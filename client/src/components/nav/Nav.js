@@ -23,7 +23,10 @@ const Nav = props => {
                          } else {
                              return (
                                  <div className="main-nav">
-                                     <h1>DueMe sounds silly</h1>
+                                     <div className="left-nav">
+                                         <img src="images/logo.png" className="logo" alt="dueme" />
+                                         <Link to="/">DueMe</Link>
+                                     </div>                                    
                                      <div className="right-nav">
                                         <Link to="/login" className="login-btn">Log In</Link>
                                         <Link to="/register" className="signup-btn">Try for free</Link>
