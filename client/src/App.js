@@ -10,7 +10,6 @@ import Register from "./components/session/Register";
 const App = () => {
     return (
         <div>
-            {/* <Nav /> */}
             <Switch>
                 <AuthRoute exact path="/login" component={Login} routeType="auth" />
                 <AuthRoute exact path="/register" component={Register} routeType="auth" />

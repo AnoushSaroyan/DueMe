@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require('./models/User');
-const Category = require("./models/Category");
-const Product = require("./models/Product");
+const Task = require("./models/Task");
+const Project = require("./models/Project");
+const Team = require("./models/Team");
 const bodyParser = require("body-parser");
 const db = require("../config/keys").MONGO_URI;
 const expressGraphQL = require("express-graphql");
@@ -37,9 +38,5 @@ app.use(
         };  
     })
 );
-
-
-
-
 
 module.exports = app;

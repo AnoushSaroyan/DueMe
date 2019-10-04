@@ -3,23 +3,22 @@ import "./session.scss";
 import { LOGIN_USER } from '../../graphql/mutations';
 import { Mutation } from 'react-apollo';
 
-class Login extends React.Component {
-    constructor(props){
+class Demo extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            password: "",
-            errorMsg: ""
+            email: "guest@guest.com",
+            password: "hunter2"
         }
     }
 
-    update(field){
-        return event => {
-            this.setState({[field]: event.target.value});
-        }
-    }
+    // update(field) {
+    //     return event => {
+    //         this.setState({ [field]: event.target.value });
+    //     }
+    // }
 
-    updateCache(cache, { data }){
+    updateCache(cache, { data }) {
         console.log(data);
         cache.writeData({
             data: { isLoggedIn: data.login.loggedIn }
@@ -51,7 +50,7 @@ class Login extends React.Component {
                                 });
                             }}
                         >
-                            <input
+                            {/* <input
                                 value={this.state.email}
                                 onChange={this.update("email")}
                                 placeholder="Email"
@@ -61,12 +60,12 @@ class Login extends React.Component {
                                 onChange={this.update("password")}
                                 type="password"
                                 placeholder="Password"
-                            />
-                            <button type="submit">Log In</button>
+                            /> */}
+                            <button type="submit">Demo</button>
                         </form>
-                        <div className="error-msg">
+                        {/* <div className="error-msg">
                             <p>{this.state.errorMsg}</p>
-                        </div>
+                        </div> */}
                     </div>
                 )}
             </Mutation>
@@ -74,4 +73,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Demo;

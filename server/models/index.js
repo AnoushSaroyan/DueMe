@@ -1,3 +1,4 @@
 require("./User");
-require("./Category");
-require("./Product");
+require("./Task");
+require("./Project");
+require("./Team")
