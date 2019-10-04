@@ -5,6 +5,7 @@ import AuthRoute from './util/route_util';
 // import Nav from "./components/Nav";
 import Splash from "./components/splash/Splash";
 import Register from "./components/session/Register";
+import CreateTeam from "./components/forms/CreateTeam";
 
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
             <Switch>
                 <AuthRoute exact path="/login" component={Login} routeType="auth" />
                 <AuthRoute exact path="/register" component={Register} routeType="auth" />
+                <Route exact path="/new_team" component={CreateTeam} />
                 <Route exact path="/" component={Splash} />
             </Switch>
         </div>
