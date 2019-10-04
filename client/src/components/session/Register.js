@@ -10,7 +10,8 @@ class Register extends Component {
         this.state = {
             name: "",
             email: "",
-            password: ""
+            password: "",
+            errorMsg: ""
         };
     }
 
@@ -34,6 +35,7 @@ class Register extends Component {
                     const { token } = data.register;
                     localStorage.setItem("auth-token", token);
                 }}
+                onError={error => this.setState({ errorMsg: error.message.split(":")[1] })}
                 update={(client, data) => this.updateCache(client, data)}
             >
                 {register => (
@@ -68,6 +70,9 @@ class Register extends Component {
                             />
                             <button type="submit">Register</button>
                         </form>
+                        <div className="error-msg">
+                            <p>{this.state.errorMsg}</p>
+                        </div>
                     </div>
                 )}
             </Mutation>
