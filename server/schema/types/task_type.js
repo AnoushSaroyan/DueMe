@@ -3,15 +3,15 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat, GraphQLBoolean } = graphql;
 const Task = mongoose.model('task');
 const User = mongoose.model('user');
+const Project = mongoose.model('project');
 
 const TaskType = new GraphQLObjectType({
 	name: "TaskType",
 	fields: () => ({
 		_id: { type: GraphQLID },
-		title: { type: GraphQLString },
-		content: { type: GraphQLString },
-		duedate: { type: GraphQLString },
-        status: { type: GraphQLBoolean },
+		description: { type: GraphQLString },
+		dueDate: { type: GraphQLString },
+		completed: { type: GraphQLBoolean },
 		user: {
 			type: require("./user_type"),
 			resolve(parentValue) {
@@ -20,6 +20,14 @@ const TaskType = new GraphQLObjectType({
 					.catch(err => null)
 			}
 		},
+		project: {
+			type: require("./project_type"),
+			resolve(parentValue) {
+				return Project.findById(parentValue.project)
+					.then(project => project)
+					.catch(err => null)
+			}
+		}
 	})
 });
 

@@ -7,22 +7,31 @@ const TaskSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "user"
 	},
-	title: {
+	project: {
+		type: Schema.Types.ObjectId,
+		ref: "project"
+	},
+	description: {
 		type: String,
 		required: true
 	},
-	content: {
+	dueDate: {
 		type: String,
-		required: false
+		required: true
 	},
-	duedate: {
-		type: String,
-		required: false
-	},
-	status: {
+	completed: {
 		type: Boolean,
-		require: false
+		require: true
 	}
 });
+
+TaskSchema.statics.updateTaskStatus = (id, completed) => {
+	const Task = mongoose.model("task");
+
+	return Task.findById(id).then(task => {
+		task.completed = completed;
+		return task.save();
+	})
+}
 
 module.exports = mongoose.model("task", TaskSchema);
