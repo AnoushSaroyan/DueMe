@@ -9,6 +9,23 @@
     padding-right: 16px;
 }
 
+.left-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-nav img {
+    height: 28px;
+    width: 28px;
+    margin-right: 8px;
+}
+
+.left-nav a {
+    text-decoration: none;
+}
+
 .right-nav {
     display: flex;
     flex-direction: row;
