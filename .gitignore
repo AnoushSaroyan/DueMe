@@ -1,0 +1,5 @@
+/config 
+node_modules
+.DS_Store
+/client/node_modules
+/client/node_modules
