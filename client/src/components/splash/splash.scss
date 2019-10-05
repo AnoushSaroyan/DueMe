@@ -1,21 +1,32 @@
+.splash{
+    display: flex;
+    flex-direction: column;
+}
+
 .greeting-container {
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    // box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 1920px;
     transition: width .15s;
-    padding-top: 128px;
-    width: calc(100% - 64px);
+    // padding-top: 128px;
+    width: 100%;
+    min-height: 800px;
+
 }
 
 .greeting-text-wrapper {
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     flex: 0 1 auto;
     position: relative;
-    max-width: 66.66667%;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-left: 16.66667%;
+    max-width: 50%;
+    // padding-left: 16px;
+    // padding-right: 16px;
+    // margin-left: 16.66667%;
 }
 
 .greeting-text-wrapper h4 {
@@ -46,6 +57,7 @@
     display: inline-block;
     font-weight: 500;
     letter-spacing: .5px;
+    align-self: center;
 }
 
 .splash-signup-btn:hover {

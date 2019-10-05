@@ -1,0 +1,126 @@
+.sidebar{
+    display: flex;
+    background-color: #151b26;
+    width: 244px;
+    transition: margin-left 250ms ease-out,transform 250ms ease-out;
+}
+
+.sidewrapper{
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px 0 24px;
+    min-width: 183px;
+    height: 100%;
+}
+
+.collapsed{
+    margin-left: -244px;
+}
+
+.sidelogo img{
+    padding-top: 24px;
+    width: 131px;
+    height: 40px;
+}
+
+.sidelogo {
+    padding-bottom: 18px;
+}
+
+.sidebar-items{
+    display: flex;
+    align-items: center;
+    color: #b3b3b3;
+    padding-bottom: 13px;
+}
+
+.sidebar-items svg{
+    font-size: 27px;
+
+}
+
+.sidebar-items div {
+    margin-left: 16px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: .015em;
+    font-weight: bold;
+    
+}
+
+.sidebar-main-nav a:last-child{
+    padding-bottom: 20px;
+}
+
+.sidebar-playlist-header{
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: .015em;
+    font-weight: bold;
+    color: #b3b3b3;
+    text-transform: uppercase;
+    letter-spacing: .16em;  
+}
+
+.create-playlist-button{
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0);
+    color:  #b3b3b3;
+    border-width: 0;
+    padding-left: 0;
+    font-weight: bold;
+}
+
+.create-playlist-button svg {
+    width: auto;
+    height: 24px;
+    padding: 4px;
+    margin-right: 16px;
+    background: #b3b3b3;
+    color: black;
+    font-size: 12px;
+}
+
+.sidebar-bottom{
+    margin-top: auto
+}
+
+.sidebar-bottom-download svg {
+    font-size: 18px;
+}
+
+.user-profile{
+    padding-top: 8px;
+    border-top: 1px solid #404040;
+    margin-bottom: 24px;
+}
+
+.user-profile div, .user-profile svg{
+    color: white;
+}
+
+.sidewrapper a:hover{
+    color:white;
+}
+
+.sidebar-playlist-list-wrapper{
+}
+
+.sidebar-playlist-list{
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+}
+
+.sidebar-playlist-list li {
+    height: 32px;
+}
+
+.sidebar-playlist-list li a{
+    font-size: 14px;
+    letter-spacing: .015em;
+    font-weight: bold;
+    color: #b3b3b3;
+    text-transform: none;
+}
