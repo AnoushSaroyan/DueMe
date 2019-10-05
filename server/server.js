@@ -10,6 +10,16 @@ const expressGraphQL = require("express-graphql");
 const app = express();
 const schema = require('./schema/schema'); 
 const cors = require('cors');
+const path = require('path');
+
+if (process.env.NODE_ENV === 'production') {
+    // app.use(express.static('../client/build'));
+    app.use(express.static('client/build'));
+    app.get('/', (req, res) => {
+        // res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+}
 
 if (!db) {
     throw new Error("You must provide a string to connect to MongoDB Atlas");

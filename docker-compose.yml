@@ -1,0 +1,15 @@
+version: "3.6"
+services:
+  web:
+    # building our own docker image
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    image: 4868/dueme
+    volumes:
+      - ".:/usr/src/app"
+      - ".:/usr/src/app/node_modules"
+    ports:
+      - "5000:3000"
+    environment:
+      - NODE_ENV=production
