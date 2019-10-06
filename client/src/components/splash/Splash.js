@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "../nav/Nav";
 import { Link } from "react-router-dom";
+// import { IS_LOGGED_IN } from "../../graphql/queries";
 import "./splash.scss";
 import Footer from '../footer/Footer'
 import ReactPlayer from 'react-player'
