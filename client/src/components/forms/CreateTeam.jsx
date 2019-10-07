@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Mutation } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
+import { useManualQuery } from 'graphql-hooks';
 import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
 
 import { CREATE_TEAM } from "../../graphql/mutations";
-import { FETCH_USERS } from "../../graphql/queries";
+import { FETCH_USERS, FIND_USER_BY_EMAIL } from "../../graphql/queries";
 
 
 class CreateTeam extends Component {
@@ -32,6 +33,7 @@ class CreateTeam extends Component {
     }
 
     if (users) {
+      debugger
       let teamArray = users;
       let newTeam = data.newTeam;
       cache.writeQuery({
@@ -41,12 +43,21 @@ class CreateTeam extends Component {
     }
   }
 
+  findUser(email){
+    const [fetchUser, { loading, error, data }] = useManualQuery(FIND_USER_BY_EMAIL, {
+      variables: { email: email }
+    })
+  }
+
   handleSubmit(e, newTeam) {
     e.preventDefault();
+    debugger
+    let userIds = this.state.users.split(', ').map(email => this.findUser(email));
+      
     newTeam({
       variables: {
         name: this.state.name,
-        users: this.state.users
+        users: userIds
       }
     });
   }
@@ -87,7 +98,7 @@ class CreateTeam extends Component {
                 <input
                   onChange={this.update("users")}
                   value={this.state.users}
-                  placeholder="Enter user ids for now. Comma separated-No spaces"
+                  placeholder="name@email.com, name2@email2.com, ..."
                   className="form-input"
                 />
                 <div className="form-buttons">
