@@ -5,7 +5,7 @@ import { Query, Mutation, ApolloConsumer } from 'react-apollo';
 import { USER } from '../../graphql/queries';
 import { MdAdd } from "react-icons/md";
 import "./main-header.scss";
-import { FiClipboard, FiCheckCircle, FiMessageCircle } from "react-icons/fi";
+import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icons/fi";
 import { LOGOUT_USER } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
 
@@ -78,6 +78,7 @@ class MainHeader extends Component {
                                         <div className="add-menu-items">
                                             <div><FiCheckCircle/>Task</div>
                                             <div><FiClipboard/>Project</div>
+                                            <div><FiUsers/>Team</div>
                                             <div><FiMessageCircle/>Conversation</div>
                                         </div>
                                         <div className="menu-caret-positioner">
