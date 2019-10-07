@@ -31,7 +31,7 @@ class MainHeader extends Component {
         <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
                 {({ data }) => {   
                    if (data) {
-                       const { user } = data
+					   const { user } = data
                        const abbreviatedName = user.name.split(" ").map(word => word[0]).join(" ")
                         return<div className="main-header">
                             <div id="main-ham" className="main-ham hidden-ham" onClick={this.handleSidebarCollapse}><MdMenu /></div>
