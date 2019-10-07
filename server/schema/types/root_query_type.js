@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
+const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull, GraphQLString } = graphql;
 const ProjectType = require("./project_type")
 const UserType = require("./user_type");
 const TeamType = require("./team_type")
@@ -25,6 +25,13 @@ const RootQueryType = new GraphQLObjectType({
             resolve(_, args) {
                 return User.findById(args._id);
             }
+        },
+        userByEmail: {
+          type: UserType,
+          args: { email: { type: new GraphQLNonNull(GraphQLString) } },
+          resolve(_, args) {
+            return User.findOne(args);
+          }
         },
         projects: {
             type: new GraphQLList(ProjectType),

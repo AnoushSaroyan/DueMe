@@ -3,6 +3,7 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import Home from '../home/Home'
 import Sidebar from '../sidebar/Sidebar'
 import "./main_page.scss"
+import CreateTeam from '../forms/CreateTeam';
 
 
 class MainPage extends Component {
@@ -17,6 +18,7 @@ class MainPage extends Component {
             <div className="main-view"> 
                     <Switch>
                         <Route exact path="/main/home" component={Home} />
+                        <Route exact path="/main/new_team" component={CreateTeam} />
                         <Route exact path='/*' render={() => <Redirect to={{ pathname: "/main/home" }} />} />
                     </Switch>
             </div>
