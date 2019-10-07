@@ -17,13 +17,18 @@
 }
 
 .left-nav img {
-    height: 28px;
-    width: 28px;
+    height: 35px;
+    width: 35px;
     margin-right: 8px;
 }
 
 .left-nav a {
+    display: flex;
     text-decoration: none;
+    color: black;
+    font-size: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .right-nav {

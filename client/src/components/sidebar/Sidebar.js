@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import "./sidebar.scss";
-// import { MdHome, MdSearch } from "react-icons/md";
+import { MdMenu, MdKeyboardArrowLeft, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { MdHome, MdSearch } from "react-icons/md";
+import { FiHome, FiCheckCircle, FiBell } from "react-icons/fi";
 // import { GoPerson } from "react-icons/go";
 // import { GiBookshelf } from "react-icons/gi";
 // import { FaPlus } from "react-icons/fa";
@@ -9,16 +11,14 @@ import "./sidebar.scss";
 // import { withRouter } from 'react-router-dom';
 
 
-
 class Sidebar extends Component {
     constructor(props) {
         super(props)
         this.state = {
             currentUser: props.currentUser,
-            playlists: [],
+            favorites: true,
         }
-
-
+        this.handleCollapse = this.handleCollapse.bind(this)
     }
 
 
@@ -26,65 +26,63 @@ class Sidebar extends Component {
         // this.props.currentUser.playlists.forEach(playlist => this.props.requestPlaylist(playlist.id))
     }
 
-    handlePlaylistForm() {
-        const playlistForm = document.getElementById("playlist-form")
-        playlistForm.classList.add("active")
+    handleSidebarHide() {
+        const sidebar = document.getElementById("sidebar")
+        sidebar.classList.add("collapsed")
     }
 
-    // handlePlaylist() {
-    //     if (this.state.playlists.length > 0) {
-    //         return this.props.playlists.map(playlist => <li key={playlist.id}><Link to={`/player/playlists/${playlist.id}`}>{playlist.name}</Link></li>)
-    //     }
-    //     // return this.props.currentUser.playlists.map(playlist => <li key={playlist.id}><Link to={`/player/playlists/${playlist.id}`}>{playlist.name}</Link></li>)
-    // }
+    handleFavorites(){
+        if (this.state.favorites) {
+            return(
+                <div className ="sidebar-favorites">
+                    <div className="sidebar-favorites-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowUp /></div>
+                    <ul className="sidebar-favorites-list">
+                        <li><Link>test 1</Link></li>
+                        <li><Link>test 2</Link></li>
+                    </ul>
+                </div>
+                )
+        } else {
+            return (
+                <div className="sidebar-favorites">
+                    <div className="sidebar-favorites-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowDown/></div>
+                </div>
+            )
+        }
+    }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (this.state.playlists.length === 0 && this.props.playlists.length > 0) {
-    //         const playlists = this.props.playlists
-    //         this.setState({ playlists: playlists })
-    //     }
-    // }
+    handleCollapse(menu){
+        return () => {
+        this.setState({
+            [menu]: !this.state[menu]
+        })}
+    }
 
     render() {
         return (
-            <section className="sidebar">
+            <section className="sidebar" id="sidebar">
                 <div className="sidewrapper">
                     <div className="sidelogo">
                         <Link to='/player/browse' >
-                            <img src="./assets/logo.png" alt="Moefy" />
+                            <img src="images/icon.png" alt="Dueme" />
+                            <div>DueMe</div>
                         </Link>
+                        <div onClick={this.handleSidebarHide} className="sidebar-ham"><MdKeyboardArrowLeft/><MdMenu /></div>
                     </div>
 
                     <nav className="sidebar-main-nav">
                         <Link className="sidebar-items" to='/player/browse' >
-                            <div>Home</div>
+                            <FiHome/><div>Home</div>
                         </Link>
                         <Link className="sidebar-items" to='/player/search' >
-                            <div>Search</div>
+                            <FiCheckCircle/><div>My Tasks</div>
                         </Link>
                         <Link className="sidebar-items" to={`/player/user/`} >
-                            <div>Library</div>
+                            <FiBell/><div>Inbox</div>
                         </Link>
                     </nav>
-                    <h2 className="sidebar-playlist-header">Playlists</h2>
-                    <button className="create-playlist-button" onClick>
-                        
-                        <span>Create Playlist</span>
-                    </button>
-                    <div className="sidebar-playlist-list-wrapper">
-                        <ul className="sidebar-playlist-list">
-
-                        </ul>
-                    </div>
-                    <div className="sidebar-bottom">
-                        <Link className="sidebar-items sidebar-bottom-download" to='/player/browse' >
-                            <div>Install App</div>
-                        </Link>
-                        <div className="user-profile">
-                            <Link className="sidebar-items sidebar-bottom-download" to='/player/settings/account'>
-                                {/* <div>{this.props.currentUser.username}</div> */}
-                            </Link>
-                        </div>
+                    <div className="sidebar-scroll-wrapper">
+                        {this.handleFavorites()}
                     </div>
                 </div>
             </section>

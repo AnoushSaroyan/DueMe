@@ -13,7 +13,7 @@ class Footer extends React.Component {
         return (
             <div className="footer1">
                 <div className="footer-links-groups">
-                    <a href={`#${this.props.history.location.pathname}`} onClick={this.goToTop}><img src="images/logo.png" className="footer-logo" alt="dueme" /></a>
+                    <a href={`#${this.props.history.location.pathname}`} onClick={this.goToTop}><img src="images/icon.png" className="footer-logo" alt="dueme" /></a>
                     <div className="footer-group">
                         <div>Get to Know Us</div>
                         <ul>
@@ -24,7 +24,7 @@ class Footer extends React.Component {
                         </ul>
                     </div>
                     <div className="footer-group">
-                        <div>Make Money with Us</div>
+                        <div>Other Services</div>
                         <ul>
                             <li><Link to="/new_item">Sell Your Pet</Link></li>
                             <li><Link to="/new_item">Sell Your Product</Link></li>
