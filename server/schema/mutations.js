@@ -122,6 +122,7 @@ const mutation = new GraphQLObjectType({
                 users: { type: new GraphQLList(GraphQLID)}
             },
             resolve(_, {name, users}){
+                users = users[0].split(',');
                 return new Team({name, users}).save();
             }
         },
@@ -140,14 +141,3 @@ const mutation = new GraphQLObjectType({
 });
 
 module.exports = mutation;
-
-        // async resolve(parentValue, { name, description, weight }, context) {
-            //     const validUser = await AuthService.verifyUser({ token: context.token });
-
-            //     if (validUser.loggedIn) {
-            //         const user = validUser._id;
-            //         return new Product({ name, description, weight, user }).save();
-            //     } else {
-            //         throw new Error("Sorry, you need to be logged in to create a product");
-            //     }
-            // }

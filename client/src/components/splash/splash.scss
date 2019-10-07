@@ -1,21 +1,34 @@
+.splash{
+    display: flex;
+    flex-direction: column;
+}
+
 .greeting-container {
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    // box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 1920px;
     transition: width .15s;
-    padding-top: 128px;
-    width: calc(100% - 64px);
+    // padding-top: 128px;
+    width: 100%;
+    min-height: 800px;
+
 }
 
 .greeting-text-wrapper {
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     flex: 0 1 auto;
     position: relative;
-    max-width: 66.66667%;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-left: 16.66667%;
+    max-width: 50%;
+    margin-bottom: 96px;
+    margin-top: 80px;
+    // padding-left: 16px;
+    // padding-right: 16px;
+    // margin-left: 16.66667%;
 }
 
 .greeting-text-wrapper h4 {
@@ -46,6 +59,8 @@
     display: inline-block;
     font-weight: 500;
     letter-spacing: .5px;
+    align-self: center;
+
 }
 
 .splash-signup-btn:hover {
@@ -64,20 +79,33 @@
 }
 
 .splash-video {
-    display: block;
-    margin-left: 25%;
-    max-width: 50%;
-    box-shadow: 0 30px 50px 0 rgba(34,43,55,.1);
+    display: flex;
+    justify-content: center;
     position: relative;
-    margin-right: auto;
+    width: 100%;
+    margin-bottom: 90px;
 }
 
+
+
 .splash-video:before {
-    background: url("/images/funny-boards.png") no-repeat 50%;
-    background-size: contain;
+    display: flex;
+    justify-content: center;
+    background: url(/images/funny-boards.png);
+    background-repeat: no-repeat;
+    background-size: 1483px auto;
+    background-position: center;
     content: "";
-    height: 95px;
+    height: 200px;
     position: absolute;
     top: 80px;
     width: 100%;
+    z-index: 0;
+}
+
+.splash-video video{
+    box-shadow: 0 30px 50px 0 rgba(34,43,55,.1);
+    position: relative;
+    z-index: 1;
+    width: 300px;
 }

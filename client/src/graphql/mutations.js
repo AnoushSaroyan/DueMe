@@ -35,6 +35,7 @@ export const CREATE_TEAM = gql`
       _id
       name
       users{
+        _id
         name
       }
     }
