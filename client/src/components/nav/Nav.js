@@ -24,8 +24,8 @@ const Nav = props => {
                              return (
                                  <div className="main-nav">
                                      <div className="left-nav">
-                                         <img src="images/logo.png" className="logo" alt="dueme" />
-                                         <Link to="/">DueMe</Link>
+                                         <Link to="/"><img src="images/icon.png" className="logo" alt="dueme" />
+                                         DueMe</Link>
                                      </div>                                    
                                      <div className="right-nav">
                                         <Link to="/login" className="login-btn">Log In</Link>
