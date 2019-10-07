@@ -4,6 +4,8 @@ import "./sidebar.scss";
 import { MdMenu, MdKeyboardArrowLeft, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { MdHome, MdSearch } from "react-icons/md";
 import { FiHome, FiCheckCircle, FiBell } from "react-icons/fi";
+import { Query, ApolloConsumer } from 'react-apollo';
+import { USER } from '../../graphql/queries';
 // import { GoPerson } from "react-icons/go";
 // import { GiBookshelf } from "react-icons/gi";
 // import { FaPlus } from "react-icons/fa";
@@ -28,7 +30,9 @@ class Sidebar extends Component {
 
     handleSidebarHide() {
         const sidebar = document.getElementById("sidebar")
+        const headerHam = document.getElementById("main-ham")
         sidebar.classList.add("collapsed")
+        headerHam.classList.remove("hidden-ham")
     }
 
     handleFavorites(){
@@ -59,9 +63,15 @@ class Sidebar extends Component {
     }
 
     render() {
+        if (!localStorage.getItem("currentUserId")){
+            return <div></div>
+        }
+
         return (
-            <section className="sidebar" id="sidebar">
-                <div className="sidewrapper">
+        <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId")}}>
+            {({ data }) => {               
+                return<section className="sidebar" id="sidebar">
+                    <div className="sidewrapper">
                     <div className="sidelogo">
                         <Link to='/main/home' >
                             <img src="images/icon.png" alt="Dueme" />
@@ -84,8 +94,10 @@ class Sidebar extends Component {
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
                     </div>
-                </div>
-            </section>
+                    </div>
+                </section>
+            }}
+        </Query>
         )
     }
 }
