@@ -4,6 +4,7 @@ import Home from '../home/Home'
 import Sidebar from '../sidebar/Sidebar'
 import "./main_page.scss"
 import CreateTeam from '../forms/CreateTeam';
+import CreateProject from '../forms/CreateProject';
 
 
 class MainPage extends Component {
@@ -19,6 +20,7 @@ class MainPage extends Component {
                     <Switch>
                         <Route exact path="/main/home" component={Home} />
                         <Route exact path="/main/new_team" component={CreateTeam} />
+                        <Route exact path="/main/new_project" component={CreateProject} />
                         <Route exact path='/*' render={() => <Redirect to={{ pathname: "/main/home" }} />} />
                     </Switch>
             </div>

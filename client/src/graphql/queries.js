@@ -16,8 +16,8 @@ export const FETCH_USERS = gql`
   }`;
 
 export const FIND_USER_BY_EMAIL = gql`
-  query findUserByEmail($email: String!){
-    findUserByEmail(email: $email) {
+  query userByEmail($email: String){
+    userByEmail(email: $email) {
       _id
       name
       email

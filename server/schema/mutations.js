@@ -122,7 +122,8 @@ const mutation = new GraphQLObjectType({
                 users: { type: new GraphQLList(GraphQLID)}
             },
             resolve(_, {name, users}){
-                users = users[0].split(',');
+              debugger
+                users = users[0].split(', ');
                 return new Team({name, users}).save();
             }
         },

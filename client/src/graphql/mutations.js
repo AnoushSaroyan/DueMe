@@ -40,6 +40,21 @@ export const CREATE_TEAM = gql`
       users{
         _id
         name
+        email
+      }
+    }
+  }
+`;
+
+export const CREATE_PROJECT = gql`
+  mutation newProject($name: String!, $description: String!, $dueDate: String!, $team: ID) {
+    newProject(name: $name, description: $description, dueDate: $dueDate, team: $team) {
+      _id
+      name
+      description
+      dueDate
+      team{
+        name
       }
     }
   }
