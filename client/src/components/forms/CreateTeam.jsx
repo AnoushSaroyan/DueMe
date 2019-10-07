@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
@@ -65,8 +65,9 @@ class CreateTeam extends Component {
         onCompleted={data => {
           const { name } = data.newTeam;
           this.setState({
-            message: `New team ${name} created successfully`
+            message: `New team ${name} created successfully!`
           });
+          this.props.history.push('/');
         }}
       >
         {(newTeam, { data }) => (
@@ -89,10 +90,12 @@ class CreateTeam extends Component {
                   placeholder="Enter user ids for now. Comma separated-No spaces"
                   className="form-input"
                 />
-                <Link to="/home"><button type="cancel">Cancel</button></Link>
-                <button type="submit">Create Team</button>
+                <div className="form-buttons">
+                  <button type="cancel"><Link to="/home">Cancel</Link></button>
+                  <button type="submit">Create Team</button>
+                </div>
               </form>
-              <p>{this.state.message}</p>
+              <p className="success-message">{this.state.message}</p>
             </div>
           </div>
         )}
@@ -101,4 +104,4 @@ class CreateTeam extends Component {
   }
 }
 
-export default CreateTeam;
+export default withRouter(CreateTeam);
