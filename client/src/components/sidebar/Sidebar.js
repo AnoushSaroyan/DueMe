@@ -63,7 +63,7 @@ class Sidebar extends Component {
             <section className="sidebar" id="sidebar">
                 <div className="sidewrapper">
                     <div className="sidelogo">
-                        <Link to='/player/browse' >
+                        <Link to='/main/home' >
                             <img src="images/icon.png" alt="Dueme" />
                             <div>DueMe</div>
                         </Link>
@@ -71,7 +71,7 @@ class Sidebar extends Component {
                     </div>
 
                     <nav className="sidebar-main-nav">
-                        <Link className="sidebar-items" to='/player/browse' >
+                        <Link className="sidebar-items" to='/main/home' >
                             <FiHome/><div>Home</div>
                         </Link>
                         <Link className="sidebar-items" to='/player/search' >

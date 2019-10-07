@@ -3,6 +3,7 @@ import Nav from "../nav/Nav";
 import { Link } from "react-router-dom";
 import "./splash.scss";
 import Footer from '../footer/Footer'
+import ReactPlayer from 'react-player'
 
 const Splash = props => {
     return (
@@ -17,7 +18,18 @@ const Splash = props => {
                     <Link to="/register" className="splash-signup-btn">Try for free</Link>
                 </div>
                 <div className="splash-video">
-                    
+                    <ReactPlayer 
+                        url="/videos/splash-video.mp4"
+                        playing="true"
+                        loop="true"
+                        width="63%"
+                        height="auto"
+                        css={{
+                            position: `absolute`,
+                            top: 0,
+                            left: 0,
+                        }}
+                    />
                 </div>
             </div>
             <Footer/>

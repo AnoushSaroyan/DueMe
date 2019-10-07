@@ -59,12 +59,12 @@
 .sidebar-ham svg:first-child{
     font-size: 17px;
     position: absolute;
-    top: 3px;
+    top: 6.5px;
     left: -13px;
 }
 
 .sidelogo {
-    margin: 20px 0;
+    margin: 20px 0 15px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -73,7 +73,7 @@
 
 .sidelogo svg{
     cursor: pointer;
-    font-size: 23px;
+    font-size: 30px;
     color:#9ca6af;
 }
 
@@ -139,6 +139,10 @@
 .sidebar-favorites{
   border-bottom: 1px solid #273240;
   padding: 10px 0;
+}
+
+.sidebar-favorites h2{
+    font-size: 12px;
 }
 
 

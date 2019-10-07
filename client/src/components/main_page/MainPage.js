@@ -11,16 +11,14 @@ class MainPage extends Component {
     }
 
     render() {
-        return (<div className="player">
+        return (<div className="main-page">
             <Sidebar/>
             <div className="black-bg"></div>
-            <div className="main-view">
-                <div className="scroll-wrapper">
+            <div className="main-view"> 
                     <Switch>
-                        <div>Hi</div>
-                        {/* <Route className="player-main-view" exact path="/main/" component={Home} /> */}
+                        <Route exact path="/main/home" component={Home} />
+                        <Route exact path='/*' render={() => <Redirect to={{ pathname: "/main/home" }} />} />
                     </Switch>
-                </div>
             </div>
         </div>)
     }

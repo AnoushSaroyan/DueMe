@@ -15,7 +15,7 @@ class Footer extends React.Component {
                 <div className="footer-links-groups">
                     <a href={`#${this.props.history.location.pathname}`} onClick={this.goToTop}><img src="images/icon.png" className="footer-logo" alt="dueme" /></a>
                     <div className="footer-group">
-                        <div>Get to Know Us</div>
+                        <div>About Us</div>
                         <ul>
                             <li><a href="https://github.com/AbbyTunes">Abby</a></li>
                             <li><a href="https://github.com/AnoushSaroyan">Anoush Saroyan</a></li>
@@ -26,17 +26,26 @@ class Footer extends React.Component {
                     <div className="footer-group">
                         <div>Other Services</div>
                         <ul>
-                            <li><Link to="/new_item">Sell Your Pet</Link></li>
-                            <li><Link to="/new_item">Sell Your Product</Link></li>
+                            <li><a href="https://moefy.herokuapp.com/">Moefy</a></li>
                         </ul>
                     </div>
 
                     <div className="footer-group">
-                        <div>Let Us help You</div>
+                        <div>Technologies</div>
                         <ul>
-                            <li><Link to={`/users/${this.props.userId}`}>Your Account</Link></li>
-                            <li><Link to="/cart">Your Cart</Link></li>
-                            <li><a href="">Help</a></li>
+                            <li><a href="https://expressjs.com">Express</a></li>
+                            <li><a href="https://reactjs.org/">React</a></li>
+                            <li><a href="https://www.mongodb.com">mongoDB</a></li>
+                            <li><a href="https://graphql.org/">GraphQL</a></li>
+                            <li><a href="https://www.apollographql.com">Apollo</a></li>
+                        </ul>
+                    </div>
+
+                    <div className="footer-group">
+                        <div>Resources</div>
+                        <ul>
+                            <li><a href="https://www.appacademy.io/">App Academy</a></li>
+                            <li><a href="https://asana.com">Asana</a></li>
                         </ul>
                     </div>
                 </div>
