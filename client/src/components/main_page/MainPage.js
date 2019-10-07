@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from '../home/Home'
 import Sidebar from '../sidebar/Sidebar'
 import "./main_page.scss"
@@ -8,10 +8,6 @@ import CreateProject from '../forms/CreateProject';
 
 
 class MainPage extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         return (<div className="main-page">
             <Sidebar/>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import "./sidebar.scss";
 import { MdMenu, MdKeyboardArrowLeft, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
-import { MdHome, MdSearch } from "react-icons/md";
 import { FiHome, FiCheckCircle, FiBell } from "react-icons/fi";
-import { Query, ApolloConsumer } from 'react-apollo';
+import { Query } from 'react-apollo';
 import { USER } from '../../graphql/queries';
 // import { GoPerson } from "react-icons/go";
 // import { GiBookshelf } from "react-icons/gi";
