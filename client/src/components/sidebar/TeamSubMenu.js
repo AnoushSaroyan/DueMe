@@ -19,7 +19,6 @@ class TeamSubMenu extends Component {
     }
 
     renderTeamMembers(team){
-        debugger
     }
 
     render(){

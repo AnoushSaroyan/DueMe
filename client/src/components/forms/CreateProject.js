@@ -3,7 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import { Mutation, ApolloConsumer, useQuery } from "react-apollo";
 import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
-import gql from 'graphql-tag';
 import { CREATE_PROJECT } from "../../graphql/mutations";
 import { FETCH_USERS, FIND_USER_BY_EMAIL, USER } from "../../graphql/queries";
 
@@ -25,28 +24,32 @@ class CreateProject extends Component {
     return e => this.setState({ [field]: e.target.value });
   }
 
-  // updateCache(cache, { data }) {
-  //   let users;
-  //   debugger
-  //   try {
-  //     users = cache.readQuery({ query: FETCH_USERS });
-  //   } catch (err) {
-  //     return;
-  //   }
+  updateCache(cache, { data }) {
+    let user;
+    try {
+      user = cache.readQuery({ query: USER, variables: { _id: localStorage.getItem("currentUserId") } });
+    } catch (err) {
+      return;
+    }
 
-  //   if (users) {
-  //     let teamArray = users;
-  //     let newTeam = data.newTeam;
-  //     cache.writeQuery({
-  //       query: FETCH_USERS,
-  //       data: { users: teamArray.concat(newTeam) }
-  //     });
-  //   }
-  // }
+    if (user) {
+      let teamArray = user.teams;
+      let newProject = data.newProject;
+      teamArray.forEach(team => {
+        if (team._id === newProject.team._id) {
+          team.push(newProject)
+        }
+      })
+      debugger
+      cache.writeQuery({
+        query: USER,
+        data: { user: {teams: teamArray} }
+      });
+    }
+  }
 
   handleSubmit(e, newProject) {
     e.preventDefault();
-    debugger
     newProject({
       variables: {
         name: this.state.name,
@@ -65,10 +68,9 @@ class CreateProject extends Component {
     const { user } = data
     let teams = []
     teams = user.teams
-    if (this.state.teams) this.setState({ team: teams[0]._id})
+    if (teams.length > 0 && teams[0] && !this.state.team) this.setState({ team: teams[0]._id})
     let teamsOptions
     teamsOptions = teams.map(team => <option key={team._id} value={team._id}>{team.name}</option>)
-
     return teamsOptions
   }
 
@@ -78,7 +80,7 @@ class CreateProject extends Component {
         mutation={CREATE_PROJECT}
         // if we error out we can set the message here
         onError={err => this.setState({ message: err.message })}
-
+        // update={(cache, data) => this.updateCache(cache, data)}
         // we need to make sure we update our cache once our new project is created
         // update={(cache, data) => {
         //   debugger
