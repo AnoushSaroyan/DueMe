@@ -12,14 +12,7 @@ const ProjectType = new GraphQLObjectType({
     name: { type: GraphQLString },
     description: { type: GraphQLString },
     dueDate: { type: GraphQLString },
-    // admin: { 
-    //   type: require("./user_type"),
-    //   resolve(parentValue) {
-    //     return User.findById(parentValue.user)
-    //       .then(user => user)
-    //       .catch(err => null)
-    //   } 
-    // },
+    color: { type: GraphQLString },
     team: { 
       type: require("./team_type"), 
       resolve(parentValue) {

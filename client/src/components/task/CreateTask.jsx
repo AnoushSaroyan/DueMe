@@ -92,7 +92,7 @@ class CreateTask extends Component {
       >
         {(newTask, { data }) => (
           <div>
-            <MainHeader page={"NewTask"} />
+            <MainHeader page={"New Task"} />
             <div className="form-top">
               <h1>Create New Task</h1>
               <form onSubmit={e => this.handleSubmit(e, newTask)} className="form-inner">

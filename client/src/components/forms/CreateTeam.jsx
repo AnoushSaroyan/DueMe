@@ -71,7 +71,7 @@ class CreateTeam extends Component {
       >
         {(newTeam, { data }) => (
           <div>
-            <MainHeader page={"Home"} />
+            <MainHeader page={"New Team"} />
             <div className="form-top">
               <h1>Create New Team</h1>
               <form onSubmit={e => this.handleSubmit(e, newTeam)} className="form-inner">

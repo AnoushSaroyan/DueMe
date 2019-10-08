@@ -66,10 +66,11 @@ const mutation = new GraphQLObjectType({
                 name: { type: GraphQLString },
                 description: { type: GraphQLString},
                 dueDate: { type: GraphQLString},
-                team: {type: GraphQLID}
+                team: {type: GraphQLID},
+                color: { type: GraphQLString },
             },
-            resolve(_, { name, description, dueDate, team }) {
-                return new Project({ name, description, dueDate, team }).save();
+            resolve(_, { name, description, dueDate, team, color }) {
+                return new Project({ name, description, dueDate, team, color }).save();
             }
         },
         deleteProject: {
@@ -122,9 +123,14 @@ const mutation = new GraphQLObjectType({
                 users: { type: new GraphQLList(GraphQLString)}
             },
             async resolve(_, {name, users}){
-              let newUsers;
-              newUsers = await User.find({ email: { "$in": users } }).then(users => users.map(user => user._id));
-              return new Team({name, users: newUsers}).save();
+              let newUsers = []
+              newUsers = await User.find({ email: { "$in": users } });
+              let userIds = []
+              userIds = newUsers.map(user => user._id);
+              return new Team({name, users: userIds}).save().then(team => {newUsers.forEach(user => {
+                  user.teams.push(team)
+                  user.save()})
+                return team}).then(team => team)
             }
         },
 

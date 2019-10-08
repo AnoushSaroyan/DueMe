@@ -186,7 +186,7 @@
     padding: 5px 0;
 }
 
-.add-menu-items div{
+.add-menu-items a{
     align-items: center;
     color: #151b26;
     cursor: pointer;
@@ -203,7 +203,7 @@
     margin-right: 10px;
 }
 
-.add-menu-items div:hover {
+.add-menu-items a:hover {
     background: linear-gradient(45deg, #ff5263 0%, #ff7381 60%, #fcbd01 115%);
     color: #fff;
     text-decoration: none;
