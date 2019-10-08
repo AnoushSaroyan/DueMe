@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "./sidebar.scss";
 import { MdMenu, MdKeyboardArrowLeft, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { FiHome, FiCheckCircle, FiBell } from "react-icons/fi";
 import { Query } from 'react-apollo';
 import { USER } from '../../graphql/queries';
+import TeamSubMenu from './TeamSubMenu';
 // import { GoPerson } from "react-icons/go";
 // import { GiBookshelf } from "react-icons/gi";
 // import { FaPlus } from "react-icons/fa";
@@ -57,7 +58,7 @@ class Sidebar extends Component {
 
     handleTeams(user){
         let teams = []
-        teams = user.teams.map(team => <li key={team._id}><Link to="/">{team.name}</Link></li>)
+        teams = user.teams.map(team => <TeamSubMenu team={team} key={team._id}/>)
 
         if (this.state.teams){
             return (

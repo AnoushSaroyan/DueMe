@@ -33,6 +33,15 @@ export const USER = gql`
       teams{
         _id
         name
+        users{
+          _id
+          name
+        }
+        projects{
+          _id
+          name
+          color
+        }
       }
       }
     }
