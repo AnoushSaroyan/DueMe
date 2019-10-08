@@ -23,35 +23,33 @@ class CreateTeam extends Component {
     return e => this.setState({ [field]: e.target.value });
   }
 
-  // updateCache(cache, { data }) {
-  //   let users;
-  //   debugger
-  //   try {
-  //     users = cache.readQuery({ query: FETCH_USERS });
-  //   } catch (err) {
-  //     return;
-  //   }
+  updateCache(cache, { data }) {
+    let users;
+    debugger
+    try {
+      users = cache.readQuery({ query: FETCH_USERS });
+    } catch (err) {
+      return;
+    }
 
-  //   if (users) {
-  //     debugger
-  //     let teamArray = users;
-  //     let newTeam = data.newTeam;
-  //     cache.writeQuery({
-  //       query: FETCH_USERS,
-  //       data: { users: teamArray.concat(newTeam) }
-  //     });
-  //   }
-  // }
+    if (users) {
+      debugger
+      let teamArray = users;
+      let newTeam = data.newTeam;
+      cache.writeQuery({
+        query: FETCH_USERS,
+        data: { users: teamArray.concat(newTeam) }
+      });
+    }
+  }
 
   handleSubmit(e, newTeam) {
     e.preventDefault();
     debugger
-
-
     newTeam({
       variables: {
         name: this.state.name,
-        users: this.state.users
+        users: this.state.users.split(', ')
       }
     });
   }
@@ -62,11 +60,9 @@ class CreateTeam extends Component {
         mutation={CREATE_TEAM}
         // if we error out we can set the message here
         onError={err => this.setState({ message: err.message })}
-
         // we need to make sure we update our cache once our new team is created
-        // update={(cache, data) => {
-        //   debugger
-        //   this.updateCache(cache, data)}}
+        update={(cache, data) => {
+          this.updateCache(cache, data)}}
         // when our query is complete we'll display a success message
         onCompleted={data => {
           const { name } = data.newTeam;

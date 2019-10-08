@@ -41,7 +41,7 @@ export const REGISTER_USER = gql `
 `;
 
 export const CREATE_TEAM = gql`
-  mutation newTeam($name: String!, $users: [ID]) {
+  mutation newTeam($name: String!, $users: [String]) {
     newTeam(name: $name, users: $users) {
       _id
       name
