@@ -1,0 +1,31 @@
+.main-page {
+    display:flex;
+    // background-image: linear-gradient(to right bottom, rgb(36, 58, 56), rgb(0, 0, 0)), linear-gradient(transparent, rgb(0, 0, 0) 70%);
+    min-height: 100vh;
+}
+
+
+.black-bg{
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,1);
+    z-index: -5;
+}
+
+.main-view{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 920px;
+    position: relative;
+}
+
+
+
+
+
+

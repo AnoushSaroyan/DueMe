@@ -1,0 +1,111 @@
+.splash{
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting-container {
+    display: flex;
+    // box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1920px;
+    transition: width .15s;
+    // padding-top: 128px;
+    width: 100%;
+    min-height: 800px;
+
+}
+
+.greeting-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex: 0 1 auto;
+    position: relative;
+    max-width: 50%;
+    margin-bottom: 96px;
+    margin-top: 80px;
+    // padding-left: 16px;
+    // padding-right: 16px;
+    // margin-left: 16.66667%;
+}
+
+.greeting-text-wrapper h4 {
+    color: #151b26;
+    font-weight: 400;
+    margin-bottom: 32px;
+    margin-top: 0;
+    font-size: calc(33.75px + 11.25 * ((100vw - 480px) / 800));
+    line-height: 1.244;
+}
+
+.greeting-text-wrapper p {
+    font-size: 1.375rem;
+    line-height: 1.636;
+    color: #646f79;
+}
+
+.splash-signup-btn{
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 24px;
+    text-decoration: none;
+    margin-bottom: 0;
+    background-color: #796eff;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+    letter-spacing: .5px;
+    align-self: center;
+
+}
+
+.splash-signup-btn:hover {
+    cursor: pointer;
+    // box-shadow:inset 0 0 0 99999px rgba(0, 0, 0, 0.267);
+    background-color: #635ac7;
+}
+
+.splash-signup-div {
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+    padding-top: 25px;
+}
+
+.splash-video {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 90px;
+}
+
+
+
+.splash-video:before {
+    display: flex;
+    justify-content: center;
+    background: url(/images/funny-boards.png);
+    background-repeat: no-repeat;
+    background-size: 1483px auto;
+    background-position: center;
+    content: "";
+    height: 200px;
+    position: absolute;
+    top: 80px;
+    width: 100%;
+    z-index: 0;
+}
+
+.splash-video video{
+    box-shadow: 0 30px 50px 0 rgba(34,43,55,.1);
+    position: relative;
+    z-index: 1;
+    width: 300px;
+}

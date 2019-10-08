@@ -1,0 +1,31 @@
+html, body, div, span, 
+h1, h2, h3, h4, h5, h6, p, a, 
+img, small, strong, i, ol, ul, li, form, 
+figcaption, figure, header, nav, section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: gordita,Helvetica Neue,Helvetica,sans-serif;
+	font-size: 14px;
+}
+
+
+input[type="file"] {
+  display: none;
+}
+
+button:focus {outline:0;}
+input:focus {outline:0;}
+textarea:focus {outline:0;}
+textarea {resize: none}
+
+.scroll-wrapper{
+    height: calc(100vh - 50px);
+    overflow-y: scroll;
+}
