@@ -59,9 +59,11 @@ export const CREATE_PROJECT = gql`
     newProject(name: $name, description: $description, dueDate: $dueDate, team: $team, color: $color) {
       _id
       name
+      color
       description
       dueDate
       team{
+        _id
         name
       }
     }
