@@ -119,11 +119,12 @@ const mutation = new GraphQLObjectType({
             type: TeamType,
             args: {
                 name: { type: GraphQLString },
-                users: { type: new GraphQLList(GraphQLID)}
+                users: { type: new GraphQLList(GraphQLString)}
             },
-            resolve(_, {name, users}){
-                users = users[0].split(',');
-                return new Team({name, users}).save();
+            async resolve(_, {name, users}){
+              let newUsers;
+              newUsers = await User.find({ email: { "$in": users } }).then(users => users.map(user => user._id));
+              return new Team({name, users: newUsers}).save();
             }
         },
 
