@@ -6,43 +6,24 @@ export const IS_LOGGED_IN = gql`
     }
 `;
 
+export const FETCH_MESSAGES = gql`
+  query fetchMessages {
+    messages {
+      _id
+      user
+      content
+      date
+      chat
+    }
+  }
+`;
+
 export const FETCH_USERS = gql`
-  query FetchUsers{
+  query fetchUsers {
     users {
       _id
-      name
       email
-    }
-  }`;
-
-export const FIND_USER_BY_EMAIL = gql`
-  query userByEmail($email: String){
-    userByEmail(email: $email) {
-      _id
       name
-      email
     }
-  }`;
-
-export const USER = gql`
-    query User($_id: ID!){
-      user(_id: $_id){
-      _id
-      name
-      email
-      }
-    }
+  }
 `;
-
-export const PROJECT = gql`
-    query Project($_id: ID!){
-      user(_id: $_id){
-      _id
-      name
-	  description
-	  dueDate
-	  team
-      }
-    }
-`;
-

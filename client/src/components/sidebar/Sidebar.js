@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import "./sidebar.scss";
 import { MdMenu, MdKeyboardArrowLeft, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { MdHome, MdSearch } from "react-icons/md";
 import { FiHome, FiCheckCircle, FiBell } from "react-icons/fi";
-import { Query } from 'react-apollo';
-import { USER } from '../../graphql/queries';
 // import { GoPerson } from "react-icons/go";
 // import { GiBookshelf } from "react-icons/gi";
 // import { FaPlus } from "react-icons/fa";
@@ -29,9 +28,7 @@ class Sidebar extends Component {
 
     handleSidebarHide() {
         const sidebar = document.getElementById("sidebar")
-        const headerHam = document.getElementById("main-ham")
         sidebar.classList.add("collapsed")
-        headerHam.classList.remove("hidden-ham")
     }
 
     handleFavorites(){
@@ -62,15 +59,9 @@ class Sidebar extends Component {
     }
 
     render() {
-        if (!localStorage.getItem("currentUserId")){
-            return <div></div>
-        }
-
         return (
-        <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId")}}>
-            {({ data }) => {               
-                return<section className="sidebar" id="sidebar">
-                    <div className="sidewrapper">
+            <section className="sidebar" id="sidebar">
+                <div className="sidewrapper">
                     <div className="sidelogo">
                         <Link to='/main/home' >
                             <img src="images/icon.png" alt="Dueme" />
@@ -83,7 +74,7 @@ class Sidebar extends Component {
                         <Link className="sidebar-items" to='/main/home' >
                             <FiHome/><div>Home</div>
                         </Link>
-                        <Link className="sidebar-items" to='/main/task' >
+                        <Link className="sidebar-items" to='/player/search' >
                             <FiCheckCircle/><div>My Tasks</div>
                         </Link>
                         <Link className="sidebar-items" to={`/player/user/`} >
@@ -93,10 +84,8 @@ class Sidebar extends Component {
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
                     </div>
-                    </div>
-                </section>
-            }}
-        </Query>
+                </div>
+            </section>
         )
     }
 }

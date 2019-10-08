@@ -22,7 +22,7 @@ class Login extends React.Component {
     updateCache(cache, { data }){
         console.log(data);
         cache.writeData({
-            data: { isLoggedIn: data.login.loggedIn}
+            data: { isLoggedIn: data.login.loggedIn }
         })
     }
 
@@ -33,7 +33,6 @@ class Login extends React.Component {
                 onCompleted={data => {
                     const { token } = data.login;
                     localStorage.setItem("auth-token", token);
-                    localStorage.setItem("currentUserId", data.login._id)
                     this.props.history.push("/");
                 }}
                 onError={error => this.setState({ errorMsg: error.message.split(":")[1] })}

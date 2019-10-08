@@ -22,7 +22,7 @@ class Register extends Component {
     // update the cache to let it know this user is loggedIn!
     updateCache(client, { data }) {
         client.writeData({
-            data: { isLoggedIn: data.register.loggedIn}
+            data: { isLoggedIn: data.register.loggedIn }
         });
     }
 
@@ -34,7 +34,6 @@ class Register extends Component {
                     console.log(data);
                     const { token } = data.register;
                     localStorage.setItem("auth-token", token);
-                    localStorage.setItem("currentUserId", data.register._id)
                 }}
                 onError={error => this.setState({ errorMsg: error.message.split(":")[1] })}
                 update={(client, data) => this.updateCache(client, data)}

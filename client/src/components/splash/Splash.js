@@ -21,8 +21,8 @@ const Splash = props => {
                 <div className="splash-video">
                     <ReactPlayer 
                         url="/videos/splash-video.mp4"
-                        playing={true}
-                        loop={true}
+                        playing="true"
+                        loop="true"
                         width="63%"
                         height="auto"
                         css={{

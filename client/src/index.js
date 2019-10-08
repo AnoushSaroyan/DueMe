@@ -32,9 +32,10 @@ const errorLink = onError(({ graphQLErrors }) => {
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-    uri: "ws://localhost:4000/",
+    uri: "ws://localhost:5000/",
     options: {
         reconnect: true,
+        // lazy: true,
         connectionParams: {
             authorization: localStorage.getItem("auth-token")
         }
@@ -70,6 +71,7 @@ const client = new ApolloClient({
 
 // if we have a token we want to verify the user is actually logged in
 const token = localStorage.getItem("auth-token");
+
 // to avoid components async problems where
 // a component would try to read the cache's value of isLoggedIn
 // before our mutation goes through we can set it up here

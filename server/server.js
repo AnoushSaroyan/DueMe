@@ -50,30 +50,19 @@ app.use(
 
 
 // // Create WebSocket listener server
-// // const websocketServer = createServer((request, response) => {
-// //     response.writeHead(404);
-// //     response.end();
-// // });
+
+const WS_PORT = process.env.PORT || 5000; 
 const websocketServer = createServer(app);
 
-const subscriptionServer = SubscriptionServer.create(
-    {
+websocketServer.listen(WS_PORT, () => {
+    new SubscriptionServer({
         execute,
         subscribe,
-        schema,
-    },
-    {
+        schema
+    }, {
         server: websocketServer,
-        path: "/",
-    },
-);
-
-const WS_PORT = process.env.PORT || 4000; // later on when you're done with the docker remember to change this according to the process.env.PORT || 5000 for heroku
-
-// // Bind it to port and start listening
-websocketServer.listen(WS_PORT, () => console.log(
-    `Websocket Server is now running on http://localhost:${WS_PORT}`
-));
-
+        path: '/',
+    });
+})
 
 module.exports = app;
