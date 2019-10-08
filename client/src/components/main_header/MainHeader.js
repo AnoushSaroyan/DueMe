@@ -8,6 +8,7 @@ import "./main-header.scss";
 import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icons/fi";
 import { LOGOUT_USER } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class MainHeader extends Component {
     constructor(props){
@@ -76,10 +77,10 @@ class MainHeader extends Component {
                                     </div>
                                     <div className="header-add-menu" id="header-add-menu">
                                         <div className="add-menu-items">
-                                            <div><FiCheckCircle/>Task</div>
-                                            <div><FiClipboard/>Project</div>
-                                            <div><FiUsers/>Team</div>
-                                            <div><FiMessageCircle/>Conversation</div>
+                                            <Link to="/main/"><FiCheckCircle />Task</Link>
+                                            <Link to="/main/project/new"><FiClipboard/>Project</Link>
+                                            <Link to="/main/"><FiUsers />Team</Link>
+                                            <Link to="/main/"><FiMessageCircle />Conversation</Link>
                                         </div>
                                         <div className="menu-caret-positioner">
                                             <div className="caret"></div>
