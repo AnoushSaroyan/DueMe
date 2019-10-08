@@ -84,3 +84,30 @@ export const CREATE_TASK = gql`
     }
   }
 `;
+export const NEW_MESSAGE = gql`
+    mutation NewMessage($user: ID!, $content: String!, $chat: ID!) {
+      newMessage(user: $user, content: $content, chat: $chat) {
+        _id
+        content
+        user
+        date
+        chat
+      }
+    }
+  `;
+
+export const DELETE_MESSAGE = gql`
+    mutation DeleteMessage($id: ID!) {
+      deleteMessage(id: $id) {
+        _id
+      }
+    }
+  `;
+
+export const CREATE_CHAT = gql`
+    mutation CreateChat($id: ID!) {
+      createChat(id: $id) {
+        _id
+      }
+    }
+  `;  
