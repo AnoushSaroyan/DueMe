@@ -17,6 +17,10 @@ const ProjectSchema = new Schema({
     team: {
         type: Schema.Types.ObjectId,
         ref: "team"
+    },
+    color: {
+        type: String,
+        required: true
     }
 });
 

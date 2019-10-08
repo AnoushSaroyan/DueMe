@@ -34,7 +34,6 @@ class CreateProject extends Component {
   //   }
 
   //   if (users) {
-  //     debugger
   //     let teamArray = users;
   //     let newTeam = data.newTeam;
   //     cache.writeQuery({
@@ -46,7 +45,6 @@ class CreateProject extends Component {
 
   handleSubmit(e, newProject) {
     e.preventDefault();
-    debugger
     newProject({
       variables: {
         name: this.state.name,

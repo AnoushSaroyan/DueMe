@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat, GraphQLBoolean, GraphQLList } = graphql;
 const User = mongoose.model('user');
+const Team = mongoose.model('team');
+const TeamType = require("./team_type")
 
 const UserType = new GraphQLObjectType({
     name: "UserType",
@@ -10,7 +12,14 @@ const UserType = new GraphQLObjectType({
         name: { type: GraphQLString },
         email: { type: GraphQLString },
         token: { type: GraphQLString },
-        loggedIn: { type: GraphQLBoolean }
+        loggedIn: { type: GraphQLBoolean },
+        teams: {
+            type: new GraphQLList(TeamType),
+            resolve(parentValue) {
+                return User.findById(parentValue.id)
+                    .populate("teams")
+                    .then(user => user.teams);
+        }}
     })
 });
 
