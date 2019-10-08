@@ -25,7 +25,6 @@ class CreateTeam extends Component {
 
   updateCache(cache, { data }) {
     let users;
-    debugger
     try {
       users = cache.readQuery({ query: FETCH_USERS });
     } catch (err) {
@@ -33,7 +32,6 @@ class CreateTeam extends Component {
     }
 
     if (users) {
-      debugger
       let teamArray = users;
       let newTeam = data.newTeam;
       cache.writeQuery({
@@ -45,7 +43,6 @@ class CreateTeam extends Component {
 
   handleSubmit(e, newTeam) {
     e.preventDefault();
-    debugger
     newTeam({
       variables: {
         name: this.state.name,
