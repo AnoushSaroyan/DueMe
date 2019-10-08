@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MainHeader from '../main_header/MainHeader';
 
 class CreateProject extends Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class CreateProject extends Component {
 
     render(){
         return <div>
+            <MainHeader page={"New Project"} />
             Hi
         </div>
     }

@@ -77,9 +77,9 @@ class MainHeader extends Component {
                                     </div>
                                     <div className="header-add-menu" id="header-add-menu">
                                         <div className="add-menu-items">
-                                            <Link to="/main/"><FiCheckCircle />Task</Link>
+                                            <Link to="/main/task/new"><FiCheckCircle />Task</Link>
                                             <Link to="/main/project/new"><FiClipboard/>Project</Link>
-                                            <Link to="/main/"><FiUsers />Team</Link>
+                                            <Link to="/main/team/new"><FiUsers />Team</Link>
                                             <Link to="/main/"><FiMessageCircle />Conversation</Link>
                                         </div>
                                         <div className="menu-caret-positioner">
