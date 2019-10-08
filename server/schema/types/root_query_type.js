@@ -5,10 +5,14 @@ const ProjectType = require("./project_type")
 const UserType = require("./user_type");
 const TeamType = require("./team_type")
 const TaskType = require("./task_type");
+const MessageType = require("./message_type");
+const ChatType = require("./chat_type");
 const User = mongoose.model("user");
 const Project = mongoose.model("project");
 const Task = mongoose.model("task");
 const Team = mongoose.model("team");
+const Message = mongoose.model("message");
+const Chat = mongoose.model("chat");
 
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
@@ -36,7 +40,7 @@ const RootQueryType = new GraphQLObjectType({
         projects: {
             type: new GraphQLList(ProjectType),
             resolve(){
-                return Project.find({})
+                return Project.find({});
             }
         },
         project: {
@@ -49,7 +53,7 @@ const RootQueryType = new GraphQLObjectType({
         tasks: {
             type: new GraphQLList(TaskType),
             resolve(){
-                return Task.find({})
+                return Task.find({});
             }
         },
         task: {
@@ -62,7 +66,7 @@ const RootQueryType = new GraphQLObjectType({
         teams: {
             type: new GraphQLList(TeamType),
             resolve(){
-                return Team.find({})
+                return Team.find({});
             }
         },
         team: {
@@ -70,6 +74,32 @@ const RootQueryType = new GraphQLObjectType({
             args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(_, args) {
                 return Team.findById(args._id);
+            }
+        },
+        messages: {
+            type: new GraphQLList(MessageType),
+            resolve() {
+                return Message.find({});
+            }
+        },
+        message: {
+            type: MessageType,
+            args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
+            resolve(_, args) {
+                return Message.findById(args._id);
+            }
+        },
+        chats: {
+            type: new GraphQLList(ChatType),
+            resolve() {
+                return Chat.find({});
+            }
+        },
+        chat: {
+            type: ChatType,
+            args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
+            resolve(_, args) {
+                return Chat.findById(args._id);
             }
         },
     })

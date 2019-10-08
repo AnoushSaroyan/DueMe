@@ -46,3 +46,15 @@ export const PROJECT = gql`
     }
 `;
 
+export const FETCH_MESSAGES = gql`
+  query fetchMessages {
+    messages {
+      _id
+      user
+      content
+      date
+      chat
+    }
+  }
+`;
+
