@@ -20,25 +20,41 @@ class TaskCalendar extends Component {
           end: new Date("10-07-2019"),
           title: "Shit to do"
         },
-        // {
-        //   start: new Date("10-11-2019"),
-        //   end: new Date("10-12-2019"),
-        //   title: "Other shit to do"
-        // }
+        {
+          start: new Date("10-11-2019"),
+          end: new Date("10-12-2019"),
+          title: "Other shit to do"
+        }
       ]
     };
   }
 
-  onEventResize = ({start, end}) => {
+  onEventResize = ({event, start, end}) => {
     this.setState(state => {
-      this.state.events[0].start = start;
-      this.state.events[0].end = end;
-      return { events: this.state.events };
-    });
+      let newEvents = this.state.events.map(evt => {
+        if (evt === event) {
+          evt.start = start;
+          evt.end = end;
+        }
+        return evt
+      });
+      return { events: newEvents };
+    }
+    );
   };
 
-  onEventDrop = ({ event, start, end, allDay }) => {
-    console.log(start);
+  onEventDrop = ({ event, start, end }) => {
+    this.setState(state => {
+      let newEvents = this.state.events.map(evt => {
+          if(evt === event){
+            evt.start = start;
+            evt.end = end;
+          }
+          return evt
+      });
+      return { events: newEvents };
+      }
+    );
   };
 
   render() {
