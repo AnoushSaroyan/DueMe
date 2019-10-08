@@ -68,4 +68,19 @@ export const CREATE_PROJECT = gql`
   }
 `;
 
-
+export const CREATE_TASK = gql`
+  mutation newTask($description: String!, $dueDate: String!, $completed: Boolean!, $project: [ID], $user: [ID]) {
+    newTask(description: $description, dueDate: $dueDate, completed: $completed, project: $project, user: $user) {
+      _id
+	  description
+	  project{
+		_id
+		name
+	  }
+      user{
+        _id
+        name
+      }
+    }
+  }
+`;

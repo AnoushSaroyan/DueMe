@@ -46,6 +46,8 @@ class CreateTeam extends Component {
   handleSubmit(e, newTeam) {
     e.preventDefault();
     debugger
+
+
     newTeam({
       variables: {
         name: this.state.name,

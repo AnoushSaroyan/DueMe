@@ -83,7 +83,7 @@ class Sidebar extends Component {
                         <Link className="sidebar-items" to='/main/home' >
                             <FiHome/><div>Home</div>
                         </Link>
-                        <Link className="sidebar-items" to='/player/search' >
+                        <Link className="sidebar-items" to='/main/task' >
                             <FiCheckCircle/><div>My Tasks</div>
                         </Link>
                         <Link className="sidebar-items" to={`/player/user/`} >
