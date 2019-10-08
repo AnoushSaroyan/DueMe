@@ -5,7 +5,7 @@ import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
 
 import { CREATE_TEAM } from "../../graphql/mutations";
-import { FETCH_USERS } from "../../graphql/queries";
+import { FETCH_USERS, FIND_USER_BY_EMAIL } from "../../graphql/queries";
 
 
 class CreateTeam extends Component {
@@ -25,6 +25,7 @@ class CreateTeam extends Component {
 
   updateCache(cache, { data }) {
     let users;
+    debugger
     try {
       users = cache.readQuery({ query: FETCH_USERS });
     } catch (err) {
@@ -32,6 +33,7 @@ class CreateTeam extends Component {
     }
 
     if (users) {
+      debugger
       let teamArray = users;
       let newTeam = data.newTeam;
       cache.writeQuery({
@@ -43,10 +45,11 @@ class CreateTeam extends Component {
 
   handleSubmit(e, newTeam) {
     e.preventDefault();
+    debugger
     newTeam({
       variables: {
         name: this.state.name,
-        users: this.state.users
+        users: this.state.users.split(', ')
       }
     });
   }
@@ -57,7 +60,6 @@ class CreateTeam extends Component {
         mutation={CREATE_TEAM}
         // if we error out we can set the message here
         onError={err => this.setState({ message: err.message })}
-
         // we need to make sure we update our cache once our new team is created
         update={(cache, data) => {
           this.updateCache(cache, data)}}
@@ -87,7 +89,7 @@ class CreateTeam extends Component {
                 <input
                   onChange={this.update("users")}
                   value={this.state.users}
-                  placeholder="Enter user ids for now. Comma separated-No spaces"
+                  placeholder="name@email.com, name2@email2.com, ..."
                   className="form-input"
                 />
                 <div className="form-buttons">
