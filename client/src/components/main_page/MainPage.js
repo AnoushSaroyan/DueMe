@@ -6,9 +6,7 @@ import Sidebar from '../sidebar/Sidebar';
 import "./main_page.scss";
 import CreateTeam from '../forms/CreateTeam';
 import CreateProject from '../forms/CreateProject';
-
 import CreateTask from '../task/CreateTask';
-import CreateProject from '../forms/CreateProject'
 
 class MainPage extends Component {
     render() {
