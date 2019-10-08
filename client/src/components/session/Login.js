@@ -39,7 +39,7 @@ class Login extends React.Component {
                 onError={error => this.setState({ errorMsg: error.message.split(":")[1] })}
                 update={(cache, data) => this.updateCache(cache, data)}
             >
-                {login => (
+                {(login, { data }) => (
                     <div>
                         <form
                             onSubmit={e => {
