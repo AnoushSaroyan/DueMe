@@ -30,6 +30,10 @@ export const USER = gql`
       _id
       name
       email
+      teams{
+        _id
+        name
+      }
       }
     }
 `;
