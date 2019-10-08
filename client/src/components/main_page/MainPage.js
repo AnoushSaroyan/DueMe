@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import Home from '../home/Home';
 import Task from '../task/Task';
 import Sidebar from '../sidebar/Sidebar';
 import "./main_page.scss";
-=======
-import { Route, Switch, Redirect } from 'react-router-dom';
-import Home from '../home/Home'
-import Sidebar from '../sidebar/Sidebar'
-import "./main_page.scss"
->>>>>>> 067562236de79c2bbfd87e5ebb72774a4d99caf7
 import CreateTeam from '../forms/CreateTeam';
 import CreateTask from '../task/CreateTask';
 

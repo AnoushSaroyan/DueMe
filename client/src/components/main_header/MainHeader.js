@@ -53,10 +53,6 @@ class MainHeader extends Component {
         <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
                 {({ data }) => {   
                    if (data) {
-<<<<<<< HEAD
-					   const { user } = data
-                       const abbreviatedName = user.name.split(" ").map(word => word[0]).join(" ")
-=======
                        const { user } = data
                        const abbreviatedName = user.name.split(" ").map(word => word[0])
                        let rightLetters
@@ -65,7 +61,6 @@ class MainHeader extends Component {
                        } else {
                            rightLetters = [abbreviatedName[0] + abbreviatedName[abbreviatedName.length - 1]]
                        }
->>>>>>> 067562236de79c2bbfd87e5ebb72774a4d99caf7
                         return<div className="main-header">
                             <div id="main-ham" className="main-ham hidden-ham" onClick={this.handleSidebarCollapse}><MdMenu /></div>
                             <div className="page-title"><h1>{this.state.page}</h1></div>
