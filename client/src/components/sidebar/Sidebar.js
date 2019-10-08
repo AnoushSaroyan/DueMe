@@ -18,7 +18,6 @@ class Sidebar extends Component {
         this.state = {
             currentUser: props.currentUser,
             favorites: true,
-            teams: true,
         }
         this.handleCollapse = this.handleCollapse.bind(this)
     }
@@ -38,9 +37,9 @@ class Sidebar extends Component {
     handleFavorites(){
         if (this.state.favorites) {
             return(
-                <div className ="sidebar-submenus">
-                    <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowUp /></div>
-                    <ul className="sidebar-submenus-list">
+                <div className ="sidebar-favorites">
+                    <div className="sidebar-favorites-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowUp /></div>
+                    <ul className="sidebar-favorites-list">
                         <li><Link>test 1</Link></li>
                         <li><Link>test 2</Link></li>
                     </ul>
@@ -48,34 +47,11 @@ class Sidebar extends Component {
                 )
         } else {
             return (
-                <div className="sidebar-submenus">
-                    <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowDown/></div>
+                <div className="sidebar-favorites">
+                    <div className="sidebar-favorites-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowDown/></div>
                 </div>
             )
         }
-    }
-
-    handleTeams(user){
-        let teams = []
-        teams = user.teams.map(team => <li key={team._id}><Link to="/">{team.name}</Link></li>)
-
-        if (this.state.teams){
-            return (
-                <div className="sidebar-submenus">
-                    <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("teams")}><h2>Teams</h2><MdKeyboardArrowUp /></div>
-                    <ul className="sidebar-submenus-list">
-                        {teams}
-                    </ul>
-                </div>
-            )
-        } else{
-            return(
-            <div className="sidebar-submenus">
-                <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("teams")}><h2>Teams</h2><MdKeyboardArrowDown /></div>
-            </div>
-            )
-        }
-        return <div></div>
     }
 
     handleCollapse(menu){
@@ -92,11 +68,7 @@ class Sidebar extends Component {
 
         return (
         <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId")}}>
-            {({ data }) => {     
-                if (data){
-                    const { user } = data
-
-                
+            {({ data }) => {               
                 return<section className="sidebar" id="sidebar">
                     <div className="sidewrapper">
                     <div className="sidelogo">
@@ -120,11 +92,9 @@ class Sidebar extends Component {
                     </nav>
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
-                        {this.handleTeams(user)}
                     </div>
                     </div>
-                </section>}
-                else return <div></div>
+                </section>
             }}
         </Query>
         )

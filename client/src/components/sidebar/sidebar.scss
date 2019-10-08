@@ -104,7 +104,7 @@
     color: #cbd4db;
 }
 
-.sidebar-submenus-header{
+.sidebar-favorites-header{
     font-size: 11px;
     color: #9ca6af;
     padding: 5px 15px;
@@ -114,7 +114,7 @@
     cursor: pointer;
 }
 
-.sidebar-submenus-header svg{
+.sidebar-favorites-header svg{
     font-size: 20px;
 }
 
@@ -136,29 +136,29 @@
     font-size: 18px;
 }
 
-.sidebar-submenus{
+.sidebar-favorites{
   border-bottom: 1px solid #273240;
   padding: 10px 0;
 }
 
-.sidebar-submenus h2{
+.sidebar-favorites h2{
     font-size: 12px;
 }
 
 
-.sidebar-submenus-list{
+.sidebar-favorites-list{
     display: flex;
     flex-direction: column;
     padding-left: 0;
 }
 
 
-.sidebar-submenus-header{
+.sidebar-favorites-header{
     color: #6f7782;
     height: 18px;
 }
 
-.sidebar-submenus-header svg{
+.sidebar-favorites-header svg{
     display: none;
 }
 
@@ -166,27 +166,27 @@
     display: block;
 }
 
-.sidebar-submenus-header:hover{
+.sidebar-favorites-header:hover{
     color: #9ca6af;
 }
 
 
-.sidebar-submenus-list li {
+.sidebar-favorites-list li {
     display: flex;
     align-items: center;
     height: 28px;
     padding: 0 10px 0 15px;
 }
 
-.sidebar-submenus-list li:last-child{
+.sidebar-favorites-list li:last-child{
     margin-bottom: 10px;
 }
 
-.sidebar-submenus-list li:hover{
+.sidebar-favorites-list li:hover{
     background-color: rgba(255,255,255,.08);
 }
 
-.sidebar-submenus-list li a{
+.sidebar-favorites-list li a{
     font-size: 13px;
     color: #cbd4db;
     text-transform: none;
