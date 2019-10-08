@@ -68,7 +68,7 @@ const subscriptionServer = SubscriptionServer.create(
     },
 );
 
-const WS_PORT = process.env.PORT || 4000; // later on when you're done with the docker remember to change this according to the process.env.PORT || 5000 for heroku
+const WS_PORT = process.env.PORT || 5000; // later on when you're done with the docker remember to change this according to the process.env.PORT || 5000 for heroku
 
 // // Bind it to port and start listening
 websocketServer.listen(WS_PORT, () => console.log(
