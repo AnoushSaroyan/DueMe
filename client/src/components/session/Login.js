@@ -4,6 +4,8 @@ import "../forms/create-team.scss"
 import { LOGIN_USER } from '../../graphql/mutations';
 import { USER } from "../../graphql/queries";
 import { Mutation } from 'react-apollo';
+import { Link } from 'react-router-dom';
+import Register from './Register';
 
 class Login extends React.Component {
     constructor(props){
@@ -50,8 +52,8 @@ class Login extends React.Component {
                 update={(cache, data) => this.updateCache(cache, data)}
             >
                 {(login, { data }) => (
-                    <div class="login">
-                        <img src="images/dueme logo.png" class="login-logo" alt="dueme" />
+                    <div className="session">
+                        <img src="images/dueme logo.png" class="session-logo" alt="dueme" />
                         <form
                             onSubmit={e => {
                                 e.preventDefault();
@@ -86,6 +88,10 @@ class Login extends React.Component {
                               </div>
                             </div>
                         </form>
+                        <div className="session-info"> 
+                          <span>Don't have an account?</span>
+                          <Link to="/register">Sign Up</Link>
+                        </div>
                         <div className="error-msg">
                             <p>{this.state.errorMsg}</p>
                         </div>

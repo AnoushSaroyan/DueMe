@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./session.scss";
 import { Mutation } from "react-apollo";
 import { REGISTER_USER } from "../../graphql/mutations";
+import { Link } from 'react-router-dom';
 
 class Register extends Component {
     constructor(props) {
@@ -40,7 +41,8 @@ class Register extends Component {
                 update={(client, data) => this.updateCache(client, data)}
             >
                 {register => (
-                    <div>
+                    <div className="session">
+                <img src="images/dueme logo.png" class="session-logo" alt="dueme" />
                         <form
                             onSubmit={e => {
                                 e.preventDefault();
@@ -52,25 +54,41 @@ class Register extends Component {
                                     }
                                 });
                             }}
+                            className="form-top-session"
                         >
-                            <input
-                                value={this.state.name}
-                                onChange={this.update("name")}
-                                placeholder="Name"
-                            />
-                            <input
-                                value={this.state.email}
-                                onChange={this.update("email")}
-                                placeholder="Email"
-                            />
-                            <input
-                                value={this.state.password}
-                                onChange={this.update("password")}
-                                type="password"
-                                placeholder="Password"
-                            />
-                            <button type="submit">Register</button>
+                            <h1>Start your free trial</h1>
+                            <div className="form-inner">
+                              <h3>Name</h3>
+                              <input
+                                  value={this.state.name}
+                                  onChange={this.update("name")}
+                                  placeholder="username"
+                                  className="form-input"
+                              />
+                              <h3>Email</h3>
+                              <input
+                                  value={this.state.email}
+                                  onChange={this.update("email")}
+                                  placeholder="name@email.com"
+                                  className="form-input"
+                              />
+                              <h3>Password</h3>
+                              <input
+                                  value={this.state.password}
+                                  onChange={this.update("password")}
+                                  type="password"
+                                  placeholder="password"
+                                  className="form-input"
+                              />
+                              <div className="form-buttons">
+                                <button type="submit">Sign Up</button>
+                              </div>
+                            </div>
                         </form>
+                        <div className="session-info">
+                          <span>Already have an account?</span>
+                          <Link to="/login">Log In</Link>
+                        </div>
                         <div className="error-msg">
                             <p>{this.state.errorMsg}</p>
                         </div>
