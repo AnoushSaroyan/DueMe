@@ -6,6 +6,7 @@ import "./create-team.scss";
 import { CREATE_PROJECT } from "../../graphql/mutations";
 import { FETCH_USERS, FIND_USER_BY_EMAIL, USER } from "../../graphql/queries";
 import "./create-project.scss"
+import CreateProjectPopup from './CreateProjectPopup'
 
 class CreateProject extends Component {
   constructor(props) {
@@ -40,7 +41,6 @@ class CreateProject extends Component {
           team.push(newProject)
         }
       })
-      debugger
       cache.writeQuery({
         query: USER,
         data: { user: {teams: teamArray} }
@@ -71,7 +71,25 @@ class CreateProject extends Component {
     if (teams.length > 0 && teams[0] && !this.state.team) this.setState({ team: teams[0]._id})
     let teamsOptions
     teamsOptions = teams.map(team => <option key={team._id} value={team._id}>{team.name}</option>)
-    return teamsOptions
+
+    if (teams.length === 0) {
+      return <CreateProjectPopup/>
+    }
+
+    return (
+      <div className="create-project-team">
+        <h3>Team</h3>
+        {/* <input
+                        onChange={this.update("team")}
+                        value={this.state.team}
+                        placeholder="Team objectID for now"
+                        className="form-input"
+                      /> */}
+        <select name="team" value={this.state.team} onChange={this.update("team")}>
+          {teamsOptions}
+        </select>
+      </div>
+    )
   }
 
   render() {
@@ -123,29 +141,18 @@ class CreateProject extends Component {
                   placeholder="MM-DD-YYYY"
                   className="form-input"
                 />
-                <div className="create-project-team">
-                     <h3>Team</h3>
-                      {/* <input
-                        onChange={this.update("team")}
-                        value={this.state.team}
-                        placeholder="Team objectID for now"
-                        className="form-input"
-                      /> */}
-                      <select name="team" value={this.state.team} onChange={this.update("team")}>
-                        {this.constructTeamSelection()}
-                      </select>
+                {this.constructTeamSelection()}
+                <div  className="create-project-color">
+                  <h3>Color</h3>
+                  <div className="create-project-color-wrapper">
+                    <label className="container"><input name="radio" id="red" type="radio" value="red" onChange={this.update("color")}/><span className="checkmark" style={ {backgroundColor: "red", border: "red 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="orange" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "orange", border: "orange 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="green" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "green", border: "green 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="blue" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "blue", border: "blue 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="indigo" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "indigo", border: "indigo 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="violet" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "violet", border: "violet 1px solid" }}/></label>
+                  </div>
                 </div>
-                    <div  className="create-project-color">
-                      <h3>Color</h3>
-                      <div className="create-project-color-wrapper">
-                        <label className="container"><input name="radio" id="red" type="radio" value="red" onChange={this.update("color")}/><span className="checkmark" style={ {backgroundColor: "red", border: "red 1px solid" }}/></label>
-                        <label className="container"><input name="radio" id="red" type="radio" value="orange" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "orange", border: "orange 1px solid" }}/></label>
-                        <label className="container"><input name="radio" id="red" type="radio" value="green" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "green", border: "green 1px solid" }}/></label>
-                        <label className="container"><input name="radio" id="red" type="radio" value="blue" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "blue", border: "blue 1px solid" }}/></label>
-                        <label className="container"><input name="radio" id="red" type="radio" value="indigo" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "indigo", border: "indigo 1px solid" }}/></label>
-                        <label className="container"><input name="radio" id="red" type="radio" value="violet" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "violet", border: "violet 1px solid" }}/></label>
-                      </div>
-                    </div>
 
                 <div className="form-buttons">
                   <button type="cancel"><Link to="/home">Cancel</Link></button>

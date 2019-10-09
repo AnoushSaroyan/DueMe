@@ -120,7 +120,7 @@ class MainHeader extends Component {
                                                         }}
                                                     >
                                                         {logout => (
-                                                            <div onClick={() => logout({ variables: { _id: localStorage.getItem("currentUserId") }})}>Logout</div>
+                                                            <div onClick={() => logout({ variables: { _id: localStorage.getItem("currentUserId") }})} className="logout-button">Logout</div>
                                                         )}
                                                     </Mutation>
                                                 )}

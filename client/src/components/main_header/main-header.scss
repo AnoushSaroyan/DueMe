@@ -2,7 +2,7 @@
     display: flex;
     padding: 0 20px;
     position: relative;
-    z-index: 200;
+    z-index: 5;
     height: 50px;
     align-items: center;
 }
@@ -223,3 +223,6 @@
 }
 
 
+.logout-button{
+    cursor: pointer;
+}
