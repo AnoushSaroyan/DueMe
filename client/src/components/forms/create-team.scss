@@ -60,7 +60,8 @@
 }
 
 .form-buttons button:first-child{
-  background-image: linear-gradient(to top right, rgb(255, 0, 81) , rgb(255, 174, 34));
+  background: linear-gradient(to top right, rgba(255, 82, 99, 0.9) 10%, rgba(255, 115, 129, 0.9) 65%, rgba(252, 189, 1, 0.9) 125%);
+  color: #fff;
 }
 
 .form-buttons button:first-child a{
