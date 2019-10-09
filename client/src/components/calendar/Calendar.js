@@ -22,7 +22,7 @@ class TaskCalendar extends Component {
         },
         {
           start: new Date("10-11-2019"),
-          end: new Date("10-12-2019"),
+          end: new Date("10-11-2019"),
           title: "Other shit to do"
         }
       ]
