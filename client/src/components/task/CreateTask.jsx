@@ -62,7 +62,6 @@ class CreateTask extends Component {
 
   handleSubmit(e, newTask) {
 	e.preventDefault();
-	debugger;
     newTask({
       variables: {
 		description: this.state.description,
