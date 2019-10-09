@@ -1,5 +1,6 @@
 import React from 'react';
 import "./session.scss";
+import "../forms/create-team.scss"
 import { LOGIN_USER } from '../../graphql/mutations';
 import { USER } from "../../graphql/queries";
 import { Mutation } from 'react-apollo';
@@ -49,7 +50,8 @@ class Login extends React.Component {
                 update={(cache, data) => this.updateCache(cache, data)}
             >
                 {(login, { data }) => (
-                    <div>
+                    <div class="login">
+                        <img src="images/dueme logo.png" class="login-logo" alt="dueme" />
                         <form
                             onSubmit={e => {
                                 e.preventDefault();
@@ -60,19 +62,29 @@ class Login extends React.Component {
                                     }
                                 });
                             }}
+                            className="form-top-session"
                         >
-                            <input
-                                value={this.state.email}
-                                onChange={this.update("email")}
-                                placeholder="Email"
-                            />
-                            <input
-                                value={this.state.password}
-                                onChange={this.update("password")}
-                                type="password"
-                                placeholder="Password"
-                            />
-                            <button type="submit">Log In</button>
+                            <h1>Log in</h1>                            
+                            <div className="form-inner">
+                              <h3>Email Address</h3>
+                              <input
+                                  value={this.state.email}
+                                  onChange={this.update("email")}
+                                  placeholder="name@email.com"
+                                  className="form-input"
+                              />                            
+                              <h3>Password</h3>
+                              <input
+                                  value={this.state.password}
+                                  onChange={this.update("password")}
+                                  type="password"
+                                  placeholder="password"
+                                  className="form-input"
+                              />                              
+                              <div className="form-buttons">
+                                <button type="submit">Log In</button>
+                              </div>
+                            </div>
                         </form>
                         <div className="error-msg">
                             <p>{this.state.errorMsg}</p>
