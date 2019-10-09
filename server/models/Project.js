@@ -17,11 +17,16 @@ const ProjectSchema = new Schema({
     team: {
         type: Schema.Types.ObjectId,
         ref: "team"
-    },
+	},
+	tasks: [{
+		type: Schema.Types.ObjectId,
+		ref: "task"
+	}],
     color: {
         type: String,
         required: true
-    }
+    },
+    
 });
 
 module.exports = mongoose.model("project", ProjectSchema);

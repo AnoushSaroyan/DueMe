@@ -1,3 +1,88 @@
-.submenu-team-name{
+.team-submenu-title{
     padding: 0 10px 0 15px;
+    display: flex;
+    align-items: center;
+    height: 28px;
+}
+
+.team-submenu-title:hover {
+    background-color: rgba(255,255,255,.08);
+}
+
+.team-submenu-title svg{
+    color: gray;
+    font-size: 18px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.team-submenu-title svg:hover{
+    color: white;
+}
+
+.submenu-invite-people{
+align-items: center;
+    align-self: center;
+    background-color: rgba(255,255,255,.1);
+    border: 0;
+    border-radius: 12px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #cbd4db;
+    display: flex;
+    flex: 0 0 auto;
+    height: 24px;
+    justify-content: center;
+    margin-left: 5px;
+
+    min-width: 111px;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.team-submenu-people{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 10px 5px 15px;
+}
+
+.submenu-invite-people:hover{
+    background-color: rgba(255,255,255,.08);
+}
+
+.team-submenu-circles{
+    display: flex;
+}
+
+.team-submenu-circles .main-header-avatar-pic{
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.team-submenu-projects .team-submenu-project:last-child{
+    margin-bottom: 20px;
+}
+
+.team-submenu-project{
+    display: flex;
+    color: #cbd4db;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px 0 15px;
+    align-items: center;
+}
+
+.team-submenu-project:hover{
+    background-color: rgba(255,255,255,.08);
+}
+
+.team-submenu-project a{
+    display: flex;
+    align-items: center;
+}
+
+.team-submenu-project svg{
+    margin-right: 10px;
+    font-size: 8px;
 }

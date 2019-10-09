@@ -9,13 +9,17 @@ import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icon
 import { LOGOUT_USER } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { FaSquare } from "react-icons/fa";
+import { FiFileText } from "react-icons/fi";
 
 
 class MainHeader extends Component {
     constructor(props){
         super(props)
         this.state = {
-            page: this.props.page
+            page: this.props.page,
+            projectColor: this.props.color,
+            type: this.props.type
         }
     }
 
@@ -31,6 +35,16 @@ class MainHeader extends Component {
         })
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.page !== this.props.page) {
+            this.setState({
+                page: this.props.page,
+                projectColor: this.props.color,
+                type: this.props.type
+            })
+        }
+    }
+
     handleSidebarCollapse(){
         const sidebar = document.getElementById("sidebar")
         const headerHam = document.getElementById("main-ham")
@@ -43,6 +57,18 @@ class MainHeader extends Component {
             let dropDown = document.getElementById(button)
             if (dropDown) dropDown.classList.add("active")
         }
+    }
+
+    renderTitle(){
+        if (this.state.type === "project"){
+            let color
+            this.state.projectColor ? color = this.state.projectColor : color = "#e362e3"
+            let projectColor = {
+                backgroundColor: color
+            } 
+            return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div><h1>{this.state.page}</h1></div>
+        }
+        return <div className="page-title"><h1>{this.state.page}</h1></div>
     }
 
     render(){
@@ -63,9 +89,17 @@ class MainHeader extends Component {
                        } else {
                            rightLetters = [abbreviatedName[0] + abbreviatedName[abbreviatedName.length - 1]]
                        }
+
+                       let color
+                       user.color ? color = user.color : color = "#e362e3"
+
+                       let profileColor = {
+                           backgroundColor: color
+                       }
+
                         return<div className="main-header">
                             <div id="main-ham" className="main-ham hidden-ham" onClick={this.handleSidebarCollapse}><MdMenu /></div>
-                            <div className="page-title"><h1>{this.state.page}</h1></div>
+                            {this.renderTitle()}
                             <div className="main-header-right">
                                 <div className="main-header-search-bar">
                                     <input className="header-search-input"></input>
@@ -90,7 +124,7 @@ class MainHeader extends Component {
                                 </div>
                                 <div className="main-header-avatar-wrapper">
                                     <div className="main-header-avatar" onClick={this.toggleDropMenu("profile-menu")}>
-                                        <div className="main-header-avatar-pic">
+                                        <div className="main-header-avatar-pic" style={profileColor}>
                                             {rightLetters}
                                         </div>
                                     </div>
@@ -112,7 +146,7 @@ class MainHeader extends Component {
                                                         }}
                                                     >
                                                         {logout => (
-                                                            <div onClick={() => logout({ variables: { _id: localStorage.getItem("currentUserId") }})}>Logout</div>
+                                                            <div onClick={() => logout({ variables: { _id: localStorage.getItem("currentUserId") }})} className="logout-button">Logout</div>
                                                         )}
                                                     </Mutation>
                                                 )}
