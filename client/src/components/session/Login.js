@@ -22,7 +22,7 @@ class Login extends React.Component {
     updateCache(cache, { data }){
         console.log(data);
         cache.writeData({
-            data: { isLoggedIn: data.login.loggedIn}
+            data: { isLoggedIn: data.login.loggedIn, currentUserId: data.login._id }
         })
     }
 

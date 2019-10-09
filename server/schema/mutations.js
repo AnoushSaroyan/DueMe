@@ -17,6 +17,7 @@ const Task = mongoose.model("task");
 const Team = mongoose.model("team");
 const Chat = mongoose.model("chat");
 const Message = mongoose.model("message");
+const pubsub = require("./pubsub");
 
 // const graphQLISO = require("graphql-iso-date")
 // const { GraphQLDate } = graphQLISO;
@@ -162,7 +163,7 @@ const mutation = new GraphQLObjectType({
             async resolve(_, args, context) {
                 let validUser = await AuthService.verifyUser({ token: context.token });
                 if (validUser.loggedIn) {
-                    return new Chat({ users: [validUser.id, args.id] }).save();
+                    return new Chat({ users: [validUser._id, args.id] }).save();
                 } else {
                     throw new Error("Sorry, you need to be logged in to create a product");
                 }
@@ -177,9 +178,9 @@ const mutation = new GraphQLObjectType({
             },
             async resolve(_, { content, user, chat }, context) {
                 let validUser = await AuthService.verifyUser({ token: context.token });
-                let message = new Message({ content, user, chat });
 
                 if (validUser.loggedIn) {
+                    let message = new Message({ content, user, chat });
                     await message.save();
                     // add the newly created message to the chat 
                     let chaty = await Chat.findById(chat);
@@ -206,7 +207,7 @@ const mutation = new GraphQLObjectType({
 
                 if (validUser.loggedIn) {
                     // check if the message auther is the current user id 
-                    if (message.user !== validUser.id) {
+                    if (message.user !== validUser._id) {
                         let chaty = await Chat.findById(chat);
                         // check if the chat contains the message then delete it from chat.messages
                         if (chaty.messages.includes(message)) {

@@ -6,6 +6,12 @@ export const IS_LOGGED_IN = gql`
     }
 `;
 
+export const CURRENT_USER = gql`
+  query CurrentUser {
+    currentUserId @client
+  }
+`;
+
 export const FETCH_USERS = gql`
   query FetchUsers{
     users {
@@ -63,7 +69,10 @@ export const FETCH_MESSAGES = gql`
   query fetchMessages {
     messages {
       _id
-      user
+      user {
+        _id
+        name
+      }
       content
       date
       chat
@@ -100,7 +109,10 @@ export const FETCH_CHAT = gql`
         email
       }
       messages {
-        user
+        user {
+          _id
+          name
+        }
         content
         date
       }

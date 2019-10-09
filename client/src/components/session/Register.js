@@ -22,7 +22,7 @@ class Register extends Component {
     // update the cache to let it know this user is loggedIn!
     updateCache(client, { data }) {
         client.writeData({
-            data: { isLoggedIn: data.register.loggedIn}
+            data: { isLoggedIn: data.register.loggedIn, currentUserId: data.register._id }
         });
     }
 
