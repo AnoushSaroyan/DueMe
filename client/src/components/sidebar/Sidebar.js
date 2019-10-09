@@ -10,6 +10,7 @@ import { USER } from '../../graphql/queries';
 // import { FaPlus } from "react-icons/fa";
 // import { FiArrowDownCircle } from "react-icons/fi";
 // import { withRouter } from 'react-router-dom';
+import UserIndex from "../conversations/UserIndex";
 
 
 class Sidebar extends Component {
@@ -92,6 +93,10 @@ class Sidebar extends Component {
                     </nav>
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
+                    </div>
+
+                    <div>
+                            <UserIndex />
                     </div>
                     </div>
                 </section>

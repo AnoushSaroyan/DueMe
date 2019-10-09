@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
 import { withRouter } from 'react-router-dom';
-=======
-import { withRouter, Link } from 'react-router-dom';
->>>>>>> please
 import "./footer.scss";
 
 class Footer extends React.Component {

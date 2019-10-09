@@ -58,3 +58,39 @@ export const FETCH_MESSAGES = gql`
   }
 `;
 
+export const FETCH_USER_CHATS = gql`
+  query fetchUserChats($id: ID!) {
+    userChats(_id: $id) {
+      _id
+      users {
+        _id
+        email
+        name
+      }
+      messages {
+        user
+        content
+        date
+      }
+    }
+  }
+`;
+
+
+export const FETCH_CHAT = gql`
+  query fetchChat($id: ID!) {
+    chat(_id: $id) {
+      _id,
+      users {
+        _id 
+        name
+        email
+      }
+      messages {
+        user
+        content
+        date
+      }
+    }
+  }
+`;
