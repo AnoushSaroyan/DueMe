@@ -5,7 +5,8 @@ import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
 import { CREATE_PROJECT } from "../../graphql/mutations";
 import { FETCH_USERS, FIND_USER_BY_EMAIL, USER } from "../../graphql/queries";
-
+import "./create-project.scss"
+import CreateProjectPopup from './CreateProjectPopup'
 
 class CreateProject extends Component {
   constructor(props) {
@@ -70,7 +71,25 @@ class CreateProject extends Component {
     if (teams.length > 0 && teams[0] && !this.state.team) this.setState({ team: teams[0]._id})
     let teamsOptions
     teamsOptions = teams.map(team => <option key={team._id} value={team._id}>{team.name}</option>)
-    return teamsOptions
+
+    if (teams.length === 0) {
+      return <CreateProjectPopup/>
+    }
+
+    return (
+      <div className="create-project-team">
+        <h3>Team</h3>
+        {/* <input
+                        onChange={this.update("team")}
+                        value={this.state.team}
+                        placeholder="Team objectID for now"
+                        className="form-input"
+                      /> */}
+        <select name="team" value={this.state.team} onChange={this.update("team")}>
+          {teamsOptions}
+        </select>
+      </div>
+    )
   }
 
   render() {
@@ -80,6 +99,15 @@ class CreateProject extends Component {
         // if we error out we can set the message here
         onError={err => this.setState({ message: err.message })}
         // update={(cache, data) => this.updateCache(cache, data)}
+        refetchQueries={() => {
+          return [
+            {
+              query: USER,
+              variables: { _id: localStorage.getItem("currentUserId") }
+            } 
+          ]
+        }
+        }
         // we need to make sure we update our cache once our new project is created
         // update={(cache, data) => {
         //   this.updateCache(cache, data)
@@ -96,6 +124,7 @@ class CreateProject extends Component {
         {(newProject, { data }) => (
           <div>
             <MainHeader page={"New Project"} />
+            <div className="scroll-wrapper">
             <div className="form-top">
               <h1>Add Project Details</h1>
               <form onSubmit={e => this.handleSubmit(e, newProject)} className="form-inner">
@@ -120,29 +149,18 @@ class CreateProject extends Component {
                   placeholder="MM-DD-YYYY"
                   className="form-input"
                 />
-                <div>
-                     <h3>Team</h3>
-                      {/* <input
-                        onChange={this.update("team")}
-                        value={this.state.team}
-                        placeholder="Team objectID for now"
-                        className="form-input"
-                      /> */}
-                      <select name="team" value={this.state.team} onChange={this.update("team")}>
-                        {this.constructTeamSelection()}
-                      </select>
+                {this.constructTeamSelection()}
+                <div  className="create-project-color">
+                  <h3>Color</h3>
+                  <div className="create-project-color-wrapper">
+                    <label className="container"><input name="radio" id="red" type="radio" value="red" onChange={this.update("color")}/><span className="checkmark" style={ {backgroundColor: "red", border: "red 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="orange" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "orange", border: "orange 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="green" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "green", border: "green 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="blue" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "blue", border: "blue 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="indigo" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "indigo", border: "indigo 1px solid" }}/></label>
+                    <label className="container"><input name="radio" id="red" type="radio" value="violet" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "violet", border: "violet 1px solid" }}/></label>
+                  </div>
                 </div>
-                    <div>
-                      <h3>Color</h3>
-                      <select name="color" value={this.state.color} onChange={this.update("color")}>
-                        <option>Red</option>
-                        <option>Orange</option>
-                        <option>Yellow</option>
-                        <option>Green</option>
-                        <option>Indigo</option>
-                        <option>Violet</option>
-                      </select>
-                    </div>
 
                 <div className="form-buttons">
                   <button type="cancel"><Link to="/home">Cancel</Link></button>
@@ -151,6 +169,7 @@ class CreateProject extends Component {
               </form>
               <p className="success-message">{this.state.message}</p>
             </div>
+          </div>
           </div>
         )}
       </Mutation>

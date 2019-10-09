@@ -1,0 +1,49 @@
+.dialog{
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.8);
+    z-index: 104;
+    align-items: center;
+    flex-direction: column;
+}  
+
+.project-popup-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 250px;
+}
+
+.dialog h1{
+    font-size: 50px;
+    color: white;
+}
+
+.dialog h2{
+    font-size: 30px;
+    color: white;
+}
+
+.dialog a{
+  display: flex;
+  justify-content: center;
+  background-image: linear-gradient(to top right, #14aaf5 , rgb(0, 255, 217));
+  color: #fff;
+  margin: 20px;
+  height: 30px; 
+  text-decoration: none;
+  border: 1px solid #cbd4db;
+  border-radius: 4px;
+  font-size: 14px; 
+  border-color: white;
+  padding: 10px;
+  align-items: center;
+}
+
+.dialog a:hover{
+  background-image: linear-gradient(to top right, #018bd0 , rgb(0, 216, 184));
+}

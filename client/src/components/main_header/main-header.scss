@@ -2,7 +2,7 @@
     display: flex;
     padding: 0 20px;
     position: relative;
-    z-index: 200;
+    z-index: 5;
     height: 50px;
     align-items: center;
 }
@@ -70,7 +70,7 @@
 }
 
 .main-header-avatar-pic{
-    background-color: #aa62e3;
+
     color: #fff;
     font-size: 11px;
     height: 24px;
@@ -223,3 +223,6 @@
 }
 
 
+.logout-button{
+    cursor: pointer;
+}

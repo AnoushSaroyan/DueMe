@@ -61,16 +61,18 @@ class TaskCalendar extends Component {
     return (
         <div className="Calendar">
           <MainHeader page={"Calendar"}/>
-          <DnDCalendar
-            localizer={localizer}
-            defaultDate={new Date()}
-            defaultView="month"
-            events={this.state.events}
-            style={{ height: "100vh" }}
-            onEventDrop={this.onEventDrop}
-            onEventResize={this.onEventResize}
-            resizable
-          />
+            <div className="scroll-wrapper">
+              <DnDCalendar
+                localizer={localizer}
+                defaultDate={new Date()}
+                defaultView="month"
+                events={this.state.events}
+                style={{ height: "100vh" }}
+                onEventDrop={this.onEventDrop}
+                onEventResize={this.onEventResize}
+                resizable
+              />
+            </div>
         </div>
     );
   }
