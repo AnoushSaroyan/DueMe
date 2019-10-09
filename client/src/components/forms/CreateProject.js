@@ -25,28 +25,28 @@ class CreateProject extends Component {
     return e => this.setState({ [field]: e.target.value });
   }
 
-  updateCache(cache, { data }) {
-    let user;
-    try {
-      user = cache.readQuery({ query: USER, variables: { _id: localStorage.getItem("currentUserId") } });
-    } catch (err) {
-      return;
-    }
+  // updateCache(cache, { data }) {
+  //   let user;
+  //   try {
+  //     user = cache.readQuery({ query: USER, variables: { _id: localStorage.getItem("currentUserId") } });
+  //   } catch (err) {
+  //     return;
+  //   }
 
-    if (user) {
-      let teamArray = user.teams;
-      let newProject = data.newProject;
-      teamArray.forEach(team => {
-        if (team._id === newProject.team._id) {
-          team.push(newProject)
-        }
-      })
-      cache.writeQuery({
-        query: USER,
-        data: { user: {teams: teamArray} }
-      });
-    }
-  }
+  //   if (user) {
+  //     let teamArray = user.teams;
+  //     let newProject = data.newProject;
+  //     teamArray.forEach(team => {
+  //       if (team._id === newProject.team._id) {
+  //         team.push(newProject)
+  //       }
+  //     })
+  //     cache.writeQuery({
+  //       query: USER,
+  //       data: { user: {teams: teamArray} }
+  //     });
+  //   }
+  // }
 
   handleSubmit(e, newProject) {
     e.preventDefault();

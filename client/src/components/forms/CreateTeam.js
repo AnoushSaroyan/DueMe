@@ -5,7 +5,7 @@ import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
 
 import { CREATE_TEAM } from "../../graphql/mutations";
-import { FETCH_USERS, FIND_USER_BY_EMAIL } from "../../graphql/queries";
+import { FETCH_USERS, FIND_USER_BY_EMAIL, USER } from "../../graphql/queries";
 
 
 class CreateTeam extends Component {
@@ -23,23 +23,23 @@ class CreateTeam extends Component {
     return e => this.setState({ [field]: e.target.value });
   }
 
-  updateCache(cache, { data }) {
-    let users;
-    try {
-      users = cache.readQuery({ query: FETCH_USERS });
-    } catch (err) {
-      return;
-    }
+  // updateCache(cache, { data }) {
+  //   let users;
+  //   try {
+  //     users = cache.readQuery({ query: FETCH_USERS });
+  //   } catch (err) {
+  //     return;
+  //   }
 
-    if (users) {
-      let teamArray = users;
-      let newTeam = data.newTeam;
-      cache.writeQuery({
-        query: FETCH_USERS,
-        data: { users: teamArray.concat(newTeam) }
-      });
-    }
-  }
+  //   if (users) {
+  //     let teamArray = users;
+  //     let newTeam = data.newTeam;
+  //     cache.writeQuery({
+  //       query: FETCH_USERS,
+  //       data: { users: teamArray.concat(newTeam) }
+  //     });
+  //   }
+  // }
 
   handleSubmit(e, newTeam) {
     e.preventDefault();
@@ -58,8 +58,17 @@ class CreateTeam extends Component {
         // if we error out we can set the message here
         onError={err => this.setState({ message: err.message })}
         // we need to make sure we update our cache once our new team is created
-        update={(cache, data) => {
-          this.updateCache(cache, data)}}
+        // update={(cache, data) => {
+        //   this.updateCache(cache, data)}}
+        refetchQueries={() => {
+          return [
+            {
+              query: USER,
+              variables: { _id: localStorage.getItem("currentUserId") }
+            }
+          ]
+        }
+        }
         // when our query is complete we'll display a success message
         onCompleted={data => {
           const { name } = data.newTeam;

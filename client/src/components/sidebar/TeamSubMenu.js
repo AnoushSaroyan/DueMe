@@ -6,6 +6,7 @@ import { FaSquare } from "react-icons/fa";
 
 
 
+
 class TeamSubMenu extends Component {
     constructor(props){
         super(props)
@@ -57,7 +58,7 @@ class TeamSubMenu extends Component {
 
     renderProjects(team){
         let projects
-    projects = team.projects.map(project => {
+        projects = team.projects.map(project => {
         let color
         project.color ? color = project.color : color = "#e362e3"
 
@@ -65,7 +66,7 @@ class TeamSubMenu extends Component {
             color: color
         }
     return (
-    <div className="team-submenu-project" key={project._id}><Link><FaSquare style={projectColor}/>{project.name}</Link></div>
+        <div className="team-submenu-project" key={project._id}><Link to={`/main/project/${project._id}`}><FaSquare style={projectColor}/>{project.name}</Link></div>
     )
     })
         return(
