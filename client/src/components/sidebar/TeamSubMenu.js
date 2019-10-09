@@ -43,10 +43,12 @@ class TeamSubMenu extends Component {
             <div className="main-header-avatar-pic" style={profileColor} key={user._id}>
                 {rightLetters}
             </div>)})
+        let three
+        three = members.slice(0,3)
         return(
             <div>
                 <div className="team-submenu-people">
-                    <div className="team-submenu-circles">{members}</div>
+                    <div className="team-submenu-circles">{three}</div>
                     <div className="submenu-invite-people">Invite People</div>
                 </div>
             </div>

@@ -63,6 +63,14 @@ class MainHeader extends Component {
                        } else {
                            rightLetters = [abbreviatedName[0] + abbreviatedName[abbreviatedName.length - 1]]
                        }
+
+                       let color
+                       user.color ? color = user.color : color = "#e362e3"
+
+                       let profileColor = {
+                           backgroundColor: color
+                       }
+
                         return<div className="main-header">
                             <div id="main-ham" className="main-ham hidden-ham" onClick={this.handleSidebarCollapse}><MdMenu /></div>
                             <div className="page-title"><h1>{this.state.page}</h1></div>
@@ -90,7 +98,7 @@ class MainHeader extends Component {
                                 </div>
                                 <div className="main-header-avatar-wrapper">
                                     <div className="main-header-avatar" onClick={this.toggleDropMenu("profile-menu")}>
-                                        <div className="main-header-avatar-pic">
+                                        <div className="main-header-avatar-pic" style={profileColor}>
                                             {rightLetters}
                                         </div>
                                     </div>

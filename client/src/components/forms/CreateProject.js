@@ -5,7 +5,7 @@ import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
 import { CREATE_PROJECT } from "../../graphql/mutations";
 import { FETCH_USERS, FIND_USER_BY_EMAIL, USER } from "../../graphql/queries";
-
+import "./create-project.scss"
 
 class CreateProject extends Component {
   constructor(props) {
@@ -98,6 +98,7 @@ class CreateProject extends Component {
         {(newProject, { data }) => (
           <div>
             <MainHeader page={"New Project"} />
+            <div className="scroll-wrapper">
             <div className="form-top">
               <h1>Add Project Details</h1>
               <form onSubmit={e => this.handleSubmit(e, newProject)} className="form-inner">
@@ -122,7 +123,7 @@ class CreateProject extends Component {
                   placeholder="MM-DD-YYYY"
                   className="form-input"
                 />
-                <div>
+                <div className="create-project-team">
                      <h3>Team</h3>
                       {/* <input
                         onChange={this.update("team")}
@@ -134,16 +135,16 @@ class CreateProject extends Component {
                         {this.constructTeamSelection()}
                       </select>
                 </div>
-                    <div>
+                    <div  className="create-project-color">
                       <h3>Color</h3>
-                      <select name="color" value={this.state.color} onChange={this.update("color")}>
-                        <option>Red</option>
-                        <option>Orange</option>
-                        <option>Yellow</option>
-                        <option>Green</option>
-                        <option>Indigo</option>
-                        <option>Violet</option>
-                      </select>
+                      <div className="create-project-color-wrapper">
+                        <label className="container"><input name="radio" id="red" type="radio" value="red" onChange={this.update("color")}/><span className="checkmark" style={ {backgroundColor: "red", border: "red 1px solid" }}/></label>
+                        <label className="container"><input name="radio" id="red" type="radio" value="orange" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "orange", border: "orange 1px solid" }}/></label>
+                        <label className="container"><input name="radio" id="red" type="radio" value="green" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "green", border: "green 1px solid" }}/></label>
+                        <label className="container"><input name="radio" id="red" type="radio" value="blue" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "blue", border: "blue 1px solid" }}/></label>
+                        <label className="container"><input name="radio" id="red" type="radio" value="indigo" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "indigo", border: "indigo 1px solid" }}/></label>
+                        <label className="container"><input name="radio" id="red" type="radio" value="violet" onChange={this.update("color")} /><span className="checkmark" style={{ backgroundColor: "violet", border: "violet 1px solid" }}/></label>
+                      </div>
                     </div>
 
                 <div className="form-buttons">
@@ -153,6 +154,7 @@ class CreateProject extends Component {
               </form>
               <p className="success-message">{this.state.message}</p>
             </div>
+          </div>
           </div>
         )}
       </Mutation>
