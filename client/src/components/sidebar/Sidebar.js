@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "./sidebar.scss";
 import { MdMenu, MdKeyboardArrowLeft, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { FiHome, FiCheckCircle, FiBell } from "react-icons/fi";
 import { Query } from 'react-apollo';
 import { USER } from '../../graphql/queries';
+import TeamSubMenu from './TeamSubMenu';
 // import { GoPerson } from "react-icons/go";
 // import { GiBookshelf } from "react-icons/gi";
 // import { FaPlus } from "react-icons/fa";
@@ -19,6 +20,7 @@ class Sidebar extends Component {
         this.state = {
             currentUser: props.currentUser,
             favorites: true,
+            teams: true,
         }
         this.handleCollapse = this.handleCollapse.bind(this)
     }
@@ -38,9 +40,9 @@ class Sidebar extends Component {
     handleFavorites(){
         if (this.state.favorites) {
             return(
-                <div className ="sidebar-favorites">
-                    <div className="sidebar-favorites-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowUp /></div>
-                    <ul className="sidebar-favorites-list">
+                <div className ="sidebar-submenus">
+                    <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowUp /></div>
+                    <ul className="sidebar-submenus-list">
                         <li><Link>test 1</Link></li>
                         <li><Link>test 2</Link></li>
                     </ul>
@@ -48,11 +50,34 @@ class Sidebar extends Component {
                 )
         } else {
             return (
-                <div className="sidebar-favorites">
-                    <div className="sidebar-favorites-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowDown/></div>
+                <div className="sidebar-submenus">
+                    <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowDown/></div>
                 </div>
             )
         }
+    }
+
+    handleTeams(user){
+        let teams = []
+        teams = user.teams.map(team => <TeamSubMenu team={team} key={team._id}/>)
+
+        if (this.state.teams){
+            return (
+                <div className="sidebar-submenus">
+                    <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("teams")}><h2>Teams</h2><MdKeyboardArrowUp /></div>
+                    <ul className="sidebar-submenus-list">
+                        {teams}
+                    </ul>
+                </div>
+            )
+        } else{
+            return(
+            <div className="sidebar-submenus">
+                <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("teams")}><h2>Teams</h2><MdKeyboardArrowDown /></div>
+            </div>
+            )
+        }
+        return <div></div>
     }
 
     handleCollapse(menu){
@@ -69,7 +94,11 @@ class Sidebar extends Component {
 
         return (
         <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId")}}>
-            {({ data }) => {               
+            {({ data }) => {     
+                if (data){
+                    const { user } = data
+
+                
                 return<section className="sidebar" id="sidebar">
                     <div className="sidewrapper">
                     <div className="sidelogo">
@@ -93,13 +122,15 @@ class Sidebar extends Component {
                     </nav>
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
+                        {this.handleTeams(user)}
                     </div>
 
                     <div>
                             <UserIndex />
                     </div>
                     </div>
-                </section>
+                </section>}
+                else return <div></div>
             }}
         </Query>
         )

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Mutation } from "react-apollo";
+import { Mutation, ApolloConsumer, useQuery } from "react-apollo";
 import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
-
 import { CREATE_PROJECT } from "../../graphql/mutations";
-import { FETCH_USERS, FIND_USER_BY_EMAIL } from "../../graphql/queries";
+import { FETCH_USERS, FIND_USER_BY_EMAIL, USER } from "../../graphql/queries";
 
 
 class CreateProject extends Component {
@@ -16,7 +15,8 @@ class CreateProject extends Component {
       name: "",
       description: "",
       dueDate: "",
-      team: ""
+      team: "",
+      color: "red"
     };
   }
 
@@ -24,37 +24,54 @@ class CreateProject extends Component {
     return e => this.setState({ [field]: e.target.value });
   }
 
-  // updateCache(cache, { data }) {
-  //   let users;
-  //   debugger
-  //   try {
-  //     users = cache.readQuery({ query: FETCH_USERS });
-  //   } catch (err) {
-  //     return;
-  //   }
+  updateCache(cache, { data }) {
+    let user;
+    try {
+      user = cache.readQuery({ query: USER, variables: { _id: localStorage.getItem("currentUserId") } });
+    } catch (err) {
+      return;
+    }
 
-  //   if (users) {
-  //     debugger
-  //     let teamArray = users;
-  //     let newTeam = data.newTeam;
-  //     cache.writeQuery({
-  //       query: FETCH_USERS,
-  //       data: { users: teamArray.concat(newTeam) }
-  //     });
-  //   }
-  // }
+    if (user) {
+      let teamArray = user.teams;
+      let newProject = data.newProject;
+      teamArray.forEach(team => {
+        if (team._id === newProject.team._id) {
+          team.push(newProject)
+        }
+      })
+      debugger
+      cache.writeQuery({
+        query: USER,
+        data: { user: {teams: teamArray} }
+      });
+    }
+  }
 
   handleSubmit(e, newProject) {
     e.preventDefault();
-    debugger
     newProject({
       variables: {
         name: this.state.name,
         description: this.state.description,
         dueDate: this.state.dueDate,
         team: this.state.team,
+        color: this.state.color
       }
     });
+  }
+
+  constructTeamSelection(){
+    const { loading, error, data } = useQuery(USER, {variables: { _id: localStorage.getItem("currentUserId") }})
+    if (loading) return null;
+    if (error) return <option>{`Error! ${error}`}</option>;
+    const { user } = data
+    let teams = []
+    teams = user.teams
+    if (teams.length > 0 && teams[0] && !this.state.team) this.setState({ team: teams[0]._id})
+    let teamsOptions
+    teamsOptions = teams.map(team => <option key={team._id} value={team._id}>{team.name}</option>)
+    return teamsOptions
   }
 
   render() {
@@ -63,7 +80,7 @@ class CreateProject extends Component {
         mutation={CREATE_PROJECT}
         // if we error out we can set the message here
         onError={err => this.setState({ message: err.message })}
-
+        // update={(cache, data) => this.updateCache(cache, data)}
         // we need to make sure we update our cache once our new project is created
         // update={(cache, data) => {
         //   debugger
@@ -80,7 +97,7 @@ class CreateProject extends Component {
       >
         {(newProject, { data }) => (
           <div>
-            <MainHeader page={"Home"} />
+            <MainHeader page={"New Project"} />
             <div className="form-top">
               <h1>Add Project Details</h1>
               <form onSubmit={e => this.handleSubmit(e, newProject)} className="form-inner">
@@ -105,13 +122,30 @@ class CreateProject extends Component {
                   placeholder="MM-DD-YYYY"
                   className="form-input"
                 />
-                <h3>Team</h3>
-                <input
-                  onChange={this.update("team")}
-                  value={this.state.team}
-                  placeholder="Team objectID for now"
-                  className="form-input"
-                />
+                <div>
+                     <h3>Team</h3>
+                      {/* <input
+                        onChange={this.update("team")}
+                        value={this.state.team}
+                        placeholder="Team objectID for now"
+                        className="form-input"
+                      /> */}
+                      <select name="team" value={this.state.team} onChange={this.update("team")}>
+                        {this.constructTeamSelection()}
+                      </select>
+                </div>
+                    <div>
+                      <h3>Color</h3>
+                      <select name="color" value={this.state.color} onChange={this.update("color")}>
+                        <option>Red</option>
+                        <option>Orange</option>
+                        <option>Yellow</option>
+                        <option>Green</option>
+                        <option>Indigo</option>
+                        <option>Violet</option>
+                      </select>
+                    </div>
+
                 <div className="form-buttons">
                   <button type="cancel"><Link to="/home">Cancel</Link></button>
                   <button type="submit">Create Project</button>

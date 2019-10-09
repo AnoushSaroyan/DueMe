@@ -55,8 +55,8 @@ export const CREATE_TEAM = gql`
 `;
 
 export const CREATE_PROJECT = gql`
-  mutation newProject($name: String!, $description: String!, $dueDate: String!, $team: ID) {
-    newProject(name: $name, description: $description, dueDate: $dueDate, team: $team) {
+  mutation newProject($name: String!, $description: String!, $dueDate: String!, $team: ID!, $color: String!) {
+    newProject(name: $name, description: $description, dueDate: $dueDate, team: $team, color: $color) {
       _id
       name
       description
