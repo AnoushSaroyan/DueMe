@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import MainHeader from '../main_header/MainHeader';
 import './task.scss';
-import ReactPlayer from 'react-player'
+// import ReactPlayer from 'react-player'
 
 class Task extends Component {
+
 	render() {
+
+		if (!localStorage.getItem("currentUserId")) {
+			return <div></div>
+		}
+
 		return <div>
 			<MainHeader page={"Task"} />
 			<div className="scroll-wrapper">
