@@ -7,7 +7,8 @@ import { useQuery } from "react-apollo";
 import { CREATE_TASK } from "../../graphql/mutations";
 import { USER } from "../../graphql/queries";
 import { PROJECT } from "../../graphql/queries";
-
+import { FaSquare } from "react-icons/fa";
+import CreateProjectPopup from '../forms/CreateProjectPopup'
 
 class CreateTask extends Component {
 
@@ -43,8 +44,21 @@ class CreateTask extends Component {
     const projects = []
     user.teams.forEach(team => team.projects.forEach(project => projects.push(project)))
     if (projects.length > 0 && projects[0] && !this.state.project) this.setState({ project: projects[0]._id })
+    
+    if (projects.length === 0){
+      return <CreateProjectPopup thing={"Project"} />
+    }
+    
     let projectOptions
-    projectOptions = projects.map(project => <option key={project._id} value={project._id}>{project.name}</option>)
+    projectOptions = projects.map(project => {
+      let color
+      project.color ? color = project.color : color = "#e362e3"
+
+      let projectColor = {
+        backgroundColor: color
+      }
+      return <option key={project._id} value={project._id}>{project.name}</option>
+    })
 
     return(
       <div className="create-project-team">
@@ -66,10 +80,13 @@ class CreateTask extends Component {
         return project
       }
     }))
-    if (team.users.length > 0 && team.users[0] && !this.state.user) this.setState({ user:team.users[0]._id })
+    if (!team) return null
+    let users = []
+    users = team.users
+    if (users.length > 0 && users[0] && !this.state.user) this.setState({ user:users[0]._id })
 
     let userOptions
-    userOptions = team.users.map(user => <option key={user._id} value={user._id}>{user.name}</option>)
+    userOptions = users.map(user => <option key={user._id} value={user._id}>{user.name}</option>)
     debugger
     return (
       <div className="create-project-team">

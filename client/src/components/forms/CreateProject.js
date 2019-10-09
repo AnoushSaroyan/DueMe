@@ -68,13 +68,14 @@ class CreateProject extends Component {
     const { user } = data
     let teams = []
     teams = user.teams
+    if (teams.length === 0) {
+      return <CreateProjectPopup thing={"Team"} />
+    }
     if (teams.length > 0 && teams[0] && !this.state.team) this.setState({ team: teams[0]._id})
     let teamsOptions
     teamsOptions = teams.map(team => <option key={team._id} value={team._id}>{team.name}</option>)
 
-    if (teams.length === 0) {
-      return <CreateProjectPopup/>
-    }
+
 
     return (
       <div className="create-project-team">
