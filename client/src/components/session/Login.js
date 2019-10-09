@@ -1,6 +1,7 @@
 import React from 'react';
 import "./session.scss";
 import { LOGIN_USER } from '../../graphql/mutations';
+import { USER } from "../../graphql/queries";
 import { Mutation } from 'react-apollo';
 
 class Login extends React.Component {
@@ -30,6 +31,14 @@ class Login extends React.Component {
         return (
             <Mutation
                 mutation={LOGIN_USER}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        }
+                    ]
+                }}
                 onCompleted={data => {
                     const { token } = data.login;
                     localStorage.setItem("auth-token", token);

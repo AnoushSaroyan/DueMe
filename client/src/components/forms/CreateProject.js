@@ -99,6 +99,15 @@ class CreateProject extends Component {
         // if we error out we can set the message here
         onError={err => this.setState({ message: err.message })}
         // update={(cache, data) => this.updateCache(cache, data)}
+        refetchQueries={() => {
+          return [
+            {
+              query: USER,
+              variables: { _id: localStorage.getItem("currentUserId") }
+            } 
+          ]
+        }
+        }
         // we need to make sure we update our cache once our new project is created
         // update={(cache, data) => {
         //   debugger
