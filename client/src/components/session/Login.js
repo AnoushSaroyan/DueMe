@@ -78,6 +78,9 @@ class Login extends React.Component {
                             className="form-top-session"
                         >
                             <h1>Log in</h1>                            
+                            <div className="error-msg">
+                                <p>{this.state.errorMsg}</p>
+                            </div>
                             <div className="form-inner">
                               <h3>Email Address</h3>
                               <input
@@ -103,9 +106,6 @@ class Login extends React.Component {
                         <div className="session-info"> 
                           <span>Don't have an account?</span>
                           <Link to="/register">Sign Up</Link>
-                        </div>
-                        <div className="error-msg">
-                            <p>{this.state.errorMsg}</p>
                         </div>
                     </div>
                 )}

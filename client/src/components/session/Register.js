@@ -21,16 +21,24 @@ class Register extends Component {
     }
 
     // update the cache to let it know this user is loggedIn!
-    updateCache(client, { data }) {
-        client.writeData({
-            data: { isLoggedIn: data.register.loggedIn}
-        });
-    }
+    // updateCache(client, { data }) {
+    //     client.writeData({
+    //         data: { isLoggedIn: data.register.loggedIn}
+    //     });
+    // }
 
     render() {
         return (
             <Mutation
                 mutation={REGISTER_USER}
+                refetchQueries={() => {
+                  return [
+                    {
+                      query: USER,
+                      variables: { _id: localStorage.getItem("currentUserId") }
+                    }
+                  ]
+                }}
                 onCompleted={data => {
                     console.log(data);
                     const { token } = data.register;
@@ -38,7 +46,7 @@ class Register extends Component {
                     localStorage.setItem("currentUserId", data.register._id)
                 }}
                 onError={error => this.setState({ errorMsg: error.message.split(":")[1] })}
-                update={(client, data) => this.updateCache(client, data)}
+                // update={(client, data) => this.updateCache(client, data)}
             >
                 {register => (
                     <div className="session">
@@ -57,6 +65,9 @@ class Register extends Component {
                             className="form-top-session"
                         >
                             <h1>Start your free trial</h1>
+                            <div className="error-msg">
+                                <p>{this.state.errorMsg}</p>
+                            </div>
                             <div className="form-inner">
                               <h3>Name</h3>
                               <input
@@ -88,9 +99,6 @@ class Register extends Component {
                         <div className="session-info">
                           <span>Already have an account?</span>
                           <Link to="/login">Log In</Link>
-                        </div>
-                        <div className="error-msg">
-                            <p>{this.state.errorMsg}</p>
                         </div>
                     </div>
                 )}
