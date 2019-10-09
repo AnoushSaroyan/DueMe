@@ -21,7 +21,8 @@ const ProjectSchema = new Schema({
     color: {
         type: String,
         required: true
-    }
+    },
+    
 });
 
 module.exports = mongoose.model("project", ProjectSchema);
