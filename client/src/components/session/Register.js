@@ -42,7 +42,7 @@ class Register extends Component {
             >
                 {register => (
                     <div className="session">
-                <img src="images/dueme logo.png" class="session-logo" alt="dueme" />
+                    <Link to="/home"><img src="images/dueme logo.png" class="session-logo" alt="dueme" /></Link>
                         <form
                             onSubmit={e => {
                                 e.preventDefault();

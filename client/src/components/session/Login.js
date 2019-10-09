@@ -30,6 +30,26 @@ class Login extends React.Component {
         })
     }
 
+    handleSubmit = (e, login) => {
+      e.preventDefault();
+      login({
+        variables: {
+          email: this.state.email,
+          password: this.state.password
+        }
+      });
+    }
+
+    handleDemo = (e, login) => {
+      e.preventDefault();
+      login({
+        variables: {
+          email: "demo@user.com",
+          password: "password"
+        }
+      });
+    }
+
     render() {
         return (
             <Mutation
@@ -53,17 +73,8 @@ class Login extends React.Component {
             >
                 {(login, { data }) => (
                     <div className="session">
-                        <img src="images/dueme logo.png" class="session-logo" alt="dueme" />
-                        <form
-                            onSubmit={e => {
-                                e.preventDefault();
-                                login({
-                                    variables: {
-                                        email: this.state.email,
-                                        password: this.state.password
-                                    }
-                                });
-                            }}
+                    <Link to="/home"><img src="images/dueme logo.png" class="session-logo" alt="dueme" /></Link>
+                        <form onSubmit={e => this.handleSubmit(e, login)}
                             className="form-top-session"
                         >
                             <h1>Log in</h1>                            
@@ -84,6 +95,7 @@ class Login extends React.Component {
                                   className="form-input"
                               />                              
                               <div className="form-buttons">
+                                <button type="demo" onClick={e => this.handleDemo(e, login)}>Demo</button>
                                 <button type="submit">Log In</button>
                               </div>
                             </div>
