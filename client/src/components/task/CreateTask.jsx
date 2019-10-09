@@ -10,15 +10,15 @@ import { PROJECT } from "../../graphql/queries";
 
 
 class CreateTask extends Component {
+
   constructor(props) {
     super(props);
-
     this.state = {
 	  description: "",
 	  dueDate: "",
 	  completed: false,
-      projects: [],
-      users: []
+      project: "",
+      user: ""
     };
   }
 
@@ -26,47 +26,49 @@ class CreateTask extends Component {
     return e => this.setState({ [field]: e.target.value });
   }
 
-  updateCache(cache, { data }) {
-    let users;
-    try {
-      users = cache.readQuery({ query: USER });
-    } catch (err) {
-      return;
-    }
+//   updateCache(cache, { data }) {
+//     let users;
+//     try {
+//       users = cache.readQuery({ query: USER });
+//     } catch (err) {
+//       return;
+//     }
 
-    if (users) {
-	  let taskUser = users;
-      let newTask = data.newTask;
-      cache.writeQuery({
-        query: USER,
-        data: { users: taskUser.concat(newTask) }
-      });
-	}
+//     if (users) {
+// 	  let taskUser = users;
+//       let newTask = data.newTask;
+//       cache.writeQuery({
+//         query: USER,
+//         data: { users: taskUser.concat(newTask) }
+//       });
+// 	}
 
-	let projects;
-	try {
-		projects = cache.readQuery({ query: PROJECT });
-	} catch (err) {
-		return;
-	}
+// 	let projects;
+// 	try {
+// 		projects = cache.readQuery({ query: PROJECT });
+// 	} catch (err) {
+// 		return;
+// 	}
 	
-	if (projects) {
-		let taskProject = projects;
-		let newTask = data.newTask;
-		cache.writeQuery({
-			query: PROJECT,
-			data: { projects: taskProject.concat(newTask) }
-		});
-	}
-  }
+// 	if (projects) {
+// 		let taskProject = projects;
+// 		let newTask = data.newTask;
+// 		cache.writeQuery({
+// 			query: PROJECT,
+// 			data: { projects: taskProject.concat(newTask) }
+// 		});
+// 	}
+//   }
 
   handleSubmit(e, newTask) {
-    e.preventDefault();
+	e.preventDefault();
     newTask({
       variables: {
-        name: this.state.description,
-		users: this.state.users,
-		projects: this.state.projects,
+		description: this.state.description,
+		dueDate: this.state.dueDate,
+		completed: this.state.completed,
+		user: this.state.user,
+		project: this.state.project,
       }
     });
   }
@@ -79,8 +81,8 @@ class CreateTask extends Component {
         onError={err => this.setState({ message: err.message })}
 
         // we need to make sure we update our cache once a new task is created
-        update={(cache, data) => {
-          this.updateCache(cache, data)}}
+        // update={(cache, data) => {
+        //   this.updateCache(cache, data)}}
         // when our query is complete we'll display a success message
         onCompleted={data => {
           const { description } = data.newTask;
@@ -96,25 +98,35 @@ class CreateTask extends Component {
             <div className="form-top">
               <h1>Create New Task</h1>
               <form onSubmit={e => this.handleSubmit(e, newTask)} className="form-inner">
-                <h3>Task Description</h3>
+                
+				<h3>Task Description</h3>
                 <input
                   onChange={this.update("description")}
 				  value={this.state.description}
                   placeholder='task description'
                   className="form-input"
                 />
+
+				<h3>Due Date</h3>
+				<input
+					onChange={this.update("dueDate")}
+					value={this.state.dueDate}
+					placeholder="MM-DD-YYYY"
+					className="form-input"
+				/>
+
                 <h3>Project</h3>
                 <input
-                  onChange={this.update("projects")}
-                  value={this.state.projects}
-                  placeholder="Enter project ids for now"
+                  onChange={this.update("project")}
+                  value={this.state.project}
+                  placeholder="Enter project id"
                   className="form-input"
                 />
 				<h3>Users</h3>
 				<input
-					onChange={this.update("users")}
-					value={this.state.users}
-					placeholder="Enter user ids for now"
+					onChange={this.update("user")}
+					value={this.state.user}
+					placeholder="Enter user id for now"
 					className="form-input"
 				/>
                 <div className="form-buttons">

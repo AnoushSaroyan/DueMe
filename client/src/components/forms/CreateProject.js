@@ -40,7 +40,6 @@ class CreateProject extends Component {
           team.push(newProject)
         }
       })
-      debugger
       cache.writeQuery({
         query: USER,
         data: { user: {teams: teamArray} }
@@ -83,7 +82,6 @@ class CreateProject extends Component {
         // update={(cache, data) => this.updateCache(cache, data)}
         // we need to make sure we update our cache once our new project is created
         // update={(cache, data) => {
-        //   debugger
         //   this.updateCache(cache, data)
         // }}
         // when our query is complete we'll display a success message
