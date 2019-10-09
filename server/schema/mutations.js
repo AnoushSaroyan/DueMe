@@ -70,7 +70,13 @@ const mutation = new GraphQLObjectType({
                 color: { type: GraphQLString },
             },
             resolve(_, { name, description, dueDate, team, color }) {
-                return new Project({ name, description, dueDate, team, color }).save();
+                return new Project({ name, description, dueDate, team, color }).save().then( project => 
+                    Team.findById(project.team).then( team => {
+                        team.projects.push(project)
+                        team.save()
+                        return project
+                    })
+                )
             }
         },
         deleteProject: {
