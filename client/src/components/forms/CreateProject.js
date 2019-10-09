@@ -110,7 +110,6 @@ class CreateProject extends Component {
         }
         // we need to make sure we update our cache once our new project is created
         // update={(cache, data) => {
-        //   debugger
         //   this.updateCache(cache, data)
         // }}
         // when our query is complete we'll display a success message
