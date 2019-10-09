@@ -7,6 +7,7 @@ import "./main_page.scss";
 import CreateTeam from '../forms/CreateTeam';
 import CreateProject from '../forms/CreateProject';
 import CreateTask from '../task/CreateTask';
+import Calendar from '../calendar/Calendar';
 
 class MainPage extends Component {
     render() {
@@ -18,8 +19,9 @@ class MainPage extends Component {
                         <Route exact path="/main/home" component={Home} />
                         <Route exact path="/main/task" component={Task} />
                         <Route exact path="/main/team/new" component={CreateTeam} />
-						<Route exact path="/main/task/new" component={CreateTask} />
+                        <Route exact path="/main/task/new" component={CreateTask} />
                         <Route exact path="/main/project/new" component={CreateProject} />
+                        <Route exact path="/main/calendar" component={Calendar} />
                         <Route exact path='/*' render={() => <Redirect to={{ pathname: "/main/home" }} />} />
                     </Switch>
             </div>
