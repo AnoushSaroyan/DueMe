@@ -34,6 +34,51 @@ export const USER = gql`
     }
 `;
 
+export const FETCH_TASKS = gql`
+  query FetchTasks{
+    tasks {
+	  _id
+      description
+	  dueDate
+	  completed
+	  project{
+		_id
+		name
+	  }
+      user{
+        _id
+        name
+      }
+    }
+  }
+`;
+
+export const TASK = gql`
+  query Task($_id: ID!){
+	task(_id: $_id){
+		_id
+		description
+		dueDate
+		completed
+		project{
+			_id
+			name
+		}
+		user{
+			_id
+			name
+		}
+	}
+}`;
+
+export const FIND_PROJECT_BY_NAME = gql`
+  query projectByName($name: String){
+    projectByName(name: $name) {
+      _id
+      name
+    }
+  }`;
+
 export const PROJECT = gql`
     query Project($_id: ID!){
       user(_id: $_id){

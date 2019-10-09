@@ -92,6 +92,7 @@ const mutation = new GraphQLObjectType({
                 user: { type: GraphQLID },
             },
             resolve(_, { description, dueDate, completed, project, user }) {
+				debugger;
                 return new Task({ description, dueDate, completed, project, user }).save();
             }
         },
