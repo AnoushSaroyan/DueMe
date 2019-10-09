@@ -3,6 +3,7 @@ import "./session.scss";
 import { Mutation } from "react-apollo";
 import { REGISTER_USER } from "../../graphql/mutations";
 import { Link } from 'react-router-dom';
+import { USER } from '../../graphql/queries';
 
 class Register extends Component {
     constructor(props) {
@@ -21,11 +22,11 @@ class Register extends Component {
     }
 
     // update the cache to let it know this user is loggedIn!
-    // updateCache(client, { data }) {
-    //     client.writeData({
-    //         data: { isLoggedIn: data.register.loggedIn}
-    //     });
-    // }
+    updateCache(client, { data }) {
+        client.writeData({
+            data: { isLoggedIn: data.register.loggedIn, currentUserId: data.register._id }
+        });
+    }
 
     render() {
         return (

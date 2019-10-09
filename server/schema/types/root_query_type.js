@@ -102,6 +102,30 @@ const RootQueryType = new GraphQLObjectType({
                 return Chat.findById(args._id);
             }
         },
+        userChats: {
+            type: new GraphQLList(ChatType),
+            args: { _id: { type: new GraphQLNonNull(GraphQLID) } }, // user_id
+            async resolve(_, args, context) {
+                let validUser = await AuthService.verifyUser({ token: context.token });
+                let conversations = await Chat.find({});
+                if (validUser.loggedIn) {
+                    return conversations.filter(chat => chat.users.includes(args._id))
+                } else {
+                    throw new Error("Sorry, you need to be logged in to create a product");
+                }
+            }
+            // async resolve(parentValue, { name, description, weight }, context) {
+            //     const validUser = await AuthService.verifyUser({ token: context.token });
+
+            //     if (validUser.loggedIn) {
+            //         const user = validUser._id;
+            //         return new Product({ name, description, weight, user }).save();
+            //     } else {
+            //         throw new Error("Sorry, you need to be logged in to create a product");
+            //     }
+            // }
+        }
+
     })
 });
 

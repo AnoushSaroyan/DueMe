@@ -82,10 +82,13 @@ export const NEW_MESSAGE = gql`
     mutation NewMessage($user: ID!, $content: String!, $chat: ID!) {
       newMessage(user: $user, content: $content, chat: $chat) {
         _id
-        content
-        user
-        date
         chat
+        content
+        date
+        user {
+          _id
+          name
+        }
       }
     }
   `;

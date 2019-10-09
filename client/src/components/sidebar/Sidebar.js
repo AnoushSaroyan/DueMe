@@ -11,6 +11,7 @@ import TeamSubMenu from './TeamSubMenu';
 // import { FaPlus } from "react-icons/fa";
 // import { FiArrowDownCircle } from "react-icons/fi";
 // import { withRouter } from 'react-router-dom';
+import UserIndex from "../conversations/UserIndex";
 
 
 class Sidebar extends Component {
@@ -122,6 +123,10 @@ class Sidebar extends Component {
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
                         {this.handleTeams(user)}
+                    </div>
+
+                    <div>
+                            <UserIndex />
                     </div>
                     </div>
                 </section>}
