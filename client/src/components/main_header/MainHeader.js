@@ -10,6 +10,7 @@ import { LOGOUT_USER } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
+
 class MainHeader extends Component {
     constructor(props){
         super(props)
