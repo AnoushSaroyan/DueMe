@@ -122,8 +122,8 @@ class CreateTask extends Component {
         refetchQueries={() => {
           return [
             {
-              query: USER,
-              variables: { _id: localStorage.getItem("currentUserId") }
+              query: PROJECT,
+              variables: { _id: this.state.project }
             }
           ]
         }}

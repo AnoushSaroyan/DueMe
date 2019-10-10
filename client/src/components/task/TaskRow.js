@@ -40,7 +40,6 @@ class TaskRow extends Component{
 
     componentDidUpdate(prevProps, prevState){
         if (this.props.task.completed !== this.state.completed){
-            debugger
             this.setState({
                 completed: this.props.task.completed
             })
