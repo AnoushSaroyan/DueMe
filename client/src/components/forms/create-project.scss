@@ -69,13 +69,14 @@
 
 .create-project-team{
     display: flex;
-    align-items: center;
     margin-bottom: 20px;
-    margin-top: 5px;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 20px;
 }
 
-.create-project-team select{
-    margin-left: 20px;
+.create-task{
+  margin-left: 0;
 }
 
 .create-project-color{
@@ -88,4 +89,52 @@
     align-items: center;
     margin-left: 20px;
     margin-bottom: 10px;
+}
+
+.date {
+
+}
+
+.team{
+  margin-bottom: 0;
+}
+
+.project-date-team{
+  display: flex;
+}
+
+select {
+
+  /* make arrow and background */
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 21px) calc(1em + 8px),
+    calc(100% - 16px) calc(1em + 8px),
+    calc(100% - 2.5em) 0.8em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.8em;
+  background-repeat: no-repeat;
+
+  /* styling and reset */
+
+  border: thin solid blue;
+  font: 300 1em/100% "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+
+  /* reset */
+
+  border-radius: 0;
+  margin: 0;      
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance:none;
+  -moz-appearance:none;
 }

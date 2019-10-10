@@ -29,3 +29,8 @@ textarea {resize: none}
     height: calc(100vh - 50px);
     overflow-y: scroll;
 }
+
+input[type="date"]::-webkit-inner-spin-button{
+    display: none;
+    -webkit-appearance: none;
+}
