@@ -19,7 +19,8 @@ const UserType = new GraphQLObjectType({
                 return User.findById(parentValue.id)
                     .populate("teams")
                     .then(user => user.teams);
-        }}
+        }},
+        color: { type: GraphQLString }
     })
 });
 

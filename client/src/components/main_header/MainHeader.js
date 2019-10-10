@@ -11,6 +11,7 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FaSquare } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
+import CreateProjectPopup from '../forms/CreateProjectPopup'
 
 
 class MainHeader extends Component {
@@ -71,6 +72,30 @@ class MainHeader extends Component {
         return <div className="page-title"><h1>{this.state.page}</h1></div>
     }
 
+    handleColorChange(){
+        return (
+            <div>
+                <span onClick={this.handleOpen}>Change Color</span>
+            </div>
+        )
+    }
+
+    handleOpen(){
+        const playlistForm = document.getElementById("project-popup");
+        playlistForm.classList.add("active");
+    }
+
+    renderEmptyHeader(){
+        return(
+            <div className="main-header main-header-loading">
+                <div class="la-ball-clip-rotate-multiple la-dark header-load">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        )
+    }
+
     render(){
         if (!localStorage.getItem("currentUserId")) {
             return <div></div>
@@ -79,8 +104,9 @@ class MainHeader extends Component {
 
         return(
         <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
-                {({ data }) => {   
-                   if (data) {
+                {({ loading, error, data }) => {   
+                    if (loading) return this.renderEmptyHeader();
+                    if (error) return <option>{`Error! ${error}`}</option>;
                        const { user } = data
                        const abbreviatedName = user.name.split(" ").map(word => word[0])
                        let rightLetters
@@ -130,6 +156,7 @@ class MainHeader extends Component {
                                     </div>
                                     <div className="profile-menu" id="profile-menu">
                                         <div className="add-menu-items profile-items">
+                                            {this.handleColorChange()}
                                             <ApolloConsumer>
                                                 {client => (
                                                     <Mutation
@@ -156,9 +183,6 @@ class MainHeader extends Component {
                                 </div>
                             </div>
                         </div>
-                    } else {
-                        return <div></div>
-                    }
             }}
         </Query>   
         )
