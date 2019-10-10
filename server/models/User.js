@@ -27,8 +27,7 @@ const UserSchema = new Schema({
         }
     ],
     color: {
-        type: String,
-        required: true
+        type: String
     },
 })
 

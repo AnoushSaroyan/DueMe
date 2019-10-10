@@ -233,6 +233,20 @@ const mutation = new GraphQLObjectType({
                 }
             }
         },
+        changeUserColor: {
+            type: UserType,
+            args: {
+                _id: { type: GraphQLID },
+                color: { type: GraphQLString }
+            },
+            resolve(_, { _id, color }) {
+                return User.findById(_id).then(user => {           
+                    user.color = color
+                    user.save()
+                    return user
+                })
+            }
+        }
 
     }
 });

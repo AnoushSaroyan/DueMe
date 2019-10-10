@@ -11,6 +11,7 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FaSquare } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
+import CreateProjectPopup from '../forms/CreateProjectPopup'
 
 
 class MainHeader extends Component {
@@ -69,6 +70,19 @@ class MainHeader extends Component {
             return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div><h1>{this.state.page}</h1></div>
         }
         return <div className="page-title"><h1>{this.state.page}</h1></div>
+    }
+
+    handleColorChange(){
+        return (
+            <div>
+                <span onClick={this.handleOpen}>Change Color</span>
+            </div>
+        )
+    }
+
+    handleOpen(){
+        const playlistForm = document.getElementById("project-popup");
+        playlistForm.classList.add("active");
     }
 
     render(){
@@ -130,6 +144,7 @@ class MainHeader extends Component {
                                     </div>
                                     <div className="profile-menu" id="profile-menu">
                                         <div className="add-menu-items profile-items">
+                                            {this.handleColorChange()}
                                             <ApolloConsumer>
                                                 {client => (
                                                     <Mutation

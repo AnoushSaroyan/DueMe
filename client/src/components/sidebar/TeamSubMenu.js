@@ -36,7 +36,6 @@ class TeamSubMenu extends Component {
 
             let color
             user.color ? color = user.color : color = "#e362e3"
-
             let profileColor = {
                 backgroundColor: color
             }

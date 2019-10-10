@@ -169,6 +169,7 @@
     right: 2px;
     padding-top: 0;
     top: 36px;
+    width: 121px;
 }
 
 .menu-caret-positioner, .profile-menu-caret-positioner{
@@ -232,6 +233,9 @@
 
 .profile-items div{
     padding: 0 15px 0 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .profile-items div:hover{
