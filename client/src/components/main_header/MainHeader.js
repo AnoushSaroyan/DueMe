@@ -85,6 +85,17 @@ class MainHeader extends Component {
         playlistForm.classList.add("active");
     }
 
+    renderEmptyHeader(){
+        return(
+            <div className="main-header main-header-loading">
+                <div class="la-ball-clip-rotate-multiple la-dark header-load">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        )
+    }
+
     render(){
         if (!localStorage.getItem("currentUserId")) {
             return <div></div>
@@ -93,8 +104,9 @@ class MainHeader extends Component {
 
         return(
         <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
-                {({ data }) => {   
-                   if (data) {
+                {({ loading, error, data }) => {   
+                    if (loading) return this.renderEmptyHeader();
+                    if (error) return <option>{`Error! ${error}`}</option>;
                        const { user } = data
                        const abbreviatedName = user.name.split(" ").map(word => word[0])
                        let rightLetters
@@ -171,9 +183,6 @@ class MainHeader extends Component {
                                 </div>
                             </div>
                         </div>
-                    } else {
-                        return <div></div>
-                    }
             }}
         </Query>   
         )

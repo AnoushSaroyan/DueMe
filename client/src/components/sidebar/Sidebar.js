@@ -110,7 +110,7 @@ class Sidebar extends Component {
                             <FiBell /><div>Inbox</div>
                         </Link>
                     </nav>
-                    <div class="la-ball-clip-rotate-multiple la-3x">
+                    <div class="la-ball-clip-rotate-multiple la-3x sidebar-load">
                         <div></div>
                         <div></div>
                     </div>
