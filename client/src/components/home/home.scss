@@ -24,6 +24,7 @@
   padding: 10px 0;
   margin: 10px 0;
   position: relative;
+  cursor: pointer;
 }
 
 .home-section-header svg{
@@ -38,7 +39,7 @@
   left: 20px;
 }
 
-.home-section-header h2:hover{
+.home-section-header:hover{
   cursor: pointer;
 }
 
@@ -56,4 +57,5 @@
   width: 100%;
   display: flex;
   margin-top: 10px;
+  flex-wrap: wrap;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import { Query } from 'react-apollo';
-import { USER } from '../../graphql/queries';
+import { USER, FETCH_TASKS } from '../../graphql/queries';
 import MainHeader from '../main_header/MainHeader';
 import Tiles from './Tiles';
 import './home.scss';
@@ -65,12 +66,14 @@ class Home extends Component {
             </div>
             <div className="section-tiles">
               { projectArr.map(project => <Tiles project={project} key={project._id}/>)}
-              <div className="tile-top">
-                <div className="tile-inner-new" >
-                  <GoPlus /> 
+              <Link to="/main/project/new">
+                <div className="tile-top">
+                  <div className="tile-inner-new" >
+                    <GoPlus /> 
+                  </div>
+                  <h2>New Project</h2>
                 </div>
-                <h2>New Project</h2>
-              </div>
+              </Link>
             </div>
           </div>
         )
@@ -102,6 +105,7 @@ class Home extends Component {
       return (
       <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
         {({ data }) => {
+          debugger
           if (data) {
             const { user } = data
             const projects = user.teams.map(team => team.projects)
