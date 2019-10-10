@@ -11,7 +11,7 @@ class CreateProjectPopup extends Component {
         super(props)
         this.state = {
             thing: this.props.thing,
-            color: "red",
+            color: "#ff3333",
             message: ""
         };
         this.handleClose = this.handleClose.bind(this);
@@ -62,11 +62,12 @@ class CreateProjectPopup extends Component {
             >
             {(ChangeUserColor, { data }) => (
                 <div  className="dialog color-dialog" id="project-popup">
+                    <MdClear onClick={this.handleClose}/>
                     <div className="project-popup-wrapper">
                         <form onSubmit={e => this.handleSubmit(e , ChangeUserColor)}>
                             <h1>Pick a new color!</h1>
                             <input type="color" name="favcolor" value={this.state.color} onChange={this.update("color")}/>
-                            <button type="submit">Create Project</button>
+                            <button type="submit">Save</button>
                         </form>
                     </div>
                 </div>

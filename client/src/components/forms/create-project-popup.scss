@@ -36,7 +36,7 @@
     color: white;
 }
 
-.dialog a{
+.dialog a, .color-dialog button{
   display: flex;
   justify-content: center;
   background-image: linear-gradient(to top right, #14aaf5 , rgb(0, 255, 217));
@@ -52,6 +52,35 @@
   align-items: center;
 }
 
-.dialog a:hover{
+.dialog a:hover, .color-dialog button:hover{
   background-image: linear-gradient(to top right, #018bd0 , rgb(0, 216, 184));
+}
+
+.color-dialog form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-dialog input{
+  margin-top: 10px;
+  width: 100%;
+  height: 40px;
+  cursor: pointer;
+}
+
+.color-dialog button{
+  width: 100%;
+  height: 40px;
+}
+
+.color-dialog svg{
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.486);
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.color-dialog svg:hover{
+  color: white;
 }
