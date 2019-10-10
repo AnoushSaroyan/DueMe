@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./session.scss";
 import { Mutation } from "react-apollo";
 import { REGISTER_USER } from "../../graphql/mutations";
+import { USER } from "../../graphql/queries";
 import { Link } from 'react-router-dom';
-import { USER } from '../../graphql/queries';
 
 class Register extends Component {
     constructor(props) {

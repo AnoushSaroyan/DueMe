@@ -9,11 +9,13 @@ import CreateProject from '../forms/CreateProject';
 import CreateTask from '../task/CreateTask';
 import Calendar from '../calendar/Calendar';
 import Chat from "../conversations/Chat";
-import Project from '../project/Project'
+import Project from '../project/Project';
+import CreateProjectPopup from '../forms/CreateProjectPopup';
 
 class MainPage extends Component {
     render() {
         return (<div className="main-page">
+            <CreateProjectPopup thing={"userColor"} />
             <Sidebar/>
             <div className="black-bg"></div>
             <div className="main-view"> 
