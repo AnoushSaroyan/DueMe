@@ -4,12 +4,15 @@ import { withRouter } from "react-router-dom";
 import { NEW_MESSAGE } from "../../graphql/mutations";
 import { CURRENT_USER, FETCH_CHAT } from "../../graphql/queries";
 import { Query } from "react-apollo";
+import 'emoji-mart/css/emoji-mart.css'
+import { Picker } from 'emoji-mart'
 
 class CreateMessage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { content: "" }
+        this.state = { content: "" };
+        this.addEmoji = this.addEmoji.bind(this);
     }
 
     update(field) {
@@ -63,6 +66,14 @@ class CreateMessage extends React.Component {
         }
     }
 
+    addEmoji(e) {
+        //console.log(e.native)
+        let emoji = e.native;
+        this.setState({
+            content: this.state.content + emoji
+        })
+    }
+
     render() {
         return (
             <Query query={CURRENT_USER} >
@@ -71,7 +82,7 @@ class CreateMessage extends React.Component {
                     return (
                         <Mutation 
                             mutation={NEW_MESSAGE} 
-                            update={(cache, data) => this.updateCache(cache, data)} 
+                            // update={(cache, data) => this.updateCache(cache, data)} 
                             refetchQueries={() => [{ query: FETCH_CHAT, variables: { id: this.props.chat } }]}
                             >
          
@@ -84,16 +95,16 @@ class CreateMessage extends React.Component {
                                             placeholder="Send a message"
                                         />
                                     </form>
+                                    <Picker onSelect={this.addEmoji} style={{ position: 'absolute', bottom: '20px', right: '20px' }}/>
                                 </div>
                             )
                             }
                         </Mutation>
                     );      
                 }}
-            </Query>
-            
-        )
+            </Query>   
+        );
     }
 }
 
-export default withRouter(CreateMessage)
+export default withRouter(CreateMessage);

@@ -3,14 +3,30 @@ import gql from "graphql-tag";
 export const NEW_MESSAGE_SUBSCRIPTION = gql`
 subscription onMessageSent {
       messageSent {
+        # _id
+        # user {
+        #   _id
+        #   name
+        # }
+        # content
+        # date
+        # chat
+
         _id
-        user {
+        users {
           _id
+          email
           name
         }
-        content
-        date
-        chat
+        messages {
+          date
+          chat
+          content
+          user {
+            _id
+            name
+          }
+        }
       }
     }
 `;
