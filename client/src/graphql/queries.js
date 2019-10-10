@@ -111,12 +111,12 @@ export const FIND_PROJECT_BY_NAME = gql`
 
 export const PROJECT = gql`
     query Project($_id: ID!){
-      user(_id: $_id){
+      users{
       _id
       name
 	  description
 	  dueDate
-	  team
+	  color
       }
     }
 `;
