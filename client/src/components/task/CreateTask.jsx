@@ -61,9 +61,9 @@ class CreateTask extends Component {
     })
 
     return(
-      <div className="create-project-team">
+      <div className="create-project-team create-task">
         <h3>Project</h3>
-        <select name="project" value={this.state.project} onChange={this.update("project")}>
+        <select name="project" value={this.state.project} onChange={this.update("project")} className="form-input team">
           {projectOptions}
         </select>
       </div>
@@ -87,11 +87,10 @@ class CreateTask extends Component {
 
     let userOptions
     userOptions = users.map(user => <option key={user._id} value={user._id}>{user.name}</option>)
-    debugger
     return (
-      <div className="create-project-team">
+      <div className="create-project-team create-task">
         <h3>User</h3>
-        <select name="user" value={this.state.user} onChange={this.update("user")}>
+        <select name="user" value={this.state.user} onChange={this.update("user")} className="form-input team">
           {userOptions}
         </select>
       </div>
@@ -156,8 +155,8 @@ class CreateTask extends Component {
 				<input
 					onChange={this.update("dueDate")}
 					value={this.state.dueDate}
-					placeholder="MM-DD-YYYY"
-					className="form-input"
+          className="form-input"
+          type="date"
 				/>
 
                 {/* <h3>Project</h3>

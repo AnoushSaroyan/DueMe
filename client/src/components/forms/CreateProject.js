@@ -86,7 +86,7 @@ class CreateProject extends Component {
                         placeholder="Team objectID for now"
                         className="form-input"
                       /> */}
-        <select name="team" value={this.state.team} onChange={this.update("team")}>
+        <select name="team minimal" value={this.state.team} onChange={this.update("team")} className="form-input team">
           {teamsOptions}
         </select>
       </div>
@@ -143,14 +143,21 @@ class CreateProject extends Component {
                   placeholder="Please include a project description"
                   className="form-input"
                 />
-                <h3>Due Date</h3>
-                <input
-                  onChange={this.update("dueDate")}
-                  value={this.state.dueDate}
-                  placeholder="MM-DD-YYYY"
-                  className="form-input"
-                />
-                {this.constructTeamSelection()}
+                <div className="project-date-team">
+                    <div className="project-date">
+                    <h3>Due Date</h3>
+                    <input
+                      onChange={this.update("dueDate")}
+                      value={this.state.dueDate}
+                      className="form-input date"
+                      type="date"
+                      required="required"
+                    />
+                    </div>
+                    {this.constructTeamSelection()}
+                </div>
+
+
                 <div  className="create-project-color">
                   <h3>Color</h3>
                   <div className="create-project-color-wrapper">

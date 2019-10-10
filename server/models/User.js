@@ -25,7 +25,11 @@ const UserSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "team"
         }
-    ]
+    ],
+    color: {
+        type: String,
+        required: true
+    },
 })
 
 module.exports = mongoose.model("user", UserSchema);
