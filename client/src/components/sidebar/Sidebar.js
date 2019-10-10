@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "./sidebar.scss";
+import "./loading.scss"
 import { MdMenu, MdKeyboardArrowLeft, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { FiHome, FiCheckCircle, FiBell } from "react-icons/fi";
 import { Query } from 'react-apollo';
@@ -87,6 +88,37 @@ class Sidebar extends Component {
         })}
     }
 
+    renderEmptySidebar(){
+        return(
+            <section className="sidebar" id="sidebar">
+                <div className="sidewrapper">
+                    <div className="sidelogo">
+                        <Link to='/main/home' >
+                            <img src="images/icon.png" alt="Dueme" />
+                            <div>DueMe</div>
+                        </Link>
+                        <div className="sidebar-ham"><MdKeyboardArrowLeft /><MdMenu /></div>
+                    </div>
+                    <nav className="sidebar-main-nav">
+                        <Link className="sidebar-items" to='/main/home' >
+                            <FiHome /><div>Home</div>
+                        </Link>
+                        <Link className="sidebar-items" to='/main/task' >
+                            <FiCheckCircle /><div>My Tasks</div>
+                        </Link>
+                        <Link className="sidebar-items" to={`/player/user/`} >
+                            <FiBell /><div>Inbox</div>
+                        </Link>
+                    </nav>
+                    <div class="la-ball-clip-rotate-multiple la-3x sidebar-load">
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </section>
+        )
+    }
+
     render() {
         if (!localStorage.getItem("currentUserId")){
             return <div></div>
@@ -94,9 +126,10 @@ class Sidebar extends Component {
 
         return (
         <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId")}}>
-            {({ data }) => {     
-                if (data){
-                    const { user } = data
+            {({ loading, error, data }) => {     
+                if (loading) return this.renderEmptySidebar();
+                if (error) return <option>{`Error! ${error}`}</option>;
+                const { user } = data
 
                 
                 return<section className="sidebar" id="sidebar">
@@ -123,14 +156,14 @@ class Sidebar extends Component {
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
                         {this.handleTeams(user)}
+                        <div>
+                            <UserIndex />
+                        </div>
                     </div>
 
-                    <div>
-                            <UserIndex />
+
                     </div>
-                    </div>
-                </section>}
-                else return <div></div>
+                </section>
             }}
         </Query>
         )

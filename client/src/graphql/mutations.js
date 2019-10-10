@@ -108,3 +108,13 @@ export const CREATE_CHAT = gql`
       }
     }
   `;  
+
+export const CHANGE_USER_COLOR = gql`
+    mutation ChangeUserColor($_id: ID!, $color: String!){
+      changeUserColor(_id: $_id, color: $color){
+        _id
+        color
+      }
+    }
+
+`
