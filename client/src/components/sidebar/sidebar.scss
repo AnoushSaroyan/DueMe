@@ -162,6 +162,11 @@
     display: none;
 }
 
+.sidebar-scroll-wrapper{
+    height: calc(100vh - 160px);
+    overflow-y: scroll;
+}
+
 .sidebar-scroll-wrapper:hover svg{
     display: block;
 }
@@ -190,4 +195,26 @@
     font-size: 13px;
     color: #cbd4db;
     text-transform: none;
+}
+
+/* width */
+.sidebar ::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.sidebar ::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+/* Handle */
+.sidebar ::-webkit-scrollbar-thumb {
+  background: transparent; 
+}
+
+/* Handle on hover */
+.sidebar:hover ::-webkit-scrollbar-thumb {
+  background: rgb(126, 126, 126); 
+  border-radius: 5px;
+   border: 2px solid rgb(126, 126, 126);
 }

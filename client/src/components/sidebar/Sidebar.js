@@ -156,11 +156,12 @@ class Sidebar extends Component {
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
                         {this.handleTeams(user)}
+                        <div>
+                            <UserIndex />
+                        </div>
                     </div>
 
-                    <div>
-                            <UserIndex />
-                    </div>
+
                     </div>
                 </section>
             }}
