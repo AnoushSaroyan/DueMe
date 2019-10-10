@@ -49,7 +49,10 @@ export const USER = gql`
           color
           tasks{
             _id
-            user
+            user{
+              _id
+              name
+            }
             description
             dueDate
           }

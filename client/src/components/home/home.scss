@@ -51,3 +51,9 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Opera and Firefox */
 }
+
+.section-tiles{
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+}

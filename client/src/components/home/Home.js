@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import { USER } from '../../graphql/queries';
 import MainHeader from '../main_header/MainHeader';
+import Tiles from './Tiles';
 import './home.scss';
-import { MdExpandLess, MdExpandMore, MdPlayArrow } from "react-icons/md";
-import { TiArrowSortedDown} from "react-icons/ti";
+import './tiles.scss';
+import { MdExpandLess, MdExpandMore} from "react-icons/md";
+import { GoTriangleRight, GoTriangleDown, GoPlus } from "react-icons/go";
 
 
 class Home extends Component {
@@ -23,7 +25,7 @@ class Home extends Component {
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
-              <TiArrowSortedDown />
+              <GoTriangleDown />
               <h2>Tasks Due Soon</h2>
               <MdExpandMore />
             </div>
@@ -36,7 +38,7 @@ class Home extends Component {
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
-              <MdPlayArrow />
+              <GoTriangleRight />
               <h2>Tasks Due Soon</h2>
               <MdExpandLess />
             </div>
@@ -45,17 +47,30 @@ class Home extends Component {
       }
     }
 
-    handleProjects(){
+    handleProjects(projects){
+      let projectArr = [];
+      projects.forEach(prjArr => {
+        prjArr.forEach(prj => {
+          projectArr.push(prj)
+        })
+      })
+
       if (this.state.projects) {
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("projects")}>
-              <TiArrowSortedDown />
+              <GoTriangleDown />
               <h2>Recent Projects</h2>
               <MdExpandMore />
             </div>
             <div className="section-tiles">
-              <h2>projects go here</h2>
+              { projectArr.map(project => <Tiles project={project} key={project._id}/>)}
+              <div className="tile-top">
+                <div className="tile-inner-new" >
+                  <GoPlus /> 
+                </div>
+                <h2>New Project</h2>
+              </div>
             </div>
           </div>
         )
@@ -63,7 +78,7 @@ class Home extends Component {
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("projects")}>
-              <MdPlayArrow />
+              <GoTriangleRight />
               <h2>Recent Projects</h2>
               <MdExpandLess />
             </div>
@@ -89,14 +104,15 @@ class Home extends Component {
         {({ data }) => {
           if (data) {
             const { user } = data
-          debugger
+            const projects = user.teams.map(team => team.projects)
+          
             return<div>
                 <MainHeader page={"Home"}/>
                 <div className="scroll-wrapper">
                     <div className="home-page">
                         <div className="home-inner">
                           {this.handleTasks()}
-                          {this.handleProjects()}
+                          {this.handleProjects(projects)}
                         </div>
                     </div>
                 </div>
