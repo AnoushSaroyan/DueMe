@@ -3,7 +3,8 @@ import { Query } from 'react-apollo';
 import { USER } from '../../graphql/queries';
 import MainHeader from '../main_header/MainHeader';
 import './home.scss';
-import { MdExpandLess, MdExpandMore } from "react-icons/md";
+import { MdExpandLess, MdExpandMore, MdPlayArrow } from "react-icons/md";
+import { TiArrowSortedDown} from "react-icons/ti";
 
 
 class Home extends Component {
@@ -21,9 +22,10 @@ class Home extends Component {
       if (this.state.tasks) {
         return (
           <div className="home-section">
-            <div className="home-section-header" onClick={this.handleCollapse("tasks")}>
+            <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
+              <TiArrowSortedDown />
               <h2>Tasks Due Soon</h2>
-              <MdExpandLess />
+              <MdExpandMore />
             </div>
             <div className="section-tiles">
               <h2>tasks go here</h2>
@@ -33,9 +35,10 @@ class Home extends Component {
       } else {
         return (
           <div className="home-section">
-            <div className="home-section-header" onClick={this.handleCollapse("tasks")}>
+            <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
+              <MdPlayArrow />
               <h2>Tasks Due Soon</h2>
-              <MdExpandMore />
+              <MdExpandLess />
             </div>
           </div>
         )
@@ -46,9 +49,10 @@ class Home extends Component {
       if (this.state.projects) {
         return (
           <div className="home-section">
-            <div className="home-section-header" onClick={this.handleCollapse("projects")}>
+            <div className="home-section-header noselect" onClick={this.handleCollapse("projects")}>
+              <TiArrowSortedDown />
               <h2>Recent Projects</h2>
-              <MdExpandLess />
+              <MdExpandMore />
             </div>
             <div className="section-tiles">
               <h2>projects go here</h2>
@@ -58,9 +62,10 @@ class Home extends Component {
       } else {
         return (
           <div className="home-section">
-            <div className="home-section-header" onClick={this.handleCollapse("projects")}>
+            <div className="home-section-header noselect" onClick={this.handleCollapse("projects")}>
+              <MdPlayArrow />
               <h2>Recent Projects</h2>
-              <MdExpandMore />
+              <MdExpandLess />
             </div>
           </div>
         )
@@ -84,18 +89,18 @@ class Home extends Component {
         {({ data }) => {
           if (data) {
             const { user } = data
-        
-          return<div>
-              <MainHeader page={"Home"}/>
-              <div className="scroll-wrapper">
-                  <div className="home-page">
-                      <div className="home-inner">
-                        {this.handleTasks()}
-                        {this.handleProjects()}
-                      </div>
-                  </div>
-              </div>
-          </div>
+          debugger
+            return<div>
+                <MainHeader page={"Home"}/>
+                <div className="scroll-wrapper">
+                    <div className="home-page">
+                        <div className="home-inner">
+                          {this.handleTasks()}
+                          {this.handleProjects()}
+                        </div>
+                    </div>
+                </div>
+            </div>
           }
           else return <div></div>
         }}

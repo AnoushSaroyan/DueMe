@@ -47,6 +47,12 @@ export const USER = gql`
           _id
           name
           color
+          tasks{
+            _id
+            user
+            description
+            dueDate
+          }
         }
       }
       }
