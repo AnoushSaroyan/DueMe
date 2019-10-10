@@ -34,6 +34,9 @@ class MainHeader extends Component {
             let accountDropdown = document.getElementById("profile-menu")
             if (accountDropdown) accountDropdown.classList.remove("active")
         })
+        if (this.props.type === "project") {
+            this.addBorderBottom()
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -44,6 +47,16 @@ class MainHeader extends Component {
                 type: this.props.type
             })
         }
+
+        if (this.props.type === "project") {
+            this.addBorderBottom()
+        }
+    }
+
+    addBorderBottom(){
+        const header = document.getElementById("main-header")
+        debugger
+        if (header) header.classList.add("header-border")
     }
 
     handleSidebarCollapse(){
@@ -88,9 +101,11 @@ class MainHeader extends Component {
     renderEmptyHeader(){
         return(
             <div className="main-header main-header-loading">
-                <div class="la-ball-clip-rotate-multiple la-dark header-load">
-                    <div></div>
-                    <div></div>
+                <div className="main-header-wrapper" id="main-header">
+                    <div class="la-ball-clip-rotate-multiple la-dark header-load">
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
             </div>
         )
@@ -124,6 +139,7 @@ class MainHeader extends Component {
                        }
 
                         return<div className="main-header">
+                            <div className="main-header-wrapper" id="main-header">
                             <div id="main-ham" className="main-ham hidden-ham" onClick={this.handleSidebarCollapse}><MdMenu /></div>
                             {this.renderTitle()}
                             <div className="main-header-right">
@@ -181,6 +197,7 @@ class MainHeader extends Component {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
             }}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MainHeader from '../main_header/MainHeader';
 import { useQuery, Query } from "react-apollo";
 import { USER, PROJECT } from '../../graphql/queries';
+import './project.scss';
 
 class Project extends Component {
     constructor(props){
@@ -31,20 +32,28 @@ class Project extends Component {
         }
 
         return(
-            <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
+            <Query query={PROJECT} variables={{ _id: this.state.projectId }}>
                 {({ loading, error, data }) => {  
                     if (loading) return null;
                     if (error) return <option>{`Error! ${error}`}</option>;
-                    const { user } = data
-                    const teams = user.teams
-                    let foundProject
-                    const team = teams.find(team => team.projects.find(project => {if(project._id == this.state.projectId){
-                        foundProject = project
-                        return project
-                    }}))
+                    const { project } = data
+                    // const teams = user.teams
+                    // let foundProject = project
+                    // const team = teams.find(team => team.projects.find(project => {if(project._id == this.state.projectId){
+                    //     foundProject = project
+                    //     return project
+                    // }}))
+                    let task = []
+                    task = project.task
+
                     return(
                         <div>
-                            <MainHeader page={foundProject.name} color={foundProject.color} type={"project"}/>
+                            <MainHeader page={project.name} color={project.color} type={"project"}/>
+                            <div className="scroll-wrapper">
+                                <div className="project-show">
+                                    <div>Add task button</div>
+                                </div>
+                            </div>
                         </div>)
                 }}
             </Query>

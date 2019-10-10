@@ -49,15 +49,6 @@ export const USER = gql`
           _id
           name
           color
-          tasks{
-            _id
-            user{
-              _id
-              name
-            }
-            description
-            dueDate
-          }
         }
       }
       }
@@ -111,12 +102,20 @@ export const FIND_PROJECT_BY_NAME = gql`
 
 export const PROJECT = gql`
     query Project($_id: ID!){
-      users{
-      _id
-      name
-	  description
-	  dueDate
-	  color
+      project(_id: $_id){
+        description
+        dueDate
+        color
+        name
+        tasks{
+          _id
+          description
+          dueDate
+          user{
+            _id
+            name
+          }
+        }
       }
     }
 `;

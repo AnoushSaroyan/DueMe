@@ -12,6 +12,7 @@ const TaskType = new GraphQLObjectType({
 		description: { type: GraphQLString },
 		dueDate: { type: GraphQLString },
 		completed: { type: GraphQLBoolean },
+		description: { type: GraphQLString },
 		user: {
 			type: require("./user_type"),
 			resolve(parentValue) {
