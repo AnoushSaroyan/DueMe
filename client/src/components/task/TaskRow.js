@@ -47,20 +47,27 @@ class TaskRow extends Component{
         </div>
     }
 
-    handleCheckmark(task){
+    handleCheckmark(task, updateTaskStatus){
         if (this.state.completed){
-            return <FaRegCheckCircle className="task-row-checked" onClick={this.handleComplete}/>
+            return <FaRegCheckCircle className="task-row-checked" onClick={e => this.handleComplete(e, task, updateTaskStatus)}/>
         } else {
-            return <FaRegCheckCircle className="task-row-not-checked" onClick={this.handleComplete}/>
+            return <FaRegCheckCircle className="task-row-not-checked" onClick={e => this.handleComplete(e, task, updateTaskStatus)}/>
         }
 
     }
 
-    handleComplete(e){
+    handleComplete(e, task, updateTaskStatus){
         e.stopPropagation();
         this.setState ({
             completed: !this.state.completed
         })
+        updateTaskStatus({
+            variables: {
+                id: task.id,
+                completed: this.state.completed
+            }
+        })
+
     }
     
     render(){
