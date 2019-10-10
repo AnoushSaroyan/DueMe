@@ -46,13 +46,13 @@ class Project extends Component {
                     //     return project
                     // }}))
                     let task = []
-                    task = project.tasks.map(task=> <TaskRow task={task} key={task._id} type={"project"}/>)
+                    task = project.tasks.map(task=> <TaskRow task={task} key={task._id} type={"project"} projectId={this.state.projectId}/>)
                     return(
                         <div>
                             <MainHeader page={project.name} color={project.color} type={"project"}/>
                             <div className="scroll-wrapper">
                                 <div className="project-show">
-                                    <div class="project-show-wrapper">
+                                    <div className="project-show-wrapper">
                                         <div className="project-show-spreadsheet">
                                             <div className="project-show-add-task-row">
                                                 <div className="add-task-button">Add Task</div>

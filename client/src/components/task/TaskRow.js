@@ -3,14 +3,15 @@ import './task-row.scss';
 import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 import { UPDATE_TASK_STATUS } from "../../graphql/mutations";
 import { Mutation} from "react-apollo";
-import { FETCH_TASK } from "../../graphql/queries";
+import { FETCH_TASK, USER, PROJECT } from "../../graphql/queries";
 
 class TaskRow extends Component{
     constructor(props){
         super(props)
         this.state = {
             completed : props.task.completed,
-            message: ""
+            message: "",
+            projectId: props.projectId
         }
         this.handleComplete = this.handleComplete.bind(this)
     }
@@ -37,6 +38,15 @@ class TaskRow extends Component{
 
     }
 
+    componentDidUpdate(prevProps, prevState){
+        if (this.props.task.completed !== this.state.completed){
+            debugger
+            this.setState({
+                completed: this.props.task.completed
+            })
+        }
+    }
+
     handleDate(dueDate){
         let date = new Date(dueDate)
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -58,13 +68,10 @@ class TaskRow extends Component{
 
     handleComplete(e, task, updateTaskStatus){
         e.stopPropagation();
-        this.setState ({
-            completed: !this.state.completed
-        })
         updateTaskStatus({
             variables: {
-                id: task.id,
-                completed: this.state.completed
+                id: task._id,
+                completed: !this.state.completed
             }
         })
 
@@ -87,18 +94,17 @@ class TaskRow extends Component{
                         refetchQueries={() => {
                             return [
                                 {
-                                    query: FETCH_TASK,
-                                    variables: { _id: task._id }
+                                    query: PROJECT,
+                                    variables: { _id: this.state.projectId }
                                 }
                             ]
                         }
                         }
                         onCompleted={data => {
-                            const { title } = data.newProject;
+                            const { title } = data.updateTaskStatus;
                             this.setState({
                                 message: `task ${title} update successfully!`
                             });
-                            this.props.history.push('/');
                         }}
                         >
                             {(updateTaskStatus, { data }) => (

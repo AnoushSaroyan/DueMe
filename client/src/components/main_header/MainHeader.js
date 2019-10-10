@@ -100,7 +100,7 @@ class MainHeader extends Component {
         return(
             <div className="main-header main-header-loading">
                 <div className="main-header-wrapper" id="main-header">
-                    <div class="la-ball-clip-rotate-multiple la-dark header-load">
+                    <div className="la-ball-clip-rotate-multiple la-dark header-load">
                         <div></div>
                         <div></div>
                     </div>

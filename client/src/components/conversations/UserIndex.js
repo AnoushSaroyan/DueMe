@@ -1,4 +1,5 @@
 import React from "react";
+import './user-index.scss'
 import { Query, Mutation } from "react-apollo";
 import { withRouter, Link } from 'react-router-dom';
 import { FETCH_USERS, FETCH_USERS_CHAT, CURRENT_USER } from "../../graphql/queries";
@@ -94,7 +95,7 @@ class UserIndex extends React.Component {
                             // debugger
 
                             return(
-                            <div>
+                                <div className="userIndex">
                             {allUsers.map(user => {
 
                                 // return <h4 onClick={(e) => this.handleClick(e, user)}>{user.name}</h4>
