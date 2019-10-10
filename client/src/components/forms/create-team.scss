@@ -33,10 +33,11 @@
   padding: 10px;
   border: 1px solid #cbd4db;
   border-radius: 4px;
-  width: 100%;
+
   font-size: 16px;
   font-weight: 200;
   margin-bottom: 20px;
+  box-sizing: content-box;
 }
 
 .form-buttons{
