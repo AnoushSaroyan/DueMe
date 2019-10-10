@@ -1,0 +1,64 @@
+.task-row{
+    display: flex;
+    padding: 0 30px;
+}
+
+.task-row-wrapper{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgb(238, 238, 238);
+    width: 100%;
+    height: 34px;
+    align-items: center;
+}
+
+.project-show-spreadsheet > div:nth-child(2) .task-row-wrapper{
+    border-top: none;
+}
+
+.task-row-right{
+    display: flex;
+}
+
+.task-row-avatar-pic{
+    margin-left: 5px;
+}
+
+.task-row-duedate{
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+}
+
+.task-row-left{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.task-row-left svg{
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.task-row:hover{
+    background-color: #f6f8f9;
+    border-color: #e8ecee;
+}
+
+
+
+.task-row-checked{
+    border-radius: 10px;
+    background: #25e8c8;
+    display: flex;
+    color: white
+}
+
+.task-row-checked:hover{
+    background: #00bf9c;
+}
+
+.task-row-not-checked{
+    color: #cecece
+}

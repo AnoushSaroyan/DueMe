@@ -69,10 +69,10 @@ export const CREATE_PROJECT = gql`
 `;
 
 export const CREATE_TASK = gql`
-  mutation newTask($description: String!, $dueDate: String!, $completed: Boolean!, $project: ID!, $user: ID!) {
-    newTask(description: $description, dueDate: $dueDate, completed: $completed, project: $project, user: $user) {
+  mutation newTask($title: String!, $description: String, $dueDate: String!, $completed: Boolean!, $project: ID!, $user: ID!) {
+    newTask(title:$title, description: $description, dueDate: $dueDate, completed: $completed, project: $project, user: $user) {
       _id
-	  description
+    title
 	  dueDate
 	  completed
     }
@@ -143,5 +143,17 @@ export const CHANGE_USER_COLOR = gql`
         color
       }
     }
+
+`
+
+export const UPDATE_TASK_STATUS = gql`
+    mutation updateTaskStatus($id: ID!, $completed: Boolean!){
+      updateTaskStatus(id: $id, completed: $completed){
+        _id
+        title
+        completed
+      }
+    }
+
 
 `

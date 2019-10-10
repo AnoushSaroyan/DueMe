@@ -97,13 +97,14 @@ const mutation = new GraphQLObjectType({
             type: TaskType,
             args: {
                 description: { type: GraphQLString },
+                title: { type: GraphQLString },
                 dueDate: { type: GraphQLString },
                 completed: { type: GraphQLBoolean },
                 project: { type: GraphQLID },
                 user: { type: GraphQLID },
             },
-            resolve(_, { description, dueDate, completed, project, user }) {
-				return new Task({ description, dueDate, completed, project, user }).save().then(task =>
+            resolve(_, { title, description, dueDate, completed, project, user }) {
+				return new Task({ title, description, dueDate, completed, project, user }).save().then(task =>
 					Project.findById(task.project).then(project => {
 						project.tasks.push(task)
 						project.save()
@@ -115,10 +116,18 @@ const mutation = new GraphQLObjectType({
         deleteTask: {
             type: TaskType,
             args: {
-                id: { type: GraphQLID }
+                _id: { type: GraphQLID }
             },
-            resolve(_, { id }) {
-                return Task.remove({ _id: id });
+            resolve(_, { _id }) {
+                Task.findById({_id}).then(task => 
+                    Project.findById(task.project).then(project => {
+                        project.tasks.pull(task)
+                        project.save()
+                        return task.remove({ _id: _id })
+                    })
+                )
+
+                // return Task.remove({ _id: _id });
             }
         },
         

@@ -110,7 +110,7 @@ class Sidebar extends Component {
                             <FiBell /><div>Inbox</div>
                         </Link>
                     </nav>
-                    <div class="la-ball-clip-rotate-multiple la-3x sidebar-load">
+                    <div className="la-ball-clip-rotate-multiple la-3x sidebar-load">
                         <div></div>
                         <div></div>
                     </div>
@@ -156,8 +156,8 @@ class Sidebar extends Component {
                     <div className="sidebar-scroll-wrapper">
                         {this.handleFavorites()}
                         {this.handleTeams(user)}
-                        <div>
-                            <UserIndex />
+                        <div >
+                            <UserIndex  />
                         </div>
                     </div>
 
