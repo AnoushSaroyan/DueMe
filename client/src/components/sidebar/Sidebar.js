@@ -126,7 +126,7 @@ class Sidebar extends Component {
                     </div>
 
                     <div>
-                            <UserIndex />
+                        <UserIndex />
                     </div>
                     </div>
                 </section>}

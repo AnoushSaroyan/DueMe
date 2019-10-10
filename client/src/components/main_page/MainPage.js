@@ -25,7 +25,7 @@ class MainPage extends Component {
                         <Route exact path="/main/project/new" component={CreateProject} />
                         <Route exact path="/main/project/:id" component={Project} />
                         <Route exact path="/main/calendar" component={Calendar} />
-                        <Route exact path="/main/chat/:chatId" component={Chat} />
+                        <Route exact path="/main/chat/:userId" component={Chat} />
                         <Route exact path='/*' render={() => <Redirect to={{ pathname: "/main/home" }} />} />
                     </Switch>
             </div>

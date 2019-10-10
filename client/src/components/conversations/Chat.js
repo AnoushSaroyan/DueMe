@@ -1,36 +1,49 @@
 import React from "react";
-import { Query, Subscription } from "react-apollo";
-import { FETCH_CHAT } from "../../graphql/queries";
+import { Query, Subscription, Mutation } from "react-apollo";
+import { FETCH_CHAT, FETCH_OR_CREATE_CHAT_WITH_USER } from "../../graphql/queries";
 import { NEW_MESSAGE_SUBSCRIPTION } from "../../graphql/subscription"
 import CreateMessage from "./CreateMessage";
+// import { FETCH_OR_CREATE_CHAT_WITH_USER } from "../../graphql/mutations";
+
 
 const Chat = (props) => (
-    <Query query={FETCH_CHAT} variables={{ id: props.match.params.chatId }}>
+    <Query query={FETCH_OR_CREATE_CHAT_WITH_USER} variables={{ id: props.match.params.userId }}>
         {({ loading, error, data }) => {
-            // debugger
             if (loading) return <p>Loading...</p>
             if (error) return `Error! ${error.message}`
+            // debugger
+            // if (loading) return <p>Loading...</p>
+            // if (error) return `Error! ${error.message}`
 
-            let chatMessages = data.chat.messages;
-            let chatData = data;
-            let chatId = props.match.params.chatId
+            let chatMessages = data.fetchOrCreateChatWithUser.messages;
+            // let chatData = data;
+            // let userId = props.match.params.userId
+            let chatId = data.fetchOrCreateChatWithUser._id;
+            // get he chat id here
+            let author;
+            // debugger
             return (
                 <Subscription subscription={NEW_MESSAGE_SUBSCRIPTION}>
-                    {(args) => {
+                    {(args)  => {
                         // debugger
                         return (
                             <div>
-                                <ul>
+                                {/* <ul> */}
                                     {chatMessages.map(message => {
-                                        let author = chatData.chat.users.filter(user => user._id === message.user._id)[0];
+                                        
+                                        // debugger
+                                        // if (!message.user) {
+                                        //     debugger
+                                        // }
+                                        author = data.fetchOrCreateChatWithUser.users.filter(user => user._id === message.user._id)[0];
                                         return (
-                                            <div>
+                                            <div key={message._id}>
                                                 <p>{author.name}</p>
                                                 <p>{message.content}</p>
                                             </div>
                                         )
                                     })}
-                                </ul>
+                                {/* </ul> */}
                                 <CreateMessage chat={chatId}/>
                             </div>
                         );

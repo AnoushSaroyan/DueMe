@@ -125,9 +125,9 @@ export const FETCH_MESSAGES = gql`
   }
 `;
 
-export const FETCH_USER_CHATS = gql`
-  query fetchUserChats($id: ID!) {
-    userChats(_id: $id) {
+export const FETCH_USERS_CHAT = gql`
+  query fetchUsersChat($id: ID!) {
+    usersChat(_id: $id) {
       _id
       users {
         _id
@@ -135,7 +135,13 @@ export const FETCH_USER_CHATS = gql`
         name
       }
       messages {
-        user
+        user {
+          _id
+          name
+          email
+          token
+          loggedIn
+        }
         content
         date
       }
@@ -147,6 +153,27 @@ export const FETCH_USER_CHATS = gql`
 export const FETCH_CHAT = gql`
   query fetchChat($id: ID!) {
     chat(_id: $id) {
+      _id,
+      users {
+        _id 
+        name
+        email
+      }
+      messages {
+        user {
+          _id
+          name
+        }
+        content
+        date
+      }
+    }
+  }
+`;
+
+export const FETCH_OR_CREATE_CHAT_WITH_USER = gql`
+  query FetchOrCreateChatWithUser($id: ID!) {
+    fetchOrCreateChatWithUser(id: $id) {
       _id,
       users {
         _id 
