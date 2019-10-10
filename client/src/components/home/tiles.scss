@@ -1,0 +1,55 @@
+.tile-top{
+  height: 215px;
+  width: 150px;
+  padding-top: 15px;
+  margin: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tile-top:first-child{
+  margin-left: 0px;
+}
+
+.tile-top:hover{
+  background-color: rgb(142, 142, 142);
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.tile-inner, .tile-inner-new{
+  height: 120px;
+  width: 120px;
+  background-color: green;
+  border-radius: 20px;
+  position: relative;
+}
+
+.tile-inner-new{
+  border: 2px dashed rgb(161, 161, 161); 
+  background-color: white;
+}
+
+.tile-inner svg{
+  font-size: 48px;
+  color: white;
+  position: absolute;
+  left: 36px;
+  top: 36px;
+}
+
+.tile-inner-new svg{
+  font-size: 48px;
+  color: rgb(161, 161, 161);
+  position: absolute;
+  left: 36px;
+  top: 36px;
+}
+
+.tile-top h2{
+  color: #151b26;
+  font-size: 13px;
+  margin-top: 10px;
+  font-weight: 500;
+}
