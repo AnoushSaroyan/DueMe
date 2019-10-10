@@ -2,5 +2,56 @@
     background-color: #f6f8f9;
     color: #151b26;
     min-height: calc(100vh - 50px);
+    
 }
 
+.project-show-wrapper{
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: calc(100vh - 50px);
+    padding: 15px;
+    padding-bottom: 0;
+    height: 100%;
+}
+
+.project-show-spreadsheet{
+    flex: 0 1 1000px;
+    min-width: 405px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px 4px 0 0;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
+}
+
+.project-show-add-task-row{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px;
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.add-task-button{
+    height: 30px;
+    line-height: 30px;
+    padding: 0 9px;
+    background-color: #14aaf5;
+    border-color: #14aaf5;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 13px;
+    transition-duration: .2s;
+    transition-property: background,border,box-shadow,color,fill;
+}
+
+.add-task-button:hover{
+    background-color: #008ce3;
+    border-color: #008ce3;
+}
+
+.project-show-add-task-row svg{
+    font-size: 25px;
+    color:rgb(175, 175, 175);
+}

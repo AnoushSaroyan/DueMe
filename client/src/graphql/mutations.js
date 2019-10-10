@@ -118,3 +118,14 @@ export const CHANGE_USER_COLOR = gql`
     }
 
 `
+
+export const UPDATE_TASK_STATUS = gql`
+    mutation updateTaskStatus($id: ID!, $completed: Boolean!){
+      updateTaskStatus(id: $id, completed: $completed){
+        _id
+        completed
+      }
+    }
+
+
+`

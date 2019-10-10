@@ -3,6 +3,8 @@ import MainHeader from '../main_header/MainHeader';
 import { useQuery, Query } from "react-apollo";
 import { USER, PROJECT } from '../../graphql/queries';
 import './project.scss';
+import TaskRow from '../task/TaskRow';
+import { MdPersonOutline, mdAdd } from "react-icons/md";
 
 class Project extends Component {
     constructor(props){
@@ -44,14 +46,24 @@ class Project extends Component {
                     //     return project
                     // }}))
                     let task = []
-                    task = project.task
-
+                    task = project.tasks.map(task=> <TaskRow task={task} key={task._id} type={"project"}/>)
                     return(
                         <div>
                             <MainHeader page={project.name} color={project.color} type={"project"}/>
                             <div className="scroll-wrapper">
                                 <div className="project-show">
-                                    <div>Add task button</div>
+                                    <div class="project-show-wrapper">
+                                        <div className="project-show-spreadsheet">
+                                            <div className="project-show-add-task-row">
+                                                <div className="add-task-button">Add Task</div>
+                                                <MdPersonOutline/>
+                                            </div>
+                                            {task}
+                                        </div>
+                                        <div className="project-show-task-details">
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>)

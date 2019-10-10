@@ -9,7 +9,6 @@ import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icon
 import { LOGOUT_USER } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { FaSquare } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import CreateProjectPopup from '../forms/CreateProjectPopup'
 
@@ -55,7 +54,6 @@ class MainHeader extends Component {
 
     addBorderBottom(){
         const header = document.getElementById("main-header")
-        debugger
         if (header) header.classList.add("header-border")
     }
 

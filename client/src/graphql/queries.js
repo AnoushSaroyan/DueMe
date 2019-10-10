@@ -110,15 +110,32 @@ export const PROJECT = gql`
         tasks{
           _id
           description
+          title
           dueDate
+          completed
           user{
             _id
             name
+            color
           }
         }
       }
     }
 `;
+
+export const FETCH_TASK = gql`
+    query Task($_id: ID!){
+      task(_id: $_Id){
+        _id
+        title
+        description
+        completed
+      }
+    }
+
+
+
+`
 
 export const FETCH_MESSAGES = gql`
   query fetchMessages {
