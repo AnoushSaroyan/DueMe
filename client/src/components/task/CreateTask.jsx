@@ -19,7 +19,8 @@ class CreateTask extends Component {
 	  dueDate: "",
 	  completed: false,
     project: "",
-    user: ""
+    user: "",
+    title: ""
     };
   }
 
@@ -98,14 +99,16 @@ class CreateTask extends Component {
   }
 
   handleSubmit(e, newTask) {
+    debugger
 	e.preventDefault();
     newTask({
       variables: {
-		description: this.state.description,
-		dueDate: this.state.dueDate,
-		completed: this.state.completed,
-		user: this.state.user,
-		project: this.state.project,
+        title: this.state.title,
+        description: this.state.description,
+        dueDate: this.state.dueDate,
+        completed: this.state.completed,
+        user: this.state.user,
+        project: this.state.project,
       }
     });
   }
@@ -142,14 +145,20 @@ class CreateTask extends Component {
             <div className="form-top">
               <h1>Create New Task</h1>
               <form onSubmit={e => this.handleSubmit(e, newTask)} className="form-inner">
-                
-				<h3>Task Description</h3>
-                <input
-                  onChange={this.update("description")}
-				  value={this.state.description}
-                  placeholder='task description'
-                  className="form-input"
-                />
+        <h3>Task Title</h3>       
+        <input
+          onChange={this.update("title")}
+          value={this.state.title}
+          placeholder='task title'
+          className="form-input"
+          />
+        <h3>Task Description</h3>
+        <input
+          onChange={this.update("description")}
+          value={this.state.description}
+          placeholder='task description'
+          className="form-input"
+        />
 
 				<h3>Due Date</h3>
 				<input

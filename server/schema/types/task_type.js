@@ -10,6 +10,7 @@ const TaskType = new GraphQLObjectType({
 	fields: () => ({
 		_id: { type: GraphQLID },
 		description: { type: GraphQLString },
+		title: { type: GraphQLString },
 		dueDate: { type: GraphQLString },
 		completed: { type: GraphQLBoolean },
 		description: { type: GraphQLString },
