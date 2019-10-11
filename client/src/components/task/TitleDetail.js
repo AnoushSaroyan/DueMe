@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { IconContext } from "react-icons";
-import { FaPencilAlt } from "react-icons/fa";
 import { UPDATE_TASK_TITLE } from '../../graphql/mutations';
 import { Mutation } from "react-apollo";
+import './task.scss';
 
 
 class TitleDetail extends Component{
@@ -11,7 +10,7 @@ class TitleDetail extends Component{
 
         this.state = {
             editing: false,
-            name: this.props.task.name || ""
+            title: this.props.task.title || ""
         };
 
         this.handleEdit = this.handleEdit.bind(this);
@@ -20,6 +19,14 @@ class TitleDetail extends Component{
     handleEdit(e){
         e.preventDefault();
         this.setState({ editing: true });
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if (this.props.task._id !== prevProps.task._id) {
+            this.setState({
+                title: this.props.task.title
+            })
+        }
     }
 
     fieldUpdate(field){
@@ -31,20 +38,20 @@ class TitleDetail extends Component{
             return (
                 <Mutation mutation={UPDATE_TASK_TITLE}>
                     {(updateTaskTitle, data) => (
-                        <div>
+                        <div className="task-show-title">
                             <form
                                 onSubmit={e => {
                                     e.preventDefault();
                                     updateTaskTitle({
-                                        variables: { id: this.props.task._id, name: this.state.name }
+                                        variables: { id: this.props.task._id, title: this.state.title }
                                     }).then(() => this.setState({ editing: false }));
                                 }}
                             >
                                 <input
-                                    value={this.state.name}
-                                    onChange={this.fieldUpdate("name")}
+                                    value={this.state.title}
+                                    onChange={this.fieldUpdate("title")}
                                 />
-                                <button type="submit">Update Name</button>
+                                <button type="submit">Update title</button>
                             </form>
                         </div>
                     )}
@@ -52,17 +59,9 @@ class TitleDetail extends Component{
             );
         } else {
             return (
-                <div>
-                    <div
-                        onClick={this.handleEdit}
-                        style={{ fontSize: "10px", cursor: "pointer", display: "inline" }}
-                    >
-                        <IconContext.Provider value={{ className: "custom-icon" }}>
-                            <FaPencilAlt />
-                        </IconContext.Provider>
+                    <div onClick={this.handleEdit} className="task-show-title">
+                        <h2>{this.state.title}</h2>
                     </div>
-                    <h2>{this.state.name}</h2>
-                </div>
             );
         }
     }

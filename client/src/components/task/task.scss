@@ -1,4 +1,4 @@
-.task-mark-complete{
+.task-mark-not-complete, .task-mark-complete{
 	background-color: transparent;
 	border: 1px lightgray solid;
 	display: flex;
@@ -8,19 +8,34 @@
 	height: 28px;
 }
 
-.task-mark-complete:hover{
+.task-mark-not-complete:hover{
 	background-color: lightgray;
 	border-color: darkgray;
 }
 
-.task-mark-complete svg{
+.task-mark-not-complete svg, .task-mark-complete svg{
 	margin-right: 5px;
 	font-size: 18px;
 	color: darkgray;
 }
 
-.task-mark-complete:hover svg{
+.task-mark-not-complete:hover svg{
 	color: darkgray;
+}
+
+.task-mark-complete{
+	background-color:  #25e8c8;
+	color: white;
+	border: 1px #25e8c8 solid;
+}
+
+.task-mark-complete svg{
+	color:white;
+}
+
+.task-mark-complete:hover{
+	background-color: #00bf9c;
+	border-color: #00bf9c;
 }
 
 .task-show-close-button{
@@ -34,7 +49,8 @@
 
 .task-scroll-wrapper{
 	height: calc(100vh - 116px);
-    overflow-y: scroll;
+	overflow-y: scroll;
+	padding: 0 30px;
 }
 
 /* width */
@@ -58,4 +74,14 @@
   background: rgb(126, 126, 126); 
   border-radius: 5px;
    border: 2px solid rgb(126, 126, 126);
+}
+
+.task-show-title{
+    margin-bottom: 10px;
+	margin-top: 10px;
+	margin-left: -10px;
+	padding: 4px 9px;
+	font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
 }
