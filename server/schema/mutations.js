@@ -87,10 +87,20 @@ const mutation = new GraphQLObjectType({
         deleteProject: {
             type: ProjectType,
             args: {
-                id: { type: GraphQLID }
+                _id: { type: GraphQLID }
             },
-            resolve(_, { id }) {
-                return Project.remove({ _id: id });
+            resolve(_, { _id }) {
+                Project.findById(_id).then(project =>{
+                    project.tasks.forEach(task => {
+                        Task.remove({ _id: task})})
+                    return project
+
+                }).then(project => Team.findById(project.team).then(team => {
+                    team.projects.pull(project)
+                    team.save()
+                    return Project.remove({ _id: _id });
+                }))
+
             }
         },
         newTask: {
@@ -123,7 +133,7 @@ const mutation = new GraphQLObjectType({
                     Project.findById(task.project).then(project => {
                         project.tasks.pull(task)
                         project.save()
-                        return task.remove({ _id: _id })
+                        return Task.remove({ _id: _id })
                     })
                 )
 

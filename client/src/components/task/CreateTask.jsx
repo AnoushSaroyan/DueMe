@@ -99,7 +99,6 @@ class CreateTask extends Component {
   }
 
   handleSubmit(e, newTask) {
-    debugger
 	e.preventDefault();
     newTask({
       variables: {
