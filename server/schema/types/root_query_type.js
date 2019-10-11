@@ -13,6 +13,7 @@ const Task = mongoose.model("task");
 const Team = mongoose.model("team");
 const Message = mongoose.model("message");
 const Chat = mongoose.model("chat");
+const AuthService = require("../../services/auth"); 
 
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
@@ -47,6 +48,7 @@ const RootQueryType = new GraphQLObjectType({
             type: ProjectType,
             args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(_, args) {
+                debugger
                 return Project.findById(args._id);
             }
         },
@@ -102,16 +104,22 @@ const RootQueryType = new GraphQLObjectType({
                 return Chat.findById(args._id);
             }
         },
-        userChats: {
+        usersChat: {
             type: new GraphQLList(ChatType),
-            args: { _id: { type: new GraphQLNonNull(GraphQLID) } }, // user_id
+            args: { _id: { type: new GraphQLNonNull(GraphQLID) } }, // other user_id
             async resolve(_, args, context) {
                 let validUser = await AuthService.verifyUser({ token: context.token });
                 let conversations = await Chat.find({});
+
                 if (validUser.loggedIn) {
-                    return conversations.filter(chat => chat.users.includes(args._id))
+                    // let valid_user_id = "5d96d076de8d3d64ecab25a7";
+                    // let returnValue = conversations.filter(chat => chat.users.includes(args._id) && chat.users.includes(valid_user_id));
+                    // return returnValue; 
+
+                    // filter the chat with other user_id and the current user id
+                    return conversations.filter(chat => chat.users.includes(args._id) && chat.users.includes(validUser._id)); 
                 } else {
-                    throw new Error("Sorry, you need to be logged in to create a product");
+                    throw new Error("Sorry, you need to be logged in");
                 }
             }
             // async resolve(parentValue, { name, description, weight }, context) {
@@ -124,6 +132,37 @@ const RootQueryType = new GraphQLObjectType({
             //         throw new Error("Sorry, you need to be logged in to create a product");
             //     }
             // }
+        },
+        fetchOrCreateChatWithUser: {
+            type: ChatType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) }, // this is the other user's id
+            },
+
+            async resolve(_, { id }, context) {
+                let validUser = await AuthService.verifyUser({ token: context.token });
+                let conversations = await Chat.find({});
+
+                if (validUser.loggedIn) {
+                    // let valid_user_id = "5d96d076de8d3d64ecab25a7";
+                    // let returnValue = conversations.filter(chat => chat.users.includes(args._id) && chat.users.includes(valid_user_id));
+                    // return returnValue; 
+
+                    // filter the chat with other user_id and the current user id
+                    let chaty = conversations.filter(chat => {
+                        return chat.users.includes(id) && chat.users.includes(validUser._id)
+                    });
+                    let newChaty;
+                    if (chaty.length !== 0) {
+                        return chaty[0];
+                    } else {
+                        newChaty = await new Chat({ users: [validUser._id, id] }).save();
+                        return newChaty;
+                    }
+                } else {
+                    throw new Error("Sorry, you need to be logged in");
+                }
+            }
         }
 
     })

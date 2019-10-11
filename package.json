@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js",
+    "server": "nodemon index.js --ignore client",
     "client-install": "npm install --prefix client",
     "client": "npm start --prefix client -g",
     "dev": "concurrently \"npm run server\" \"npm run client\""

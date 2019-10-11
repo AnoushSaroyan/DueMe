@@ -49,15 +49,6 @@ export const USER = gql`
           _id
           name
           color
-          tasks{
-            _id
-            user{
-              _id
-              name
-            }
-            description
-            dueDate
-          }
         }
       }
       }
@@ -111,15 +102,40 @@ export const FIND_PROJECT_BY_NAME = gql`
 
 export const PROJECT = gql`
     query Project($_id: ID!){
-      user(_id: $_id){
-      _id
-      name
-	  description
-	  dueDate
-	  team
+      project(_id: $_id){
+        description
+        dueDate
+        color
+        name
+        tasks{
+          _id
+          description
+          title
+          dueDate
+          completed
+          user{
+            _id
+            name
+            color
+          }
+        }
       }
     }
 `;
+
+export const FETCH_TASK = gql`
+    query Task($_id: ID!){
+      task(_id: $_Id){
+        _id
+        title
+        description
+        completed
+      }
+    }
+
+
+
+`
 
 export const FETCH_MESSAGES = gql`
   query fetchMessages {
@@ -136,9 +152,9 @@ export const FETCH_MESSAGES = gql`
   }
 `;
 
-export const FETCH_USER_CHATS = gql`
-  query fetchUserChats($id: ID!) {
-    userChats(_id: $id) {
+export const FETCH_USERS_CHAT = gql`
+  query fetchUsersChat($id: ID!) {
+    usersChat(_id: $id) {
       _id
       users {
         _id
@@ -146,7 +162,13 @@ export const FETCH_USER_CHATS = gql`
         name
       }
       messages {
-        user
+        user {
+          _id
+          name
+          email
+          token
+          loggedIn
+        }
         content
         date
       }
@@ -158,6 +180,27 @@ export const FETCH_USER_CHATS = gql`
 export const FETCH_CHAT = gql`
   query fetchChat($id: ID!) {
     chat(_id: $id) {
+      _id,
+      users {
+        _id 
+        name
+        email
+      }
+      messages {
+        user {
+          _id
+          name
+        }
+        content
+        date
+      }
+    }
+  }
+`;
+
+export const FETCH_OR_CREATE_CHAT_WITH_USER = gql`
+  query FetchOrCreateChatWithUser($id: ID!) {
+    fetchOrCreateChatWithUser(id: $id) {
       _id,
       users {
         _id 

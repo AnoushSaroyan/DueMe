@@ -12,8 +12,7 @@ const TaskSchema = new Schema({
 		ref: "project"
 	},
 	description: {
-		type: String,
-		required: true
+		type: String
 	},
 	dueDate: {
 		type: String,
@@ -22,7 +21,11 @@ const TaskSchema = new Schema({
 	completed: {
 		type: Boolean,
 		require: true
-	}
+	},
+	title: {
+		type: String,
+		required: true
+	},
 });
 
 TaskSchema.statics.updateTaskStatus = (id, completed) => {

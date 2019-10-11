@@ -73,7 +73,7 @@ class Login extends React.Component {
             >
                 {(login, { data }) => (
                     <div className="session">
-                    <Link to="/home"><img src="images/dueme logo.png" class="session-logo" alt="dueme" /></Link>
+                    <Link to="/home"><img src="images/dueme logo.png" className="session-logo" alt="dueme" /></Link>
                         <form onSubmit={e => this.handleSubmit(e, login)}
                             className="form-top-session"
                         >

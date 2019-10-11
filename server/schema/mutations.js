@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLID, GraphQLList, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLID, GraphQLList, GraphQLBoolean, GraphQLNonNull } = graphql;
 const mongoose = require("mongoose");
 
 const UserType = require("./types/user_type");
@@ -97,13 +97,14 @@ const mutation = new GraphQLObjectType({
             type: TaskType,
             args: {
                 description: { type: GraphQLString },
+                title: { type: GraphQLString },
                 dueDate: { type: GraphQLString },
                 completed: { type: GraphQLBoolean },
                 project: { type: GraphQLID },
                 user: { type: GraphQLID },
             },
-            resolve(_, { description, dueDate, completed, project, user }) {
-				return new Task({ description, dueDate, completed, project, user }).save().then(task =>
+            resolve(_, { title, description, dueDate, completed, project, user }) {
+				return new Task({ title, description, dueDate, completed, project, user }).save().then(task =>
 					Project.findById(task.project).then(project => {
 						project.tasks.push(task)
 						project.save()
@@ -115,10 +116,18 @@ const mutation = new GraphQLObjectType({
         deleteTask: {
             type: TaskType,
             args: {
-                id: { type: GraphQLID }
+                _id: { type: GraphQLID }
             },
-            resolve(_, { id }) {
-                return Task.remove({ _id: id });
+            resolve(_, { _id }) {
+                Task.findById({_id}).then(task => 
+                    Project.findById(task.project).then(project => {
+                        project.tasks.pull(task)
+                        project.save()
+                        return task.remove({ _id: _id })
+                    })
+                )
+
+                // return Task.remove({ _id: _id });
             }
         },
         
@@ -171,12 +180,12 @@ const mutation = new GraphQLObjectType({
                 if (validUser.loggedIn) {
                     return new Chat({ users: [validUser._id, args.id] }).save();
                 } else {
-                    throw new Error("Sorry, you need to be logged in to create a product");
+                    throw new Error("Sorry, you need to be logged in to create a chat");
                 }
             }
         },
         newMessage: {
-            type: MessageType,
+            type: ChatType,
             args: {
                 content: { type: GraphQLString },
                 user: { type: GraphQLID },
@@ -195,10 +204,10 @@ const mutation = new GraphQLObjectType({
                     }
                     await chaty.save();
                     // publish to the pubsub system so that the new data will get send to the chat that is subscribed to the messageSent subscription
-                    await pubsub.publish("MESSAGE_SENT", { messageSent: message, chat: chaty });
-                    return message;
+                    await pubsub.publish("MESSAGE_SENT", { messageSent: chaty });
+                    return chaty;
                 } else {
-                    throw new Error("Sorry, you need to be logged in to create a product");
+                    throw new Error("Sorry, you need to be logged in to create a new message");
                 }
             }
         },
@@ -229,7 +238,7 @@ const mutation = new GraphQLObjectType({
                         throw new Error("Sorry, you can't delete other users' messages");
                     }
                 } else {
-                    throw new Error("Sorry, you need to be logged in to create a product");
+                    throw new Error("Sorry, you need to be logged in to delete a message");
                 }
             }
         },
@@ -247,6 +256,38 @@ const mutation = new GraphQLObjectType({
                 })
             }
         }
+
+        // fetchOrCreateChatWithUser: {
+        //     type: ChatType,
+        //     args: {
+        //         id: { type: new GraphQLNonNull(GraphQLID) }, // this is the other user's id
+        //     },
+
+        //     async resolve(_, { id }, context) {
+        //         let validUser = await AuthService.verifyUser({ token: context.token });
+        //         let conversations = await Chat.find({});
+
+        //         if (validUser.loggedIn) {
+        //             // let valid_user_id = "5d96d076de8d3d64ecab25a7";
+        //             // let returnValue = conversations.filter(chat => chat.users.includes(args._id) && chat.users.includes(valid_user_id));
+        //             // return returnValue; 
+
+        //             // filter the chat with other user_id and the current user id
+        //             let chaty = conversations.filter(chat => {
+        //                 return chat.users.includes(id) && chat.users.includes(validUser._id)
+        //             });
+        //             let newChaty;
+        //             if (chaty.length !== 0) {
+        //                 return chaty[0];
+        //             } else {
+        //                 newChaty = await new Chat({ users: [valid_user_id, id] }).save();
+        //                 return newChaty;
+        //             }
+        //         } else {
+        //             throw new Error("Sorry, you need to be logged in");
+        //         }
+        //     }
+        // }
 
     }
 });
