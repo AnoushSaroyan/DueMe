@@ -65,7 +65,7 @@ class TaskList extends Component {
 					
 					return (
 						<div>
-							<MainHeader page={user.name} color={user.color} type={"project"} />
+							<MainHeader page={user.name} color={user.color} type={"user"} />
 							<div className="scroll-wrapper">
 								<div className="project-show">
 									<div className="project-show-wrapper">

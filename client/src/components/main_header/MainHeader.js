@@ -80,6 +80,23 @@ class MainHeader extends Component {
             } 
             return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div><h1>{this.state.page}</h1></div>
         }
+        if (this.state.type === "user") {
+            let color
+            this.state.projectColor ? color = this.state.projectColor : color = "#e362e3"
+            let projectColor = {
+                backgroundColor: color
+            }
+            const abbreviatedName = this.state.page.split(" ").map(word => word[0])
+            let rightLetters
+            if (abbreviatedName.length === 1) {
+                rightLetters = abbreviatedName[0]
+            } else {
+                rightLetters = [abbreviatedName[0] + abbreviatedName[abbreviatedName.length - 1]]
+            }
+            return <div className="page-title"><div className="page-title-color-box page-title-color-circle" style={projectColor}><div className="page-title-inside" >{rightLetters}</div></div><h1>{this.state.page}</h1></div>
+        }
+
+
         return <div className="page-title"><h1>{this.state.page}</h1></div>
     }
 
