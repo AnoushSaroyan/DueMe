@@ -28,10 +28,20 @@ class TaskList extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps.match.params.id !== this.props.match.params.id && !this.props.type) {
+			debugger
 			this.setState({
-				userID: this.props.match.params.id
+				userId: this.props.match.params.id
 			})
 		}
+	}
+
+	renderLoading(){
+		return (
+			<div className="la-ball-clip-rotate-multiple la-dark la-3x main-page-load">
+				<div></div>
+				<div></div>
+			</div>
+		)
 	}
 
 	render() {
@@ -42,7 +52,7 @@ class TaskList extends Component {
 		return (
 			<Query query={USER} variables={{ _id: this.state.userId }}>
 				{({ loading, error, data }) => {
-					if (loading) return null;
+					if (loading) return this.renderLoading()
 					if (error) return <option>{`Error! ${error}`}</option>;
 					const { user } = data
 					const projects = []
