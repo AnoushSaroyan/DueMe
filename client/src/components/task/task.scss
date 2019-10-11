@@ -83,5 +83,20 @@
 	padding: 4px 9px;
 	font-size: 24px;
     font-weight: 500;
+	line-height: 32px;
+	border: 1px solid transparent;
+}
+
+.task-show-title:hover{
+	border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.task-show-title input{
+    font-size: 24px;
+    font-weight: 500;
     line-height: 32px;
+    background: transparent;
+    border: none;
+    box-sizing: content-box;
 }

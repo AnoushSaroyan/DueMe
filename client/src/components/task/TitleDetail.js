@@ -50,8 +50,14 @@ class TitleDetail extends Component{
                                 <input
                                     value={this.state.title}
                                     onChange={this.fieldUpdate("title")}
+                                    onBlur={e => {
+                                        e.preventDefault();
+                                        updateTaskTitle({
+                                            variables: { id: this.props.task._id, title: this.state.title }
+                                        }).then(() => this.setState({ editing: false }));
+                                    }}
                                 />
-                                <button type="submit">Update title</button>
+                                {/* <button type="submit">Update title</button> */}
                             </form>
                         </div>
                     )}
