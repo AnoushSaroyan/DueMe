@@ -38,6 +38,8 @@ class TaskRow extends Component{
 
     }
 
+    
+
     componentDidUpdate(prevProps, prevState){
         if (this.props.task.completed !== this.state.completed){
             this.setState({

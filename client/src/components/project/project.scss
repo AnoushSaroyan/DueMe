@@ -55,3 +55,30 @@
     font-size: 25px;
     color:rgb(175, 175, 175);
 }
+
+.project-show-task-details{
+    overflow: hidden;
+    flex: 0 1 0px;
+    margin-left: 15px;
+    border-radius: 4px 4px 0 0;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s ease-in-out;
+    transition: flex-basis 500ms ease-in-out;
+    transition: min-width .2s ease-in-out;
+    transform: translateX(100%);
+}
+
+.task-details-slide{
+    transform: translateX(0%);
+    transition: transform .5s cubic-bezier(0.23, 1, 0.32, 1);
+    min-width: 495px;
+    flex: 0 1 675px;
+}
+
+// .test-left{
+//     min-width: calc(100% - 800px);
+//     width: 45%;
+// }

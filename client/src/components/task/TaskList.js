@@ -5,6 +5,7 @@ import { USER, PROJECT } from '../../graphql/queries';
 import '../project/project.scss';
 import TaskRow from './TaskRow';
 import { MdPersonOutline, mdAdd } from "react-icons/md";
+import Task from './Task'
 // import ReactPlayer from 'react-player'
 
 class TaskList extends Component {
@@ -12,12 +13,15 @@ class TaskList extends Component {
 		super(props)
 		if (this.props.type === "own"){
 			this.state = {
-				userId: localStorage.getItem("currentUserId") 
+				userId: localStorage.getItem("currentUserId"),
+				openedTask: ""
 			}
 		} else {
 		this.state = {
-			userId: this.props.match.params.id
+			userId: this.props.match.params.id,
+			openedTask: ""
 		}}
+		this.handleSlide = this.handleSlide.bind(this)
 	}
 
 	// componentDidMount(){
@@ -28,7 +32,6 @@ class TaskList extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps.match.params.id !== this.props.match.params.id && !this.props.type) {
-			debugger
 			this.setState({
 				userId: this.props.match.params.id
 			})
@@ -42,6 +45,14 @@ class TaskList extends Component {
 				<div></div>
 			</div>
 		)
+	}
+
+	handleSlide(e){
+		const slider = document.getElementById("task-details")
+		this.setState({
+			openedTask: e.currentTarget.id
+		})
+		slider.classList.add("task-details-slide")
 	}
 
 	render() {
@@ -71,7 +82,7 @@ class TaskList extends Component {
 					//     foundProject = project
 					//     return project
 					// }}))
-					tasks = tasks.map(task => <TaskRow task={task} key={task._id} type={"user"} projectId={task.project._id} userId={user._id}/>)
+					tasks = tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id}><TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} /></div>)
 					
 					return (
 						<div>
@@ -79,14 +90,14 @@ class TaskList extends Component {
 							<div className="scroll-wrapper">
 								<div className="project-show">
 									<div className="project-show-wrapper">
-										<div className="project-show-spreadsheet">
+										<div className="project-show-spreadsheet test-left">
 											<div className="project-show-add-task-row">
 												<div className="add-task-button">Add Task</div>
 											</div>
 											{tasks}
 										</div>
-										<div className="project-show-task-details">
-
+										<div className="project-show-task-details" id="task-details">
+											<Task taskId={this.state.openedTask}/>
 										</div>
 									</div>
 								</div>
