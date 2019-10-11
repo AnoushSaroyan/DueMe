@@ -1,0 +1,11 @@
+# version: "3"
+
+# services:
+#   web:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     image: 4868/dueme
+#     environment:
+#       NODE_ENV: production
+
