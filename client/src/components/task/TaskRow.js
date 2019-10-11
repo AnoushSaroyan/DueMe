@@ -4,6 +4,7 @@ import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 import { UPDATE_TASK_STATUS } from "../../graphql/mutations";
 import { Mutation} from "react-apollo";
 import { FETCH_TASK, USER, PROJECT } from "../../graphql/queries";
+import { Link } from 'react-router-dom';
 
 class TaskRow extends Component{
     constructor(props){
@@ -31,9 +32,9 @@ class TaskRow extends Component{
         }
 
         return (
-            <div className="main-header-avatar-pic task-row-avatar-pic" style={profileColor} key={user._id}>
+            <Link to={`/main/user/${user._id}`} className="main-header-avatar-pic task-row-avatar-pic" style={profileColor} key={user._id}>
                 {rightLetters}
-             </div>
+             </Link>
         )
 
     }
