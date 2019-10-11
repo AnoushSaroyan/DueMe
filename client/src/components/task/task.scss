@@ -1,40 +1,61 @@
-.task-page {
-	display: block;
-	width: 100%;
-	min-height: 500px;
-	margin: auto;
-}
-
-.task-header {
+.task-mark-complete{
+	background-color: transparent;
+	border: 1px lightgray solid;
 	display: flex;
-	height: 40px;
-	padding: 0 20px;
 	align-items: center;
-	border-top: 1px solid rgb(228, 228, 228);
-	border-bottom: 1px solid rgb(228, 228, 228);
-	box-shadow: rgba(170, 170, 170, 0.3) 0px 2px 2px;
+	color: black;
+	font-size: 12px;
+	height: 28px;
 }
 
-.task-intro {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    margin-bottom: 90px;
-} 
-
-.task-column {
-
+.task-mark-complete:hover{
+	background-color: lightgray;
+	border-color: darkgray;
 }
 
-.add-task {
-
+.task-mark-complete svg{
+	margin-right: 5px;
+	font-size: 18px;
+	color: darkgray;
 }
 
-.add-task-button {
-
+.task-mark-complete:hover svg{
+	color: darkgray;
 }
 
-.task-list {
+.task-show-close-button{
+	cursor: pointer;
+	color: lightgray;
+}
 
+.task-show-close-button:hover{
+	color: rgb(78, 78, 78);
+}
+
+.task-scroll-wrapper{
+	height: calc(100vh - 116px);
+    overflow-y: scroll;
+}
+
+/* width */
+.task-show ::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.task-show ::-webkit-scrollbar-track {
+  background: transparent; 
+  z-index: -1;
+}
+ 
+/* Handle */
+.task-show ::-webkit-scrollbar-thumb {
+  background: transparent; 
+}
+
+/* Handle on hover */
+.task-show:hover ::-webkit-scrollbar-thumb {
+  background: rgb(126, 126, 126); 
+  border-radius: 5px;
+   border: 2px solid rgb(126, 126, 126);
 }
