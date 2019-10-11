@@ -48,7 +48,6 @@ const RootQueryType = new GraphQLObjectType({
             type: ProjectType,
             args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(_, args) {
-                debugger
                 return Project.findById(args._id);
             }
         },

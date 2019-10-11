@@ -5,13 +5,16 @@ import { USER, PROJECT } from '../../graphql/queries';
 import './project.scss';
 import TaskRow from '../task/TaskRow';
 import { MdPersonOutline, mdAdd } from "react-icons/md";
+import Task from '../task/Task'
 
 class Project extends Component {
     constructor(props){
         super(props)
         this.state = {
-            projectId: this.props.match.params.id
+            projectId: this.props.match.params.id,
+            openedTask: ""
         }
+        this.handleSlide = this.handleSlide.bind(this)
     }
 
     // componentDidMount(){
@@ -19,6 +22,14 @@ class Project extends Component {
     //         projectId: 
     //     })
     // }
+    handleSlide(e) {
+        const slider = document.getElementById("task-details")
+        this.setState({
+            openedTask: e.currentTarget.id
+        })
+        slider.classList.add("task-details-slide")
+    }
+
 
     componentDidUpdate(prevProps, prevState){
         if (prevProps.match.params.id !== this.props.match.params.id){
@@ -46,7 +57,7 @@ class Project extends Component {
                     //     return project
                     // }}))
                     let task = []
-                    task = project.tasks.map(task=> <TaskRow task={task} key={task._id} type={"project"} projectId={this.state.projectId}/>)
+                    task = project.tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id}><TaskRow task={task} type={"project"} projectId={this.state.projectId}/></div>)
                     return(
                         <div>
                             <MainHeader page={project.name} color={project.color} type={"project"}/>
@@ -60,8 +71,8 @@ class Project extends Component {
                                             </div>
                                             {task}
                                         </div>
-                                        <div className="project-show-task-details">
-
+                                        <div className="project-show-task-details" id="task-details">
+                                            <Task taskId={this.state.openedTask} />
                                         </div>
                                     </div>
                                 </div>

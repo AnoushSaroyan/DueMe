@@ -1,35 +1,28 @@
 import React, { Component } from 'react';
-import MainHeader from '../main_header/MainHeader';
-import './task.scss';
-// import ReactPlayer from 'react-player'
 
-class Task extends Component {
+class Task extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            taskId: this.props.taskId
+        }
+    }
 
-	render() {
+    componentDidUpdate(prevProps, prevState){
+        if (this.state.taskId !== this.props.taskId){
+            this.setState({
+                taskId: this.props.taskId
+            })
+        }
+    }
 
-		if (!localStorage.getItem("currentUserId")) {
-			return <div></div>
-		}
-
-		return <div>
-			<MainHeader page={"Task"} />
-			<div className="scroll-wrapper">
-				<div className="task-page">
-					<div className="task-header"> {} completed </div>
-					<div className="task-intro">
-					</div>
-					<div className="task-column">
-						<div className="add-task">
-							<div className="add-task-button"> Add Task </div>
-						</div>
-						<div className="task-list">
-							{}items
-						</div>
-					</div>
-                </div>
-			</div>
-		</div>
-	}
+    render(){
+        return(
+            <div>Hi
+                taskId: {this.state.taskId}
+            </div>
+        )
+    }
 }
 
 export default Task

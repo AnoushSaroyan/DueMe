@@ -38,6 +38,8 @@ class TaskRow extends Component{
 
     }
 
+    
+
     componentDidUpdate(prevProps, prevState){
         if (this.props.task.completed !== this.state.completed){
             this.setState({
@@ -118,6 +120,45 @@ class TaskRow extends Component{
                     </div>
                     </div>
                 </div>
+            )
+        }
+
+        if (type === "user") {
+            return(
+            <div className="task-row">
+                <div className="task-row-wrapper">
+                    <div className="task-row-left noselect">
+                        <Mutation
+                            mutation={UPDATE_TASK_STATUS}
+                            onError={err => this.setState({ message: err.message })}
+                            refetchQueries={() => {
+                                return [
+                                    {
+                                        query: PROJECT,
+                                        variables: { _id: this.state.projectId }
+                                    }
+                                ]
+                            }
+                            }
+                            onCompleted={data => {
+                                const { title } = data.updateTaskStatus;
+                                this.setState({
+                                    message: `task ${title} update successfully!`
+                                });
+                            }}
+                        >
+                            {(updateTaskStatus, { data }) => (
+                                this.handleCheckmark(task, updateTaskStatus)
+                            )}
+                        </Mutation>
+                        {displayTitle}
+                    </div>
+                    <div className="task-row-right">
+                        {this.handleDate(dueDate)}
+                        {/* {this.handleUserName(user)} */}
+                    </div>
+                </div>
+            </div>
             )
         }
     }

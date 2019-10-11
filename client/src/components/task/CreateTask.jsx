@@ -99,7 +99,6 @@ class CreateTask extends Component {
   }
 
   handleSubmit(e, newTask) {
-    debugger
 	e.preventDefault();
     newTask({
       variables: {
@@ -136,7 +135,7 @@ class CreateTask extends Component {
           this.setState({
 			  message: `New task ${description} created successfully!`
           });
-          this.props.history.push('/');
+          this.props.history.push(`/main/project/${this.state.project}`);
         }}
       >
         {(newTask, { data }) => (
