@@ -146,14 +146,47 @@ export const CHANGE_USER_COLOR = gql`
 
 `
 
+// export const UPDATE_TASK_STATUS = gql`
+//     mutation updateTaskStatus($id: ID!, $completed: Boolean!){
+//       updateTaskStatus(id: $id, completed: $completed){
+//         _id
+//         title
+//         completed
+//       }
+//     }
+
+
+// `
+
 export const UPDATE_TASK_STATUS = gql`
-    mutation updateTaskStatus($id: ID!, $completed: Boolean!){
-      updateTaskStatus(id: $id, completed: $completed){
+    mutation updateTaskStatus($id: ID, $completed: Boolean){
+      updateTask(_id: $id, completed: $completed){
         _id
         title
         completed
       }
     }
 
+`
+
+export const UPDATE_TASK_TITLE = gql`
+    mutation updateTaskTitle($id: ID, $title: String){
+      updateTask(_id: $id, title: $title){
+        _id
+        title
+        completed
+      }
+    }
+
+`
+
+export const UPDATE_TASK_USER = gql`
+    mutation updateTaskUser($id: ID, $user: ID){
+      updateTask(_id: $id, user: $user){
+        _id
+        title
+        completed
+      }
+    }
 
 `

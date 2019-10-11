@@ -205,6 +205,7 @@
 /* Track */
 .sidebar ::-webkit-scrollbar-track {
   background: transparent; 
+  z-index: -1;
 }
  
 /* Handle */

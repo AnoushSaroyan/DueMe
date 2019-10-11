@@ -12,7 +12,8 @@ class Project extends Component {
         super(props)
         this.state = {
             projectId: this.props.match.params.id,
-            openedTask: ""
+            openedTask: "",
+            taskStatus: ""
         }
         this.handleSlide = this.handleSlide.bind(this)
     }
@@ -24,8 +25,16 @@ class Project extends Component {
     // }
     handleSlide(e) {
         const slider = document.getElementById("task-details")
+        let bool = e.currentTarget.getAttribute("value")
+        if (bool === "true"){
+            bool = true
+        } else {
+            bool = false
+        }
+
         this.setState({
-            openedTask: e.currentTarget.id
+            openedTask: e.currentTarget.id,
+            taskStatus: bool
         })
         slider.classList.add("task-details-slide")
     }
@@ -57,7 +66,7 @@ class Project extends Component {
                     //     return project
                     // }}))
                     let task = []
-                    task = project.tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id}><TaskRow task={task} type={"project"} projectId={this.state.projectId}/></div>)
+                    task = project.tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}><TaskRow task={task} type={"project"} projectId={this.state.projectId}/></div>)
                     return(
                         <div>
                             <MainHeader page={project.name} color={project.color} type={"project"}/>
@@ -72,7 +81,7 @@ class Project extends Component {
                                             {task}
                                         </div>
                                         <div className="project-show-task-details" id="task-details">
-                                            <Task taskId={this.state.openedTask} />
+                                            <Task taskId={this.state.openedTask} completed={this.state.taskStatus} />
                                         </div>
                                     </div>
                                 </div>

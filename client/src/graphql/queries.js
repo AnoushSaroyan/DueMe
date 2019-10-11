@@ -93,7 +93,8 @@ export const TASK = gql`
 		_id
 		description
 		dueDate
-		completed
+    completed
+    title
 		project{
 			_id
 			name

@@ -14,12 +14,14 @@ class TaskList extends Component {
 		if (this.props.type === "own"){
 			this.state = {
 				userId: localStorage.getItem("currentUserId"),
-				openedTask: ""
+				openedTask: "",
+				taskStatus: ""
 			}
 		} else {
 		this.state = {
 			userId: this.props.match.params.id,
-			openedTask: ""
+			openedTask: "",
+			taskStatus: ""
 		}}
 		this.handleSlide = this.handleSlide.bind(this)
 	}
@@ -49,8 +51,15 @@ class TaskList extends Component {
 
 	handleSlide(e){
 		const slider = document.getElementById("task-details")
+		let bool = e.currentTarget.getAttribute("value")
+		if (bool === "true") {
+			bool = true
+		} else {
+			bool = false
+		}
 		this.setState({
-			openedTask: e.currentTarget.id
+			openedTask: e.currentTarget.id,
+			taskStatus: bool
 		})
 		slider.classList.add("task-details-slide")
 	}
@@ -82,7 +91,7 @@ class TaskList extends Component {
 					//     foundProject = project
 					//     return project
 					// }}))
-					tasks = tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id}><TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} /></div>)
+					tasks = tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}><TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} /></div>)
 					
 					return (
 						<div>
@@ -97,7 +106,7 @@ class TaskList extends Component {
 											{tasks}
 										</div>
 										<div className="project-show-task-details" id="task-details">
-											<Task taskId={this.state.openedTask}/>
+											<Task taskId={this.state.openedTask} completed={this.state.taskStatus}/>
 										</div>
 									</div>
 								</div>
