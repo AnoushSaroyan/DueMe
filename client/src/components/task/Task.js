@@ -8,6 +8,7 @@ import { Mutation } from "react-apollo";
 import { UPDATE_TASK_STATUS } from "../../graphql/mutations";
 import TaskList from './TaskList';
 import AssigneeDetail from './AssigneeDetail';
+import DueDateDetail from './DueDateDetail'
 
 class Task extends Component{
     constructor(props){
@@ -111,6 +112,7 @@ class Task extends Component{
                                     <TitleDetail task={task}/>
                                     <div className="assignee-data">
                                     <AssigneeDetail task={task}/>
+                                    <DueDateDetail task={task}/>
                                     </div>
 
                                 </div>

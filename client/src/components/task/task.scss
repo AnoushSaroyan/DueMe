@@ -104,6 +104,7 @@
 .task-show-user{
 	display: flex;
 	align-items: center;
+	margin-right: 20px;
 }
 
 .task-show-user .main-header-avatar-pic{
@@ -117,6 +118,7 @@
 .assignee-data{
 	padding-bottom: 15px;
 	border-bottom: 1px solid rgb(238, 238, 238);
+	display: flex;
 }
 
 .assignee-details{
@@ -132,3 +134,12 @@
 .assignee-details div:last-child{
 	color:#273240;
 }
+
+.task-calendar{
+	justify-content: center;
+}
+
+.task-calendar svg{
+	color: darkgray;
+	font-size: 16px;
+}	
