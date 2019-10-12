@@ -75,7 +75,10 @@ class TaskRow extends Component{
                 id: task._id,
                 completed: !this.state.completed
             }
-        })
+        }).then(() =>
+            this.setState({
+                completed: !this.state.completed
+            }))
 
     }
     

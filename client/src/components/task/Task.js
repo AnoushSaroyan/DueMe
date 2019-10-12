@@ -24,13 +24,13 @@ class Task extends Component{
                 completed: this.props.completed
             })
         }
-
-        // if (this.state.completed !== this.props.completed){
-        // 
-        //     this.setState({
-        //         completed: this.props.completed
-        //     })
-        // }
+        // debugger
+        if (this.state.completed !== this.props.completed){
+        
+            this.setState({
+                completed: this.props.completed
+            })
+        }
 
     }
 
