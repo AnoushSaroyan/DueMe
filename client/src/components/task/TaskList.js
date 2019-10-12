@@ -33,7 +33,7 @@ class TaskList extends Component {
 	// }
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevProps.match.params.id !== this.props.match.params.id && !this.props.type) {
+		if (!this.props.type && prevProps.match.params.id !== this.props.match.params.id) {
 			this.setState({
 				userId: this.props.match.params.id
 			})
@@ -85,7 +85,15 @@ class TaskList extends Component {
 									if (task.user._id === user._id )tasks.push(task)})}})}})
 
 
-
+					if (this.state.openedTask) {
+						let foundTask = tasks.find(task => task._id === this.state.openedTask)
+						if (foundTask.completed !== this.state.taskStatus) {
+							debugger
+							this.setState({
+								taskStatus: foundTask.completed
+							})
+						}
+					}
 					// let foundProject = project
 					// const team = teams.find(team => team.projects.find(project => {if(project._id == this.state.projectId){
 					//     foundProject = project
