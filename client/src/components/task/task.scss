@@ -100,3 +100,35 @@
     border: none;
     box-sizing: content-box;
 }
+
+.task-show-user{
+	display: flex;
+	align-items: center;
+}
+
+.task-show-user .main-header-avatar-pic{
+	height: 30px;
+	width: 30px;
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+}
+
+.assignee-data{
+	padding-bottom: 15px;
+	border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.assignee-details{
+	display: flex;
+	flex-direction: column;
+	font-size: 12px;
+}
+
+.assignee-details div:first-child{
+	color: #6f7782;
+}
+
+.assignee-details div:last-child{
+	color:#273240;
+}

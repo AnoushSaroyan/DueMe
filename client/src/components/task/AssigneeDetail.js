@@ -33,6 +33,7 @@ class AssigneeDetail extends Component{
 
     render(){
         const { user } = this.state
+        const abbreviatedName = user.name.split(" ").map(word => word[0])
         let rightLetters
         if (abbreviatedName.length === 1) {
             rightLetters = abbreviatedName[0]
@@ -80,6 +81,14 @@ class AssigneeDetail extends Component{
                 <div onClick={this.handleEdit} className="task-show-user">
                     <div className="main-header-avatar-pic" style={profileColor} >
                         {rightLetters}
+                    </div>
+                    <div className="assignee-details">
+                        <div>
+                            Assigned To
+                        </div>
+                        <div>
+                            {user.name}
+                        </div>
                     </div>
                 </div>
             );
