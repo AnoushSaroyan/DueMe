@@ -33,6 +33,8 @@ class MainHeader extends Component {
             if (addDropdown) addDropdown.classList.remove("active")
             let accountDropdown = document.getElementById("profile-menu")
             if (accountDropdown) accountDropdown.classList.remove("active")
+            let projectDropdown = document.getElementById("project-menu")
+            if (accountDropdown) projectDropdown.classList.remove("active")
         })
         if (this.props.type === "project") {
             this.addBorderBottom()
@@ -131,10 +133,10 @@ class MainHeader extends Component {
             return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div>
             <h1>{this.state.page}</h1>
             {this.handleFavorite(user)}
-            <div>
-                <MdKeyboardArrowDown onClick={this.toggleDropMenu("project-menu")}/>
+            <div className="project-dropdown-wrapper">
+                <MdKeyboardArrowDown className="project-dropdown-button" onClick={this.toggleDropMenu("project-menu")}/>
             </div>
-            <div className="profile-menu" id="project-menu">
+            <div className="profile-menu project-menu" id="project-menu">
                     <div className="add-menu-items">
                         <ApolloConsumer>
                             {client => (
