@@ -126,7 +126,7 @@ class TaskModal extends Component {
                                     <div>
                                         <div className="dots noselect" onClick={this.toggleDropMenu("task-menu")}>
                                             ...
-                                </div>
+                                        </div>
                                         <div className="profile-menu" id="task-menu">
                                             <div className="add-menu-items">
                                                 <ApolloConsumer>

@@ -273,6 +273,11 @@ div.task-details-modal{
 
 .task-details-modal .dots{
 	margin-right: 10px;
+	cursor: pointer;
+}
+
+.task-details-modal .dots:hover{
+	color: rgb(78, 78, 78);
 }
 
 .task-details-modal input{
@@ -309,4 +314,8 @@ div.task-details-modal{
 	display: flex;
 	min-height: calc(100vh - 300px);
 	font-size: 16px;
+}
+
+.task-details-modal .dialog-close-button:hover{
+	color: rgb(78, 78, 78);
 }
