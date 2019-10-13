@@ -2,10 +2,12 @@
   height: 215px;
   width: 150px;
   padding-top: 15px;
-  margin: 0px 10px;
+  margin: 8px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: margin 0.5s, background-color 0.5s;
+  border-radius: 20px;
 }
 
 .tile-top:first-child{
@@ -13,9 +15,9 @@
 }
 
 .tile-top:hover{
-  background-color: rgb(142, 142, 142);
+  background-color: rgba(237, 237, 237, 0.75);
   cursor: pointer;
-  border-radius: 20px;
+  margin-top: 0px;
 }
 
 .tile-inner, .tile-inner-new{
@@ -52,4 +54,8 @@
   font-size: 13px;
   margin-top: 10px;
   font-weight: 500;
+}
+
+.section-tiles a{
+  text-decoration: none;
 }
