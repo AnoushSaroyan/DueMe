@@ -37,7 +37,7 @@ class DescriptionDetail extends Component {
             return (
                 <Mutation mutation={UPDATE_TASK_DESCRIPTION}>
                     {(updateTaskDescription, data) => (
-                        <div className="task-show-description-details">
+                        <div className="task-show-description-details description-edit">
                             <form
                                 onSubmit={e => {
                                     e.preventDefault();
@@ -46,7 +46,7 @@ class DescriptionDetail extends Component {
                                     }).then(() => this.setState({ editing: false }));
                                 }}
                             >
-                                <input
+                                <textarea
                                     value={this.state.description}
                                     onChange={this.fieldUpdate("description")}
                                     onBlur={e => {
