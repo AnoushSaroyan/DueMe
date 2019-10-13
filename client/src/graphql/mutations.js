@@ -190,3 +190,14 @@ export const UPDATE_TASK_USER = gql`
     }
 
 `
+
+export const UPDATE_TASK_DESCRIPTION = gql`
+    mutation updateTaskDescription($id: ID, $description: String){
+      updateTask(_id: $id, description: $description){
+        _id
+        description
+        completed
+      }
+    }
+
+`

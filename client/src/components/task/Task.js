@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MdDone, MdClear } from "react-icons/md";
+import { MdDone, MdClear, MdFormatAlignLeft } from "react-icons/md";
 import './task.scss'
 import { TASK, PROJECT } from '../../graphql/queries';
 import { Query } from "react-apollo";
@@ -9,6 +9,7 @@ import { UPDATE_TASK_STATUS } from "../../graphql/mutations";
 import TaskList from './TaskList';
 import AssigneeDetail from './AssigneeDetail';
 import DueDateDetail from './DueDateDetail'
+import DescriptionDetail from './DescriptionDetail';
 
 class Task extends Component{
     constructor(props){
@@ -111,10 +112,13 @@ class Task extends Component{
                                 <div>
                                     <TitleDetail task={task}/>
                                     <div className="assignee-data">
-                                    <AssigneeDetail task={task}/>
-                                    <DueDateDetail task={task}/>
+                                        <AssigneeDetail task={task}/>
+                                        <DueDateDetail task={task}/>
                                     </div>
-
+                                    <div className="task-show-description">
+                                        <MdFormatAlignLeft/>
+                                        <DescriptionDetail task={task}/>
+                                    </div>
                                 </div>
 
                             </div>

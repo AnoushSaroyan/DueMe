@@ -119,6 +119,7 @@
 	padding-bottom: 15px;
 	border-bottom: 1px solid rgb(238, 238, 238);
 	display: flex;
+	margin-bottom: 15px;
 }
 
 .assignee-details{
@@ -143,3 +144,36 @@
 	color: darkgray;
 	font-size: 16px;
 }	
+
+.task-show-description{
+	display: flex;
+	margin-bottom: 15px;
+    margin-top: 5px;
+}
+
+
+.task-show-description svg{
+	color: darkgray;
+	margin-right: 10px;
+	font-size: 18px;
+	padding-top: 3px;
+}
+
+.task-show-description-details{
+	margin-top: 0;
+	padding: 2px 9px;
+	padding-bottom: 35px;
+	border: 1px solid transparent;
+	width: 100%;
+}
+
+.task-show-description-details:hover{
+	border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.task-show-description input{
+    background: transparent;
+    border: none;
+    box-sizing: content-box;
+}
