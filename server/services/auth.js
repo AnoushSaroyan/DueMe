@@ -73,7 +73,8 @@ const login = async data => {
         // if user does not exist, we throw an error
         if (user) {
             const hashedPassword = user.password;
-            if (bcrypt.compareSync(password, hashedPassword)){
+            const isValidPass = await bcrypt.compareSync(password, hashedPassword); // added await here
+            if (isValidPass){
 
                 const token = jwt.sign({ id: user._id }, secretOrkey);
                 return { token, loggedIn: true, ...user._doc, password: null };
@@ -96,7 +97,7 @@ const verifyUser = async data => {
         const { token } = data;
         // we decode the token using our secret password to get the
         // user's id
-        const decoded = jwt.verify(token, secretOrkey);
+        const decoded = await jwt.verify(token, secretOrkey); // added await here
         const { id } = decoded;
 
         // then we try to use the User with the id we just decoded

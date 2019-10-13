@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import Home from '../home/Home';
-import Task from '../task/Task';
+import TaskList from '../task/TaskList';
 import Sidebar from '../sidebar/Sidebar';
 import "./main_page.scss";
 import CreateTeam from '../forms/CreateTeam';
@@ -21,9 +21,10 @@ class MainPage extends Component {
             <div className="main-view"> 
                     <Switch>
                         <Route exact path="/main/home" component={Home} />
-                        <Route exact path="/main/task" component={Task} />
+                        <Route exact path="/main/task" component={() => <TaskList type={"own"} />} />
                         <Route exact path="/main/team/new" component={CreateTeam} />
                         <Route exact path="/main/task/new" component={CreateTask} />
+                        <Route exact path="/main/user/:id" component={TaskList} />
                         <Route exact path="/main/project/new" component={CreateProject} />
                         <Route exact path="/main/project/:id" component={Project} />
                         <Route exact path="/main/calendar" component={Calendar} />

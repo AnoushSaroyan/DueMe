@@ -29,7 +29,7 @@
 .project-show-add-task-row{
     display: flex;
     justify-content: space-between;
-    padding: 10px 30px;
+    padding: 10px 38px 10px 30px;
     border-bottom: 1px solid rgb(238, 238, 238);
 }
 
@@ -44,7 +44,10 @@
     font-size: 13px;
     transition-duration: .2s;
     transition-property: background,border,box-shadow,color,fill;
+    cursor: pointer;
+    text-decoration: none;
 }
+
 
 .add-task-button:hover{
     background-color: #008ce3;
@@ -54,4 +57,59 @@
 .project-show-add-task-row svg{
     font-size: 25px;
     color:rgb(175, 175, 175);
+}
+
+.project-show-task-details{
+    overflow: hidden;
+    flex: 0 1 0px;
+    margin-left: 15px;
+    border-radius: 4px 4px 0 0;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s ease-in-out;
+    transition: flex-basis 500ms ease-in-out;
+    transition: min-width .2s ease-in-out;
+    transform: translateX(100%);
+}
+
+.task-details-slide{
+    transform: translateX(0%);
+    transition: transform .5s cubic-bezier(0.23, 1, 0.32, 1);
+    min-width: 495px;
+    flex: 0 1 675px;
+}
+
+// .test-left{
+//     min-width: calc(100% - 800px);
+//     width: 45%;
+// }
+
+.project-scroll-wrapper{
+    height: calc(100vh - 116px);
+	overflow-y: scroll;
+}
+
+/* width */
+.project-show ::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.project-show ::-webkit-scrollbar-track {
+  background: transparent; 
+  z-index: -1;
+}
+ 
+/* Handle */
+.project-show ::-webkit-scrollbar-thumb {
+  background: transparent; 
+}
+
+/* Handle on hover */
+.project-show:hover ::-webkit-scrollbar-thumb {
+  background: rgb(182, 182, 182); 
+  border-radius: 5px;
+   border: 2px solid rgb(182, 182, 182);  
 }

@@ -18,6 +18,8 @@ const Team = mongoose.model("team");
 const Chat = mongoose.model("chat");
 const Message = mongoose.model("message");
 const pubsub = require("./pubsub");
+const secretOrkey = require("../../config/keys").secretOrkey;
+const jwt = require("jsonwebtoken");
 
 // const graphQLISO = require("graphql-iso-date")
 // const { GraphQLDate } = graphQLISO;
@@ -87,10 +89,20 @@ const mutation = new GraphQLObjectType({
         deleteProject: {
             type: ProjectType,
             args: {
-                id: { type: GraphQLID }
+                _id: { type: GraphQLID }
             },
-            resolve(_, { id }) {
-                return Project.remove({ _id: id });
+            resolve(_, { _id }) {
+                Project.findById(_id).then(project =>{
+                    project.tasks.forEach(task => {
+                        Task.remove({ _id: task})})
+                    return project
+
+                }).then(project => Team.findById(project.team).then(team => {
+                    team.projects.pull(project)
+                    team.save()
+                    return Project.remove({ _id: _id });
+                }))
+
             }
         },
         newTask: {
@@ -123,14 +135,44 @@ const mutation = new GraphQLObjectType({
                     Project.findById(task.project).then(project => {
                         project.tasks.pull(task)
                         project.save()
-                        return task.remove({ _id: _id })
+                        return Task.remove({ _id: _id })
                     })
                 )
 
                 // return Task.remove({ _id: _id });
             }
         },
-        
+        updateTask: {
+            type: TaskType,
+            args: {
+                _id: { type: GraphQLID},
+                title: { type: GraphQLString },
+                description: { type: GraphQLString },
+                user: { type: GraphQLID },
+                project: { type: GraphQLID },
+                completed: { type: GraphQLBoolean },
+                dueDate: { type: GraphQLString },
+            },
+            resolve(_, { _id, title, description, user, project, completed, dueDate }){
+                const updateObj = {};
+                if (_id) updateObj._id = _id;
+                if (title) updateObj.title = title;
+                if (description) updateObj.description = description;
+                if (user) updateObj.user = user;
+                if (project) updateObj.project = project;
+                if (completed !== undefined) updateObj.completed = completed;
+                if (dueDate) updateObj.dueDate = dueDate;
+                debugger
+                return Task.findOneAndUpdate(
+                    {_id: _id},
+                    { $set: updateObj },
+                    { new: true},
+                    (err, task) => {
+                        return task;
+                    }
+                )
+            }
+        },
         updateTaskStatus: {
             type: TaskType,
             args: {
@@ -176,9 +218,14 @@ const mutation = new GraphQLObjectType({
                 id: { type: GraphQLID } // that is the other user's id
             },
             async resolve(_, args, context) {
-                let validUser = await AuthService.verifyUser({ token: context.token });
-                if (validUser.loggedIn) {
-                    return new Chat({ users: [validUser._id, args.id] }).save();
+                // let validUser = await AuthService.verifyUser({ token: context.token });
+                // check if the user is loggedin
+                const token = context.token;
+                const decoded = await jwt.verify(token, secretOrkey);
+                const valid_user_id = decoded.id;
+                const loggedIn = await User.findById(valid_user_id);
+                if (loggedIn) {
+                    return new Chat({ users: [valid_user_id, args.id] }).save();
                 } else {
                     throw new Error("Sorry, you need to be logged in to create a chat");
                 }
@@ -192,9 +239,14 @@ const mutation = new GraphQLObjectType({
                 chat: { type: GraphQLID }
             },
             async resolve(_, { content, user, chat }, context) {
-                let validUser = await AuthService.verifyUser({ token: context.token });
+                // let validUser = await AuthService.verifyUser({ token: context.token });
+                // check if the user is loggedin
+                // const token = context.token;
+                // const decoded = await jwt.verify(token, secretOrkey);
+                // const valid_user_id = decoded.id;
+                // const loggedIn = await User.findById(valid_user_id);
 
-                if (validUser.loggedIn) {
+                // if (loggedIn) {
                     let message = new Message({ content, user, chat });
                     await message.save();
                     // add the newly created message to the chat 
@@ -206,9 +258,9 @@ const mutation = new GraphQLObjectType({
                     // publish to the pubsub system so that the new data will get send to the chat that is subscribed to the messageSent subscription
                     await pubsub.publish("MESSAGE_SENT", { messageSent: chaty });
                     return chaty;
-                } else {
-                    throw new Error("Sorry, you need to be logged in to create a new message");
-                }
+                // } else {
+                //     throw new Error("Sorry, you need to be logged in to create a new message");
+                // }
             }
         },
         deleteMessage: {
@@ -217,12 +269,18 @@ const mutation = new GraphQLObjectType({
                 id: { type: GraphQLID },
             },
             async resolve(_, { id }, context) {
-                let validUser = await AuthService.verifyUser({ token: context.token });
+                // let validUser = await AuthService.verifyUser({ token: context.token });
+                // check if the user is loggedin
+                const token = context.token;
+                const decoded = await jwt.verify(token, secretOrkey);
+                const valid_user_id = decoded.id;
+                const loggedIn = await User.findById(valid_user_id);
+
                 let message = await Message.findById(id);
 
-                if (validUser.loggedIn) {
+                if (loggedIn) {
                     // check if the message auther is the current user id 
-                    if (message.user !== validUser._id) {
+                    if (message.user !== valid_user_id) {
                         let chaty = await Chat.findById(chat);
                         // check if the chat contains the message then delete it from chat.messages
                         if (chaty.messages.includes(message)) {
@@ -255,7 +313,35 @@ const mutation = new GraphQLObjectType({
                     return user
                 })
             }
-        }
+        },
+        addToFavorites: {
+            type: UserType,
+            args: {
+                _id: { type: GraphQLID },
+                projectId: { type: GraphQLID}
+            },
+            resolve(_, { _id, projectId }) {
+                return User.findById(_id).then(user => Project.findById(projectId).then(project => {
+                    user.projects.push(project)
+                    user.save()
+                    return user
+                }))
+            }
+        },
+        removeFromFavorites: {
+            type: UserType,
+            args: {
+                _id: { type: GraphQLID },
+                projectId: { type: GraphQLID }
+            },
+            resolve(_, { _id, projectId }) {
+                return User.findById(_id).then(user => Project.findById(projectId).then(project => {
+                    user.projects.pull(project)
+                    user.save()
+                    return user
+                }))
+            }
+        },
 
         // fetchOrCreateChatWithUser: {
         //     type: ChatType,
@@ -288,7 +374,7 @@ const mutation = new GraphQLObjectType({
         //         }
         //     }
         // }
-
+        //}
     }
 });
 

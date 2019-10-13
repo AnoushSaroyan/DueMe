@@ -5,8 +5,7 @@ import MainHeader from "../main_header/MainHeader";
 import "./create-task.scss";
 import { useQuery } from "react-apollo";
 import { CREATE_TASK } from "../../graphql/mutations";
-import { USER } from "../../graphql/queries";
-import { PROJECT } from "../../graphql/queries";
+import { PROJECT, USER } from "../../graphql/queries";
 import { FaSquare } from "react-icons/fa";
 import CreateProjectPopup from '../forms/CreateProjectPopup'
 
@@ -99,7 +98,6 @@ class CreateTask extends Component {
   }
 
   handleSubmit(e, newTask) {
-    debugger
 	e.preventDefault();
     newTask({
       variables: {
@@ -124,7 +122,11 @@ class CreateTask extends Component {
             {
               query: PROJECT,
               variables: { _id: this.state.project }
-            }
+            },
+            {
+              query: USER,
+              variables: { _id: localStorage.getItem("currentUserId") }
+            },
           ]
         }}
         // we need to make sure we update our cache once a new task is created
@@ -136,7 +138,7 @@ class CreateTask extends Component {
           this.setState({
 			  message: `New task ${description} created successfully!`
           });
-          this.props.history.push('/');
+          this.props.history.push(`/main/project/${this.state.project}`);
         }}
       >
         {(newTask, { data }) => (

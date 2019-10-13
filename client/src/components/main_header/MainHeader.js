@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { MdMenu } from "react-icons/md";
-import { IoIosSearch } from "react-icons/io";
 import { Query, Mutation, ApolloConsumer } from 'react-apollo';
 import { USER } from '../../graphql/queries';
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdStarBorder, MdStar } from "react-icons/md";
 import "./main-header.scss";
 import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icons/fi";
-import { LOGOUT_USER } from "../../graphql/mutations";
+import { LOGOUT_USER, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FiFileText } from "react-icons/fi";
 import CreateProjectPopup from '../forms/CreateProjectPopup'
+import Search from '../search/search'
 
 
 class MainHeader extends Component {
@@ -19,7 +19,8 @@ class MainHeader extends Component {
         this.state = {
             page: this.props.page,
             projectColor: this.props.color,
-            type: this.props.type
+            type: this.props.type,
+            projectId: this.props.projectId
         }
     }
 
@@ -43,9 +44,16 @@ class MainHeader extends Component {
             this.setState({
                 page: this.props.page,
                 projectColor: this.props.color,
-                type: this.props.type
+                type: this.props.type,
+                projectId: this.props.projectId
             })
         }
+
+        // if ( prevProps.projectId && prevProps.projectId !== this.props.projectId){
+        //     this.setState({
+        //         projectId: this.props.projectId
+        //     })
+        // }
 
         if (this.props.type === "project") {
             this.addBorderBottom()
@@ -71,15 +79,74 @@ class MainHeader extends Component {
         }
     }
 
-    renderTitle(){
+    handleFavorite(user){
+        let favorites = user.projects
+        let hasFavorite = favorites.find(project => project._id === this.state.projectId)
+        if (hasFavorite){
+            return (
+            <Mutation
+                mutation={REMOVE_FROM_FAVORITES}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        },
+                    ]
+                }}
+            >
+                {removeFromFavorites => (
+                        <MdStar className="star-filled" onClick={() => removeFromFavorites({ variables: { _id: localStorage.getItem("currentUserId"), projectId: this.state.projectId }})} />
+                )}
+            </Mutation>
+            )
+        } else {
+            return (
+            <Mutation
+                mutation={ADD_TO_FAVORITES}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        },
+                    ]
+                }}
+            >
+                {addToFavorites => (
+                        <MdStarBorder className="star-empty" onClick={() => addToFavorites({ variables: { _id: localStorage.getItem("currentUserId"), projectId: this.state.projectId } })}/>
+                )}
+            </Mutation>
+            )
+        }
+    }
+
+    renderTitle(user){
         if (this.state.type === "project"){
             let color
             this.state.projectColor ? color = this.state.projectColor : color = "#e362e3"
             let projectColor = {
                 backgroundColor: color
             } 
-            return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div><h1>{this.state.page}</h1></div>
+            return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div><h1>{this.state.page}</h1>{this.handleFavorite(user)}</div>
         }
+        if (this.state.type === "user") {
+            let color
+            this.state.projectColor ? color = this.state.projectColor : color = "#e362e3"
+            let projectColor = {
+                backgroundColor: color
+            }
+            const abbreviatedName = this.state.page.split(" ").map(word => word[0])
+            let rightLetters
+            if (abbreviatedName.length === 1) {
+                rightLetters = abbreviatedName[0]
+            } else {
+                rightLetters = [abbreviatedName[0] + abbreviatedName[abbreviatedName.length - 1]]
+            }
+            return <div className="page-title"><div className="page-title-color-box page-title-color-circle" style={projectColor}><div className="page-title-inside" >{rightLetters}</div></div><h1>{this.state.page}</h1></div>
+        }
+
+
         return <div className="page-title"><h1>{this.state.page}</h1></div>
     }
 
@@ -139,12 +206,9 @@ class MainHeader extends Component {
                         return<div className="main-header">
                             <div className="main-header-wrapper" id="main-header">
                             <div id="main-ham" className="main-ham hidden-ham" onClick={this.handleSidebarCollapse}><MdMenu /></div>
-                            {this.renderTitle()}
+                            {this.renderTitle(user)}
                             <div className="main-header-right">
-                                <div className="main-header-search-bar">
-                                    <input className="header-search-input"></input>
-                                    <IoIosSearch/>
-                                </div>
+                                <Search user={user}/>
                                 <div className="main-header-add-button-wrapper">
                                     <div className="main-header-add-button" onClick={this.toggleDropMenu("header-add-menu")}>
                                         <MdAdd/>

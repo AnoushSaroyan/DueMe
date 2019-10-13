@@ -1,0 +1,19 @@
+# this is just a demonstration of docker-compose, 
+# Not using docker-compose and the Dockerfile.web files for deploying to heroku 
+# 
+
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    image: 4868/dueme
+    environment:
+      NODE_ENV: production
+      MONGO_URI: "your MONGO_URI"
+      secretOrkey: "your secretOrkey"
+    ports:
+      - "5000:5000"  
+

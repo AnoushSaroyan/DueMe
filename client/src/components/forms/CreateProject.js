@@ -115,11 +115,11 @@ class CreateProject extends Component {
         // }}
         // when our query is complete we'll display a success message
         onCompleted={data => {
-          const { name } = data.newProject;
+          const { name, _id } = data.newProject;
           this.setState({
             message: `New project ${name} created successfully!`
           });
-          this.props.history.push('/');
+          this.props.history.push(`/main/project/${_id}`);
         }}
       >
         {(newProject, { data }) => (

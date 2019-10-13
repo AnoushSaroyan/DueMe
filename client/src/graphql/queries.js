@@ -37,6 +37,11 @@ export const USER = gql`
       name
       email
       color
+      projects{
+        _id
+        name
+        color
+      }
       teams{
         _id
         name
@@ -49,6 +54,19 @@ export const USER = gql`
           _id
           name
           color
+          tasks{
+            _id
+            title
+            description
+            completed
+            dueDate
+            project{
+              _id
+            }
+            user{
+              _id
+            }
+          }
         }
       }
       }
@@ -80,14 +98,24 @@ export const TASK = gql`
 		_id
 		description
 		dueDate
-		completed
+    completed
+    title
 		project{
 			_id
-			name
+      name
+      team{
+        _id
+        users{
+          _id
+          name
+          email
+        }
+      }
 		}
 		user{
 			_id
-			name
+      name
+      color
 		}
 	}
 }`;
@@ -199,8 +227,8 @@ export const FETCH_CHAT = gql`
 `;
 
 export const FETCH_OR_CREATE_CHAT_WITH_USER = gql`
-  query FetchOrCreateChatWithUser($id: ID!) {
-    fetchOrCreateChatWithUser(id: $id) {
+  query FetchOrCreateChatWithUser($id1: ID!, $id2: ID!) {
+    fetchOrCreateChatWithUser(current_user_id: $id1, other_user_id: $id2) {
       _id,
       users {
         _id 

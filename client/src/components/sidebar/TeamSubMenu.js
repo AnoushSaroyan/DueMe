@@ -40,9 +40,9 @@ class TeamSubMenu extends Component {
                 backgroundColor: color
             }
             return (
-            <div className="main-header-avatar-pic" style={profileColor} key={user._id}>
+            <Link to={`/main/user/${user._id}`} className="main-header-avatar-pic" style={profileColor} key={user._id}>
                 {rightLetters}
-            </div>)})
+            </Link>)})
         let three
         three = members.slice(0,3)
         return(
@@ -64,9 +64,9 @@ class TeamSubMenu extends Component {
         let projectColor = {
             color: color
         }
-    return (
-        <div className="team-submenu-project" key={project._id}><Link to={`/main/project/${project._id}`}><FaSquare style={projectColor}/>{project.name}</Link></div>
-    )
+        return (
+            <div className="team-submenu-project" key={project._id}><Link to={`/main/project/${project._id}`}><FaSquare style={projectColor}/>{project.name}</Link></div>
+        )
     })
         return(
             <div className="team-submenu-projects">
