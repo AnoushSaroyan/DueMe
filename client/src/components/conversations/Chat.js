@@ -7,7 +7,7 @@ import CreateMessage from "./CreateMessage";
 
 
 const Chat = (props) => (
-    <Query query={FETCH_OR_CREATE_CHAT_WITH_USER} variables={{ id: props.match.params.userId }}>
+    <Query query={FETCH_OR_CREATE_CHAT_WITH_USER} variables={{ id1: localStorage.getItem("currentUserId"), id2: props.match.params.userId }}>
         {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>
             if (error) return `Error! ${error.message}`
@@ -19,7 +19,7 @@ const Chat = (props) => (
             // let chatData = data;
             // let userId = props.match.params.userId
             let chatId = data.fetchOrCreateChatWithUser._id;
-            // get he chat id here
+            // get the chat id here
             let author;
             // debugger
             return (
@@ -36,6 +36,9 @@ const Chat = (props) => (
                                         //     debugger
                                         // }
                                         author = data.fetchOrCreateChatWithUser.users.filter(user => user._id === message.user._id)[0];
+                                        if(!author) {
+                                            debugger
+                                        }
                                         return (
                                             <div key={message._id}>
                                                 <p>{author.name}</p>

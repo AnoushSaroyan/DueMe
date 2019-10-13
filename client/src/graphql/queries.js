@@ -227,8 +227,8 @@ export const FETCH_CHAT = gql`
 `;
 
 export const FETCH_OR_CREATE_CHAT_WITH_USER = gql`
-  query FetchOrCreateChatWithUser($id: ID!) {
-    fetchOrCreateChatWithUser(id: $id) {
+  query FetchOrCreateChatWithUser($id1: ID!, $id2: ID!) {
+    fetchOrCreateChatWithUser(current_user_id: $id1, other_user_id: $id2) {
       _id,
       users {
         _id 

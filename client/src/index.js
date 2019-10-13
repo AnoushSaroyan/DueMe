@@ -18,10 +18,17 @@ const cache = new InMemoryCache({
     dataIdFromObject: object => object._id || null
 });
 
+let httpUri;
+if (process.env.NODE_ENV === "production") {
+    httpUri = `/graphql`;
+} else {
+    httpUri = "http://localhost:5000/graphql";
+}
+
 const httpLink = createHttpLink({
-    uri: "http://localhost:5000/graphql",
+    uri: httpUri,
     headers: {
-        authorization: localStorage.getItem("auth-token")
+        authorization: localStorage.getItem("auth-token") || ""
     }
 });
 
@@ -30,14 +37,22 @@ const errorLink = onError(({ graphQLErrors }) => {
     if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message));
 });
 
+let wsUri;
+if (process.env.NODE_ENV === "production") {
+    wsUri = "wss://" + window.location.host + "/";
+} else {
+    wsUri = "ws://localhost:5000/";
+}
+
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-    uri: "ws://localhost:5000/",
+    // uri: "ws://localhost:5000/",
+    uri: wsUri,
     options: {
         reconnect: true,
         // lazy: true,
         connectionParams: {
-            authorization: localStorage.getItem("auth-token")
+            authorization: localStorage.getItem("auth-token") || ""
         }
     }
 });
