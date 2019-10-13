@@ -220,3 +220,19 @@ export const DELETE_TASK = gql`
       }
     }
 `
+export const ADD_TO_FAVORITES = gql`
+    mutation addToFavorites($_id: ID, $projectId: ID){
+      addToFavorites(_id: $_id, projectId: $projectId){
+        _id
+      }
+    }
+`
+
+
+export const REMOVE_FROM_FAVORITES = gql`
+    mutation removeFromFavorites($_id: ID, $projectId: ID){
+      removeFromFavorites(_id: $_id, projectId: $projectId){
+        _id
+      }
+    }
+`

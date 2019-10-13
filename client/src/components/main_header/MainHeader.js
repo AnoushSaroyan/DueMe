@@ -6,7 +6,7 @@ import { USER } from '../../graphql/queries';
 import { MdAdd, MdStarBorder, MdStar } from "react-icons/md";
 import "./main-header.scss";
 import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icons/fi";
-import { LOGOUT_USER } from "../../graphql/mutations";
+import { LOGOUT_USER, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FiFileText } from "react-icons/fi";
@@ -83,9 +83,41 @@ class MainHeader extends Component {
         let favorites = user.projects
         let hasFavorite = favorites.find(project => project._id === this.state.projectId)
         if (hasFavorite){
-            return <MdStar className="star-filled" />
+            return (
+            <Mutation
+                mutation={REMOVE_FROM_FAVORITES}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        },
+                    ]
+                }}
+            >
+                {removeFromFavorites => (
+                        <MdStar className="star-filled" onClick={() => removeFromFavorites({ variables: { _id: localStorage.getItem("currentUserId"), projectId: this.state.projectId }})} />
+                )}
+            </Mutation>
+            )
         } else {
-            return <MdStarBorder className="star-empty" />
+            return (
+            <Mutation
+                mutation={ADD_TO_FAVORITES}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        },
+                    ]
+                }}
+            >
+                {addToFavorites => (
+                        <MdStarBorder className="star-empty" onClick={() => addToFavorites({ variables: { _id: localStorage.getItem("currentUserId"), projectId: this.state.projectId } })}/>
+                )}
+            </Mutation>
+            )
         }
     }
 
