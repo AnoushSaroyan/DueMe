@@ -20,7 +20,15 @@ const UserType = new GraphQLObjectType({
                     .populate("teams")
                     .then(user => user.teams);
         }},
-        color: { type: GraphQLString }
+        color: { type: GraphQLString },
+        favorites: {
+            type: new GraphQLList(require("./project_type")),
+            resolve(parentValue) {
+                return Team.findById(parentValue._id)
+                    .populate("projects")
+                    .then(team => team.projects)
+            }
+        }
     })
 });
 
