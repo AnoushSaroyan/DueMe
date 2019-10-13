@@ -30,9 +30,13 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 210px;
-    width: 99.9%;
+    top: 40px;
+    width: 81.9%;
     background-color: white;
+    max-height: 470px;
+    overflow-y: scroll;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px rgba(111,119,130,.15), 0 5px 20px 0 rgba(21,27,38,.08);
 }
 
 .search-suggestion{

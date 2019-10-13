@@ -9,7 +9,11 @@ class Search extends Component{
         this.state = {
             editing: false,
             search: "",
-            currentlyDisplayed: []
+            currentlyDisplayed: [],
+            tasks: [],
+            projects: [],
+            teams: [],
+            users: []
         };
         this.suggestionsElement = ""
         this.handleEdit = this.handleEdit.bind(this);
@@ -48,7 +52,13 @@ class Search extends Component{
         let teams = []
         let projects = []
         let tasks = []
+        let users = []
         this.props.user.teams.forEach(team => {
+                team.users.forEach(user => {
+                    if (user.name.match(new RegExp(e.target.value, "i"))) users.push(user)
+                })
+
+
             if (team.name.match(new RegExp(e.target.value, "i"))) teams.push(team)
             team.projects.forEach(project => {
                 if (project.name.match(new RegExp(e.target.value, "i"))) projects.push(project)
@@ -59,16 +69,35 @@ class Search extends Component{
         } )
         this.setState({
             search: e.target.value,
-            currentlyDisplayed: tasks
+            tasks: tasks,
+            projects: projects,
+            teams: teams,
+            users: users
         })
     }
 
     renderSuggestions() {
         let cut
-        if (this.state.currentlyDisplayed) cut = this.state.currentlyDisplayed
+        if (this.state.tasks) cut = this.state.tasks
             .reverse().slice(-12).reverse()
             .map(item => <div key={item._id} className="search-suggestion" >{item.name ? item.name : item.title}</div>)
         return cut
+        // return(
+        //     <div>
+        //         <div className="search-teams">
+        //             {teams}
+        //         </div>
+        //         <div className="search-people">
+        //             {users}
+        //         </div>
+        //         <div className="search-projects">
+        //             {projects}
+        //         </div>
+        //         <div className="search-task">
+        //             {tasks}
+        //         </div>
+        //     </div>
+        // )
     }
 
     render(){
@@ -93,7 +122,7 @@ class Search extends Component{
                     <IoIosSearch />
                 </div>
                 <div className="search-suggestions" id="search-suggestions">
-                    {this.renderSuggestions()}
+                    {/* {this.renderSuggestions()} */}
                 </div>
             </div>
             )
