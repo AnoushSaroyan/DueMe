@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import MainHeader from '../main_header/MainHeader';
-import { useQuery, Query } from "react-apollo";
+import { useQuery, Query, Mutation } from "react-apollo";
 import { USER, PROJECT } from '../../graphql/queries';
 import './project.scss';
 import TaskRow from '../task/TaskRow';
 import { MdPersonOutline, mdAdd } from "react-icons/md";
-import Task from '../task/Task'
+import Task from '../task/Task';
+import { CREATE_TASK } from "../../graphql/mutations";
 
 class Project extends Component {
     constructor(props){
@@ -48,6 +49,47 @@ class Project extends Component {
         }
     }
 
+
+    addTaskButton(){
+        return(
+            <Mutation
+                mutation={CREATE_TASK}
+                // if we error out we can set the message here
+                onError={err => this.setState({ message: err.message })}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: PROJECT,
+                            variables: { _id: this.state.projectId }
+                        }
+                    ]
+                }}
+                // we need to make sure we update our cache once a new task is created
+                // update={(cache, data) => {
+                //   this.updateCache(cache, data)}}
+                // when our query is complete we'll display a success message
+            >
+                {(newTask, { data }) => (
+                    <div className="add-task-button" onClick={() => this.handleAddTask(newTask)}>Add Task</div>
+                )}
+            </Mutation>
+        )
+    }
+
+    handleAddTask(newTask){
+        debugger
+        newTask({
+            variables: {
+                title: "new task",
+                description: "",
+                dueDate: "",
+                completed: false,
+                user: localStorage.getItem("currentUserId"),
+                project: this.state.projectId,
+            }
+        });
+    }
+
     render(){
         if (!localStorage.getItem("currentUserId")) {
             return <div></div>
@@ -65,8 +107,9 @@ class Project extends Component {
                     //     foundProject = project
                     //     return project
                     // }}))
+                    let foundTask
                     if (this.state.openedTask){
-                        let foundTask = project.tasks.find(task => task._id === this.state.openedTask)
+                        foundTask = project.tasks.find(task => task._id === this.state.openedTask)
                         if ( foundTask.completed !== this.state.taskStatus){
                             this.setState({
                                 taskStatus: foundTask.completed
@@ -83,7 +126,8 @@ class Project extends Component {
                                     <div className="project-show-wrapper">
                                         <div className="project-show-spreadsheet">
                                             <div className="project-show-add-task-row">
-                                                <div className="add-task-button">Add Task</div>
+                                                {this.addTaskButton()}
+                                                
                                                 <MdPersonOutline/>
                                             </div>
                                             {task}
