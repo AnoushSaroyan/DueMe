@@ -191,14 +191,28 @@
 	display: flex;
 }
 
-.task-show-right div:first-child{
-	color: darkgray;
-    font-size: 20px;
-    margin-top: -9px;
+.task-show-right > div:first-child{
     margin-right: 10px;
     cursor: pointer
 }
 
+.dots{
+	color: darkgray;
+    font-size: 20px;
+}
+
 .task-show-right div:first-child:hover{
 	color: black;
+}
+
+.delete-task-button{
+	padding: 0 15px 0 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.delete-task-button:hover{
+	color: #151b26;
+    background: #e8ecee;
 }

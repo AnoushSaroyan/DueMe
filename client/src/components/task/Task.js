@@ -19,6 +19,16 @@ class Task extends Component{
         }
     }
 
+    componentDidMount() {
+        const body = document.getElementsByTagName("body")[0];
+        body.addEventListener("click", (event) => {
+            // let screen = document.getElementById("smoke-screen")
+            // if (screen) screen.classList.remove("active")
+            let addDropdown = document.getElementById("task-menu")
+            if (addDropdown) addDropdown.classList.remove("active")
+        })
+    }
+
     componentDidUpdate(prevProps, prevState){
         if (this.state.taskId !== this.props.taskId){
             this.setState({
@@ -34,6 +44,13 @@ class Task extends Component{
             })
         }
 
+    }
+
+    toggleDropMenu(button) {
+        return (e) => {
+            let dropDown = document.getElementById(button)
+            if (dropDown) dropDown.classList.add("active")
+        }
     }
 
     handleClose(){
@@ -106,30 +123,32 @@ class Task extends Component{
                             </Mutation>
                             <div className="task-show-right">
                             <div>
-                                <div>
+                                <div className="dots noselect" onClick={this.toggleDropMenu("task-menu")}>
                                 ...
                                 </div>
-                                <div className="add-menu-items">
-                                        <ApolloConsumer>
-                                            {client => (
-                                                <Mutation
-                                                    mutation={DELETE_TASK}
-                                                    refetchQueries={() => {
-                                                        return [
-                                                            {
-                                                                query: PROJECT,
-                                                                variables: { _id: task.project._id }
-                                                            }
-                                                        ]
-                                                    }}
-                                                >
-                                                    {deleteTask => (
-                                                        <div onClick={() => deleteTask( { variables: { _id: task._id } } )} className="logout-button">Delete Task</div>
-                                                    )}
-                                                </Mutation>
-                                            )}
-                                        </ApolloConsumer>
+                                <div className="profile-menu" id="task-menu">
+                                    <div className="add-menu-items">
+                                            <ApolloConsumer>
+                                                {client => (
+                                                    <Mutation
+                                                        mutation={DELETE_TASK}
+                                                        refetchQueries={() => {
+                                                            return [
+                                                                {
+                                                                    query: PROJECT,
+                                                                    variables: { _id: task.project._id }
+                                                                }
+                                                            ]
+                                                        }}
+                                                    >
+                                                        {deleteTask => (
+                                                            <div onClick={() => deleteTask( { variables: { _id: task._id } } )} className="delete-task-button">Delete Task</div>
+                                                        )}
+                                                    </Mutation>
+                                                )}
+                                            </ApolloConsumer>
                                     </div>
+                                </div>
                             </div>
                             <MdClear className="task-show-close-button" onClick={this.handleClose}/>
                             </div>
