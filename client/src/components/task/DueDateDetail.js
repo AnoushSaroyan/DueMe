@@ -40,7 +40,7 @@ class DueDateDetail extends Component{
             return (
                 <Mutation mutation={UPDATE_TASK_USER}>
                     {(updateTaskUser, data) => (
-                        <div className="task-show-title">
+                        <div className="task-show-user">
                             <form
                                 onSubmit={e => {
                                     e.preventDefault();

@@ -186,3 +186,19 @@
 .description-edit{
 	padding-bottom: 0;
 }
+
+.task-show-right{
+	display: flex;
+}
+
+.task-show-right div:first-child{
+	color: darkgray;
+    font-size: 20px;
+    margin-top: -9px;
+    margin-right: 10px;
+    cursor: pointer
+}
+
+.task-show-right div:first-child:hover{
+	color: black;
+}

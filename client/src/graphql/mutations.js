@@ -201,3 +201,22 @@ export const UPDATE_TASK_DESCRIPTION = gql`
     }
 
 `
+
+export const UPDATE_TASK_DUEDATE = gql`
+    mutation updateTaskDueDate($id: ID, $dueDate: String){
+      updateTask(_id: $id, dueDate: $dueDate){
+        _id
+        dueDate
+        completed
+      }
+    }
+
+`
+
+export const DELETE_TASK = gql`
+    mutation deleteTask($_id: ID){
+      deleteTask(_id: $_id){
+        _id
+      }
+    }
+`

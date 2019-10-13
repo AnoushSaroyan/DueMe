@@ -68,7 +68,6 @@ class Project extends Component {
                     if (this.state.openedTask){
                         let foundTask = project.tasks.find(task => task._id === this.state.openedTask)
                         if ( foundTask.completed !== this.state.taskStatus){
-                            debugger
                             this.setState({
                                 taskStatus: foundTask.completed
                             })

@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { MdDone, MdClear, MdFormatAlignLeft } from "react-icons/md";
 import './task.scss'
 import { TASK, PROJECT } from '../../graphql/queries';
-import { Query } from "react-apollo";
+import { Query, Mutation, ApolloConsumer } from "react-apollo";
 import TitleDetail from './TitleDetail';
-import { Mutation } from "react-apollo";
-import { UPDATE_TASK_STATUS } from "../../graphql/mutations";
+import { UPDATE_TASK_STATUS, DELETE_TASK } from "../../graphql/mutations";
 import TaskList from './TaskList';
 import AssigneeDetail from './AssigneeDetail';
 import DueDateDetail from './DueDateDetail'
@@ -105,7 +104,35 @@ class Task extends Component{
                                     this.handleCompleteButton(task, updateTaskStatus)
                                 )}
                             </Mutation>
+                            <div className="task-show-right">
+                            <div>
+                                <div>
+                                ...
+                                </div>
+                                <div className="add-menu-items">
+                                        <ApolloConsumer>
+                                            {client => (
+                                                <Mutation
+                                                    mutation={DELETE_TASK}
+                                                    refetchQueries={() => {
+                                                        return [
+                                                            {
+                                                                query: PROJECT,
+                                                                variables: { _id: task.project._id }
+                                                            }
+                                                        ]
+                                                    }}
+                                                >
+                                                    {deleteTask => (
+                                                        <div onClick={() => deleteTask( { variables: { _id: task._id } } )} className="logout-button">Delete Task</div>
+                                                    )}
+                                                </Mutation>
+                                            )}
+                                        </ApolloConsumer>
+                                    </div>
+                            </div>
                             <MdClear className="task-show-close-button" onClick={this.handleClose}/>
+                            </div>
                         </div>
                             <div className="task-scroll-wrapper">
 
