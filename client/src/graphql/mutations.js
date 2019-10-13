@@ -210,6 +210,16 @@ export const UPDATE_TASK_DUEDATE = gql`
         completed
       }
     }
+`
+
+export const UPDATE_TASK_ASSIGNEE = gql`
+    mutation updateTaskAssignee($id: ID, $user: ID){
+      updateTask(_id: $id, user: $user){
+        _id
+        description
+        completed
+      }
+    }
 
 `
 
