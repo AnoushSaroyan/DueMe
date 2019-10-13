@@ -274,3 +274,18 @@ a.main-header-avatar-pic {
     border-radius: 50px;
     color:white;
 }
+
+.star-empty, .star-filled{
+    font-size: 25px;
+    color: darkgray;
+    padding-left: 8px;
+    cursor: pointer;
+}
+
+.star-empty:hover{
+    color: #fcbd01;
+}
+
+.star-filled{
+    color: #fcbd01;
+}

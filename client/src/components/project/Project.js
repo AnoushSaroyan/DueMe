@@ -120,7 +120,7 @@ class Project extends Component {
                     taskDivs = tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}><TaskRow task={task} type={"project"} projectId={this.state.projectId}/></div>)
                     return(
                         <div>
-                            <MainHeader page={project.name} color={project.color} type={"project"}/>
+                            <MainHeader page={project.name} color={project.color} type={"project"} projectId={this.state.projectId}/>
                             <div className="scroll-wrapper">
                                 <div className="project-show">
                                     <div className="project-show-wrapper">

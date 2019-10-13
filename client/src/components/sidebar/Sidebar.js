@@ -13,6 +13,7 @@ import TeamSubMenu from './TeamSubMenu';
 // import { FiArrowDownCircle } from "react-icons/fi";
 // import { withRouter } from 'react-router-dom';
 import UserIndex from "../conversations/UserIndex";
+import { FaSquare } from "react-icons/fa";
 
 
 class Sidebar extends Component {
@@ -38,14 +39,27 @@ class Sidebar extends Component {
         headerHam.classList.remove("hidden-ham")
     }
 
-    handleFavorites(){
+    handleFavorites(user){
+        let projects
+        projects = user.projects.map(project => {
+            let color
+            project.color ? color = project.color : color = "#e362e3"
+
+            let projectColor = {
+                color: color
+            }
+            return (
+                <div className="team-submenu-project" key={project._id}><Link to={`/main/project/${project._id}`}><FaSquare style={projectColor} />{project.name}</Link></div>
+            )
+        })
+
+
         if (this.state.favorites) {
             return(
                 <div className ="sidebar-submenus">
                     <div className="sidebar-submenus-header noselect" onClick={this.handleCollapse("favorites")}><h2>Favorites</h2><MdKeyboardArrowUp /></div>
                     <ul className="sidebar-submenus-list">
-                        <li><Link>test 1</Link></li>
-                        <li><Link>test 2</Link></li>
+                        {projects}
                     </ul>
                 </div>
                 )
@@ -154,7 +168,7 @@ class Sidebar extends Component {
                         </Link>
                     </nav>
                     <div className="sidebar-scroll-wrapper">
-                        {this.handleFavorites()}
+                        {this.handleFavorites(user)}
                         {this.handleTeams(user)}
                         <div >
                             <UserIndex  />

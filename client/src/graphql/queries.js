@@ -37,6 +37,11 @@ export const USER = gql`
       name
       email
       color
+      projects{
+        _id
+        name
+        color
+      }
       teams{
         _id
         name
