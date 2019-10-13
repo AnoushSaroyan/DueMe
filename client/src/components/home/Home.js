@@ -8,6 +8,7 @@ import TaskRow from '../task/TaskRow';
 import Tiles from './Tiles';
 import './home.scss';
 import './tiles.scss';
+import '../project/project.scss'
 import { MdExpandLess, MdExpandMore} from "react-icons/md";
 import { GoTriangleRight, GoTriangleDown, GoPlus } from "react-icons/go";
 
@@ -45,29 +46,16 @@ class Home extends Component {
             let taskDivs = []
             let userTasks = []
             taskDivs = projects.map(project => project.tasks).flat();
-        userTasks = taskDivs.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}><TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} /></div>)
-            debugger
-            // return (
-            //   <div>
-            //     <MainHeader page={project.name} color={project.color} type={"project"} projectId={this.state.projectId} />
-            //     <div className="project-show">
-            //       <div className="project-show-wrapper">
-            //         <div className="project-show-spreadsheet">
-            //           <div className="project-show-add-task-row">
-            //             {this.addTaskButton()}
-
-                        
-            //           </div>
-            //           <div className="project-scroll-wrapper">
-            //             {taskDivs}
-            //           </div>
-            //         </div>
-            //         <div className="project-show-task-details" id="task-details">
-            //           <Task taskId={this.state.openedTask} completed={this.state.taskStatus} />
-            //         </div>
-            //       </div>
-            //     </div>
-            //   </div>)
+            let filteredTasks = taskDivs.filter(task => task.user._id === user._id)
+            userTasks = filteredTasks.map(task => {
+              return (
+              <div>
+                <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}>
+                  <TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} />
+                </div>
+              </div>
+              )
+            })
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
@@ -75,7 +63,7 @@ class Home extends Component {
               <h2>Tasks Due Soon</h2>
               <MdExpandMore />
             </div>
-            <div className="section-tiles">
+            <div className="section-tiles-tasks" id="task-details">
               {userTasks}
             </div>
           </div>

@@ -53,9 +53,13 @@
                                   supported by Chrome, Opera and Firefox */
 }
 
-.section-tiles{
+.section-tiles, .section-tiles-tasks{
   width: 100%;
   display: flex;
   margin-top: 10px;
   flex-wrap: wrap;
+}
+
+.section-tiles-tasks{
+  flex-direction: column;
 }
