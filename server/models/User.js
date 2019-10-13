@@ -29,7 +29,7 @@ const UserSchema = new Schema({
     color: {
         type: String
     },
-    favorites: [
+    projects: [
         {
             type: Schema.Types.ObjectId,
             ref: "project"

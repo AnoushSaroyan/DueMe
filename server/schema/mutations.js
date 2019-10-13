@@ -293,7 +293,35 @@ const mutation = new GraphQLObjectType({
                     return user
                 })
             }
-        }
+        },
+        addToFavorites: {
+            type: UserType,
+            args: {
+                _id: { type: GraphQLID },
+                projectId: { type: GraphQLID}
+            },
+            resolve(_, { _id, projectId }) {
+                return User.findById(_id).then(user => Project.findById(projectId).then(project => {
+                    user.projects.push(project)
+                    user.save()
+                    return user
+                }))
+            }
+        },
+        removeFromFavorites: {
+            type: UserType,
+            args: {
+                _id: { type: GraphQLID },
+                projectId: { type: GraphQLID }
+            },
+            resolve(_, { _id, projectId }) {
+                return User.findById(_id).then(user => Project.findById(projectId).then(project => {
+                    user.projects.pull(project)
+                    user.save()
+                    return user
+                }))
+            }
+        },
 
         // fetchOrCreateChatWithUser: {
         //     type: ChatType,
