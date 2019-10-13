@@ -121,7 +121,7 @@ class Search extends Component{
                     <input className="header-search-input" value={this.state.search} onClick={this.handleEdit}></input>
                     <IoIosSearch />
                 </div>
-                <div className="search-suggestions" id="search-suggestions">
+                <div className="search-suggestions search-suggestions-minimized" id="search-suggestions">
                     {/* {this.renderSuggestions()} */}
                 </div>
             </div>
