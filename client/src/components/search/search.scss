@@ -53,3 +53,44 @@
 .active{
     display: flex;
 }
+
+.search-teams{
+    box-shadow: inset 0 1px #e8ecee;  
+    padding: 5px 0;
+}
+
+.search-teams-item, .search-teams-items-header{
+    display: flex;
+    height: 40px;
+    padding: 0 15px;
+    align-items: center;
+    color:black;
+    text-decoration: none;
+    font-family: gordita,Helvetica Neue,Helvetica,sans-serif;
+    font-size: 12px;
+}
+
+.search-teams-item svg{
+    color: darkgray;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+
+
+.search-teams-items-header{
+    height: 30px;
+    color: darkgray;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.search-pic {
+    margin-right: 8px;
+}
+
+.search-user-email {
+    font-size: 10px;
+    color: darkgray;
+    margin-left: 10px;
+}
