@@ -7,7 +7,7 @@ import CreateMessage from "./CreateMessage";
 
 
 const Chat = (props) => (
-    <Query query={FETCH_OR_CREATE_CHAT_WITH_USER} variables={{ id: props.match.params.userId }}>
+    <Query query={FETCH_OR_CREATE_CHAT_WITH_USER} variables={{ id1: localStorage.getItem("currentUserId"), id2: props.match.params.userId }}>
         {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>
             if (error) return `Error! ${error.message}`

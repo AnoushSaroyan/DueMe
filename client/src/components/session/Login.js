@@ -54,14 +54,14 @@ class Login extends React.Component {
         return (
             <Mutation
                 mutation={LOGIN_USER}
-                refetchQueries={() => {
-                    return [
-                        {
-                            query: USER,
-                            variables: { _id: localStorage.getItem("currentUserId") }
-                        }
-                    ]
-                }}
+                // refetchQueries={() => {
+                //     return [
+                //         {
+                //             query: USER,
+                //             variables: { _id: localStorage.getItem("currentUserId") }
+                //         }
+                //     ]
+                // }}
                 onCompleted={data => {
                     const { token } = data.login;
                     localStorage.setItem("auth-token", token);

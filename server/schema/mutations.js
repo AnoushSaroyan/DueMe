@@ -18,6 +18,8 @@ const Team = mongoose.model("team");
 const Chat = mongoose.model("chat");
 const Message = mongoose.model("message");
 const pubsub = require("./pubsub");
+const secretOrkey = require("../../config/keys").secretOrkey;
+const jwt = require("jsonwebtoken");
 
 // const graphQLISO = require("graphql-iso-date")
 // const { GraphQLDate } = graphQLISO;
@@ -214,9 +216,14 @@ const mutation = new GraphQLObjectType({
                 id: { type: GraphQLID } // that is the other user's id
             },
             async resolve(_, args, context) {
-                let validUser = await AuthService.verifyUser({ token: context.token });
-                if (validUser.loggedIn) {
-                    return new Chat({ users: [validUser._id, args.id] }).save();
+                // let validUser = await AuthService.verifyUser({ token: context.token });
+                // check if the user is loggedin
+                const token = context.token;
+                const decoded = await jwt.verify(token, secretOrkey);
+                const valid_user_id = decoded.id;
+                const loggedIn = await User.findById(valid_user_id);
+                if (loggedIn) {
+                    return new Chat({ users: [valid_user_id, args.id] }).save();
                 } else {
                     throw new Error("Sorry, you need to be logged in to create a chat");
                 }
@@ -230,9 +237,14 @@ const mutation = new GraphQLObjectType({
                 chat: { type: GraphQLID }
             },
             async resolve(_, { content, user, chat }, context) {
-                let validUser = await AuthService.verifyUser({ token: context.token });
+                // let validUser = await AuthService.verifyUser({ token: context.token });
+                // check if the user is loggedin
+                // const token = context.token;
+                // const decoded = await jwt.verify(token, secretOrkey);
+                // const valid_user_id = decoded.id;
+                // const loggedIn = await User.findById(valid_user_id);
 
-                if (validUser.loggedIn) {
+                // if (loggedIn) {
                     let message = new Message({ content, user, chat });
                     await message.save();
                     // add the newly created message to the chat 
@@ -244,9 +256,9 @@ const mutation = new GraphQLObjectType({
                     // publish to the pubsub system so that the new data will get send to the chat that is subscribed to the messageSent subscription
                     await pubsub.publish("MESSAGE_SENT", { messageSent: chaty });
                     return chaty;
-                } else {
-                    throw new Error("Sorry, you need to be logged in to create a new message");
-                }
+                // } else {
+                //     throw new Error("Sorry, you need to be logged in to create a new message");
+                // }
             }
         },
         deleteMessage: {
@@ -255,12 +267,18 @@ const mutation = new GraphQLObjectType({
                 id: { type: GraphQLID },
             },
             async resolve(_, { id }, context) {
-                let validUser = await AuthService.verifyUser({ token: context.token });
+                // let validUser = await AuthService.verifyUser({ token: context.token });
+                // check if the user is loggedin
+                const token = context.token;
+                const decoded = await jwt.verify(token, secretOrkey);
+                const valid_user_id = decoded.id;
+                const loggedIn = await User.findById(valid_user_id);
+
                 let message = await Message.findById(id);
 
-                if (validUser.loggedIn) {
+                if (loggedIn) {
                     // check if the message auther is the current user id 
-                    if (message.user !== validUser._id) {
+                    if (message.user !== valid_user_id) {
                         let chaty = await Chat.findById(chat);
                         // check if the chat contains the message then delete it from chat.messages
                         if (chaty.messages.includes(message)) {
@@ -294,39 +312,6 @@ const mutation = new GraphQLObjectType({
                 })
             }
         }
-
-        // fetchOrCreateChatWithUser: {
-        //     type: ChatType,
-        //     args: {
-        //         id: { type: new GraphQLNonNull(GraphQLID) }, // this is the other user's id
-        //     },
-
-        //     async resolve(_, { id }, context) {
-        //         let validUser = await AuthService.verifyUser({ token: context.token });
-        //         let conversations = await Chat.find({});
-
-        //         if (validUser.loggedIn) {
-        //             // let valid_user_id = "5d96d076de8d3d64ecab25a7";
-        //             // let returnValue = conversations.filter(chat => chat.users.includes(args._id) && chat.users.includes(valid_user_id));
-        //             // return returnValue; 
-
-        //             // filter the chat with other user_id and the current user id
-        //             let chaty = conversations.filter(chat => {
-        //                 return chat.users.includes(id) && chat.users.includes(validUser._id)
-        //             });
-        //             let newChaty;
-        //             if (chaty.length !== 0) {
-        //                 return chaty[0];
-        //             } else {
-        //                 newChaty = await new Chat({ users: [valid_user_id, id] }).save();
-        //                 return newChaty;
-        //             }
-        //         } else {
-        //             throw new Error("Sorry, you need to be logged in");
-        //         }
-        //     }
-        // }
-
     }
 });
 
