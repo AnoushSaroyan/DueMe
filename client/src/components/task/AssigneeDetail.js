@@ -10,7 +10,7 @@ class AssigneeDetail extends Component{
         this.state = {
             editing: false,
             task: this.props.task || "",
-            user: this.props.task.user || ""
+            user: ""
         }
 
         this.handleEdit = this.handleEdit.bind(this);
@@ -24,10 +24,14 @@ class AssigneeDetail extends Component{
     componentDidUpdate(prevProps, prevState) {
         if (this.props.task._id !== prevProps.task._id) {
             this.setState({
-                user: this.props.task.user,
                 task: this.props.task
             })
         }
+        // if (prevState.project !== this.state.project) {
+        //     this.setState({
+        //         user: ""
+        //     })
+        // }
     }
 
     fieldUpdate(field) {
@@ -38,20 +42,22 @@ class AssigneeDetail extends Component{
     constructUserSelection(task, updateTaskAssignee) {
         let users = []
         users = task.project.team.users
-        if (users.length > 0 && users[0] && !this.state.user) this.setState({ user: users[0]._id })
-
+        // if (users.length > 0 && users[0] && !this.state.user) this.setState({ user: users[0]._id })
         let userOptions
-        userOptions = users.map(user => <option key={user._id} value={user._id}>{user.name}</option>)
+        userOptions = users.map(user => <option key={user._id} value={user._id} selected={task.user._id == user._id}>{user.name}</option>)
         return (
-            <div className="create-project-team create-task">
-                <h3>User</h3>
+            <div className="assignee-details">
+                <div>
+                    Assigned To
+                </div>
                 <select 
                 name="user" 
-                value={this.state.user} 
+                // value={this.state.user} 
                 onChange={this.fieldUpdate("user")} 
-                className="form-input team"
+                className="user-show-assignee-input"
                 onBlur={e => {
                     e.preventDefault();
+
                     updateTaskAssignee({
                         variables: { id: this.props.task._id, user: this.state.user }
                     }).then(() => this.setState({ editing: false }));
@@ -97,7 +103,7 @@ class AssigneeDetail extends Component{
                 }}
                 >
                     {(updateTaskAssignee, data) => (
-                        <div className="task-show-title">
+                        <div className="task-show-user">
                             <form
                                 onSubmit={e => {
                                     e.preventDefault();

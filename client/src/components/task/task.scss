@@ -217,3 +217,20 @@
 	color: #151b26;
     background: #e8ecee;
 }
+
+select.user-show-assignee-input{
+	background-position:
+		calc(100% - 15px) calc(1em + 1px), 
+		calc(100% - 10px) calc(1em + 1px), 
+		calc(100% - 2.4em) 0.5em;
+	background-size:
+		5px 5px,
+		5px 5px,
+		1px 1.5em;
+	border-radius: 5px;
+	border-color: darkgray;
+}
+
+select.user-show-assignee-input:focus {
+	outline: 0;
+}
