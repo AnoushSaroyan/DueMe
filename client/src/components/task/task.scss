@@ -234,3 +234,14 @@ select.user-show-assignee-input{
 select.user-show-assignee-input:focus {
 	outline: 0;
 }
+
+div.task-details-modal{
+	min-width: 650px;
+	position: absolute;
+	top: 20px;
+	border-radius: 4px;
+}
+
+.task-details-modal h2{
+	color: black;
+}
