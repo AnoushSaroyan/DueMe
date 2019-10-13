@@ -162,7 +162,6 @@ const mutation = new GraphQLObjectType({
                 if (project) updateObj.project = project;
                 if (completed !== undefined) updateObj.completed = completed;
                 if (dueDate) updateObj.dueDate = dueDate;
-                debugger
                 return Task.findOneAndUpdate(
                     {_id: _id},
                     { $set: updateObj },

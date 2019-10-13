@@ -1,4 +1,4 @@
-.task-mark-not-complete, .task-mark-complete{
+div.task-mark-not-complete, div.task-mark-complete{
 	background-color: transparent;
 	border: 1px lightgray solid;
 	display: flex;
@@ -8,32 +8,32 @@
 	height: 28px;
 }
 
-.task-mark-not-complete:hover{
+div.task-mark-not-complete:hover{
 	background-color: lightgray;
 	border-color: darkgray;
 }
 
-.task-mark-not-complete svg, .task-mark-complete svg{
+div.task-mark-not-complete svg, .task-mark-complete svg{
 	margin-right: 5px;
 	font-size: 18px;
 	color: darkgray;
 }
 
-.task-mark-not-complete:hover svg{
+div.task-mark-not-complete:hover svg{
 	color: darkgray;
 }
 
-.task-mark-complete{
+div.task-mark-complete{
 	background-color:  #25e8c8;
 	color: white;
 	border: 1px #25e8c8 solid;
 }
 
-.task-mark-complete svg{
+div.task-mark-complete svg{
 	color:white;
 }
 
-.task-mark-complete:hover{
+div.task-mark-complete:hover{
 	background-color: #00bf9c;
 	border-color: #00bf9c;
 }
@@ -104,7 +104,15 @@
 .task-show-user{
 	display: flex;
 	align-items: center;
-	margin-right: 20px;
+	margin-right: 10px;
+	border: 1px solid transparent;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.task-show-user:hover{
+	border: 1px lightgray solid;
 }
 
 .task-show-user .main-header-avatar-pic{
@@ -244,4 +252,61 @@ div.task-details-modal{
 
 .task-details-modal h2{
 	color: black;
+}
+
+.task-details-modal .project-show-add-task-row {
+	align-items: center;
+}
+
+.task-details-modal div.add-task-button svg{
+	margin-top: -1px;
+	font-size: 25px;
+}
+
+.task-details-modal .dialog-right{
+	display: flex;
+}
+
+.task-details-modal .dialog-right svg{
+	margin: 0;
+}
+
+.task-details-modal .dots{
+	margin-right: 10px;
+}
+
+.task-details-modal input{
+	margin-top: 0;
+	height: inherit;
+}
+
+.task-details-modal  .task-calendar svg{
+	margin-top: 0;
+}
+
+.task-details-modal .dialog-description {
+	display: flex;
+}
+
+
+
+.task-details-modal .dialog-description svg {
+	color: darkgray;
+    margin-right: 10px;
+    font-size: 18px;
+	padding-top: 3px;
+	margin-top: 0;
+}
+
+.task-details-modal .description-edit{
+	display: inherit;
+}
+
+.task-details-modal textarea{
+    background: transparent;
+    border: none;
+	width: 100%;
+	display: flex;
+	min-height: calc(100vh - 300px);
+	font-size: 16px;
 }

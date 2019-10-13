@@ -22,7 +22,7 @@
   justify-content: space-between;
   border-bottom: 2px solid #e8ecee;
   padding: 10px 0;
-  margin: 10px 0;
+  margin-top: 10px;
   position: relative;
   cursor: pointer;
 }
@@ -56,7 +56,7 @@
 .section-tiles, .section-tiles-tasks{
   width: 100%;
   display: flex;
-  margin-top: 10px;
+  // margin-top: 10px;
   flex-wrap: wrap;
 }
 
