@@ -61,7 +61,11 @@ class Project extends Component {
                         {
                             query: PROJECT,
                             variables: { _id: this.state.projectId }
-                        }
+                        },
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        },
                     ]
                 }}
                 // we need to make sure we update our cache once a new task is created

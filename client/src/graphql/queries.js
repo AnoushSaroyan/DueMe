@@ -102,11 +102,20 @@ export const TASK = gql`
     title
 		project{
 			_id
-			name
+      name
+      team{
+        _id
+        users{
+          _id
+          name
+          email
+        }
+      }
 		}
 		user{
 			_id
-			name
+      name
+      color
 		}
 	}
 }`;

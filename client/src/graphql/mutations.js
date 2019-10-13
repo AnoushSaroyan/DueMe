@@ -69,7 +69,7 @@ export const CREATE_PROJECT = gql`
 `;
 
 export const CREATE_TASK = gql`
-  mutation newTask($title: String!, $description: String, $dueDate: String, $completed: Boolean!, $project: ID!, $user: ID!) {
+  mutation newTask($title: String!, $description: String, $dueDate: String, $completed: Boolean!, $project: ID, $user: ID!) {
     newTask(title:$title, description: $description, dueDate: $dueDate, completed: $completed, project: $project, user: $user) {
       _id
     title
@@ -206,7 +206,7 @@ export const UPDATE_TASK_DUEDATE = gql`
     mutation updateTaskDueDate($id: ID, $dueDate: String){
       updateTask(_id: $id, dueDate: $dueDate){
         _id
-        dueDate
+        description
         completed
       }
     }

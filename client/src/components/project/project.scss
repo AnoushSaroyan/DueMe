@@ -45,7 +45,9 @@
     transition-duration: .2s;
     transition-property: background,border,box-shadow,color,fill;
     cursor: pointer;
+    text-decoration: none;
 }
+
 
 .add-task-button:hover{
     background-color: #008ce3;

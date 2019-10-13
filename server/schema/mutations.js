@@ -148,9 +148,10 @@ const mutation = new GraphQLObjectType({
                 description: { type: GraphQLString },
                 user: { type: GraphQLID },
                 project: { type: GraphQLID },
-                completed: { type: GraphQLBoolean }
+                completed: { type: GraphQLBoolean },
+                dueDate: { type: GraphQLString },
             },
-            resolve(_, { _id, title, description, user, project, completed }){
+            resolve(_, { _id, title, description, user, project, completed, dueDate }){
                 const updateObj = {};
                 if (_id) updateObj._id = _id;
                 if (title) updateObj.title = title;
@@ -158,7 +159,8 @@ const mutation = new GraphQLObjectType({
                 if (user) updateObj.user = user;
                 if (project) updateObj.project = project;
                 if (completed !== undefined) updateObj.completed = completed;
-
+                if (dueDate) updateObj.dueDate = dueDate;
+                debugger
                 return Task.findOneAndUpdate(
                     {_id: _id},
                     { $set: updateObj },

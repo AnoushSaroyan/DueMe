@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { UPDATE_TASK_USER } from '../../graphql/mutations';
+import { UPDATE_TASK_DUEDATE } from '../../graphql/mutations';
 import { Mutation } from "react-apollo";
 import './task.scss';
 import { FiCalendar } from "react-icons/fi";
+import { USER, PROJECT } from '../../graphql/queries';
 
 class DueDateDetail extends Component{
     constructor(props) {
         super(props)
         this.state = {
             editing: false,
-            task: this.props.task || ""
+            task: this.props.task || "",
+            dueDate: this.props.task.dueDate
         }
 
         this.handleEdit = this.handleEdit.bind(this);
@@ -23,7 +25,8 @@ class DueDateDetail extends Component{
     componentDidUpdate(prevProps, prevState) {
         if (this.props.task._id !== prevProps.task._id) {
             this.setState({
-                user: this.props.task.user
+                dueDate: this.props.task.dueDate,
+                task: this.props.task
             })
         }
     }
@@ -38,24 +41,40 @@ class DueDateDetail extends Component{
 
         if (this.state.editing) {
             return (
-                <Mutation mutation={UPDATE_TASK_USER}>
-                    {(updateTaskUser, data) => (
+                <Mutation 
+                mutation={UPDATE_TASK_DUEDATE}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: PROJECT,
+                            variables: { _id: this.state.task.project._id }
+                        },
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        },
+                    ]
+                }}
+                >
+                    {(updateTaskDueDate, data) => (
                         <div className="task-show-user">
                             <form
                                 onSubmit={e => {
                                     e.preventDefault();
-                                    updateTaskUser({
-                                        variables: { id: this.props.task._id, title: this.state.title }
+                                    updateTaskDueDate({
+                                        variables: { id: this.props.task._id, dueDate: this.state.dueDate }
                                     }).then(() => this.setState({ editing: false }));
                                 }}
                             >
                                 <input
-                                    value={this.state.title}
-                                    onChange={this.fieldUpdate("title")}
+                                    type="date"
+                                    value={this.state.dueDate}
+                                    onChange={this.fieldUpdate("dueDate")}
                                     onBlur={e => {
                                         e.preventDefault();
-                                        updateTaskUser({
-                                            variables: { id: this.props.task._id, title: this.state.title }
+                                        debugger
+                                        updateTaskDueDate({
+                                            variables: { id: this.props.task._id, dueDate: this.state.dueDate }
                                         }).then(() => this.setState({ editing: false }));
                                     }}
                                 />
@@ -76,7 +95,7 @@ class DueDateDetail extends Component{
                             Due Date
                         </div>
                         <div>
-                            {task.dueDate}
+                            {this.state.dueDate}
                         </div>
                     </div>
                 </div>
