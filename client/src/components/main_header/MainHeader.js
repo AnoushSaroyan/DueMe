@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { MdMenu } from "react-icons/md";
-import { IoIosSearch } from "react-icons/io";
 import { Query, Mutation, ApolloConsumer } from 'react-apollo';
 import { USER } from '../../graphql/queries';
 import { MdAdd, MdStarBorder, MdStar } from "react-icons/md";
@@ -11,6 +10,7 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FiFileText } from "react-icons/fi";
 import CreateProjectPopup from '../forms/CreateProjectPopup'
+import Search from '../search/search'
 
 
 class MainHeader extends Component {
@@ -208,10 +208,7 @@ class MainHeader extends Component {
                             <div id="main-ham" className="main-ham hidden-ham" onClick={this.handleSidebarCollapse}><MdMenu /></div>
                             {this.renderTitle(user)}
                             <div className="main-header-right">
-                                <div className="main-header-search-bar">
-                                    <input className="header-search-input"></input>
-                                    <IoIosSearch/>
-                                </div>
+                                <Search user={user}/>
                                 <div className="main-header-add-button-wrapper">
                                     <div className="main-header-add-button" onClick={this.toggleDropMenu("header-add-menu")}>
                                         <MdAdd/>

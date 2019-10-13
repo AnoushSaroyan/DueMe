@@ -1,0 +1,23 @@
+.header-search-input{
+    border-radius: 15px;
+    width: 150px;
+    padding: 4px 15px 4px 30px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    border: 1px solid #cbd4db;
+    box-sizing: border-box;
+    transition: background-color .15s ease-out,width .15s ease-out;
+}
+
+.main-header-search-bar svg{
+    position: absolute;
+    font-size: 18px;
+    color: #6f7782;
+    top: 16px;
+    left: 9px;
+}
+
+.search-expand{
+    width: 511px;
+}
