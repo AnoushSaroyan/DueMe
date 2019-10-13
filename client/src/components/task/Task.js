@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MdDone, MdClear, MdFormatAlignLeft } from "react-icons/md";
 import './task.scss'
-import { TASK, PROJECT } from '../../graphql/queries';
+import { TASK, PROJECT, USER } from '../../graphql/queries';
 import { Query, Mutation, ApolloConsumer } from "react-apollo";
 import TitleDetail from './TitleDetail';
 import { UPDATE_TASK_STATUS, DELETE_TASK } from "../../graphql/mutations";
@@ -137,12 +137,17 @@ class Task extends Component{
                                                                 {
                                                                     query: PROJECT,
                                                                     variables: { _id: task.project._id }
-                                                                }
+                                                                },
+                                                                {
+                                                                    query: USER,
+                                                                    variables: { _id: localStorage.getItem("currentUserId") }
+                                                                },
                                                             ]
                                                         }}
                                                     >
                                                         {deleteTask => (
-                                                            <div onClick={() => deleteTask( { variables: { _id: task._id } } )} className="delete-task-button">Delete Task</div>
+                                                            <div onClick={() => {deleteTask( { variables: { _id: task._id } } )
+                                                                                this.handleClose()}} className="delete-task-button">Delete Task</div>
                                                         )}
                                                     </Mutation>
                                                 )}

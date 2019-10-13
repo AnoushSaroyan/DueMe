@@ -84,10 +84,10 @@ class TaskList extends Component {
 								project.tasks.forEach(task => {
 									if (task.user._id === user._id )tasks.push(task)})}})}})
 
-
+					let foundTask
 					if (this.state.openedTask) {
-						let foundTask = tasks.find(task => task._id === this.state.openedTask)
-						if (foundTask.completed !== this.state.taskStatus) {
+						foundTask = tasks.find(task => task._id === this.state.openedTask)
+						if (foundTask && foundTask.completed !== this.state.taskStatus) {
 							this.setState({
 								taskStatus: foundTask.completed
 							})

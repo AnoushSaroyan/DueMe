@@ -77,7 +77,6 @@ class Project extends Component {
     }
 
     handleAddTask(newTask){
-        debugger
         newTask({
             variables: {
                 title: "new task",
@@ -107,17 +106,18 @@ class Project extends Component {
                     //     foundProject = project
                     //     return project
                     // }}))
+                    let tasks = project.tasks
                     let foundTask
                     if (this.state.openedTask){
                         foundTask = project.tasks.find(task => task._id === this.state.openedTask)
-                        if ( foundTask.completed !== this.state.taskStatus){
+                        if ( foundTask && foundTask.completed !== this.state.taskStatus){
                             this.setState({
                                 taskStatus: foundTask.completed
                             })
                         }
                     }
-                    let task = []
-                    task = project.tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}><TaskRow task={task} type={"project"} projectId={this.state.projectId}/></div>)
+                    let taskDivs = []
+                    taskDivs = tasks.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}><TaskRow task={task} type={"project"} projectId={this.state.projectId}/></div>)
                     return(
                         <div>
                             <MainHeader page={project.name} color={project.color} type={"project"}/>
@@ -130,7 +130,7 @@ class Project extends Component {
                                                 
                                                 <MdPersonOutline/>
                                             </div>
-                                            {task}
+                                            {taskDivs}
                                         </div>
                                         <div className="project-show-task-details" id="task-details">
                                             <Task taskId={this.state.openedTask} completed={this.state.taskStatus} />
