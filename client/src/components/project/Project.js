@@ -125,7 +125,6 @@ class Project extends Component {
                     return(
                         <div>
                             <MainHeader page={project.name} color={project.color} type={"project"} projectId={this.state.projectId}/>
-                            <div className="scroll-wrapper">
                                 <div className="project-show">
                                     <div className="project-show-wrapper">
                                         <div className="project-show-spreadsheet">
@@ -134,13 +133,14 @@ class Project extends Component {
                                                 
                                                 <MdPersonOutline/>
                                             </div>
-                                            {taskDivs}
+                                            <div className="project-scroll-wrapper">
+                                                {taskDivs}
+                                            </div>
                                         </div>
                                         <div className="project-show-task-details" id="task-details">
                                             <Task taskId={this.state.openedTask} completed={this.state.taskStatus} />
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>)
                 }}

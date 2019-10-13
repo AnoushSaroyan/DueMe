@@ -58,28 +58,36 @@ class DueDateDetail extends Component{
                 >
                     {(updateTaskDueDate, data) => (
                         <div className="task-show-user">
-                            <form
-                                onSubmit={e => {
-                                    e.preventDefault();
-                                    updateTaskDueDate({
-                                        variables: { id: this.props.task._id, dueDate: this.state.dueDate }
-                                    }).then(() => this.setState({ editing: false }));
-                                }}
-                            >
-                                <input
-                                    type="date"
-                                    value={this.state.dueDate}
-                                    onChange={this.fieldUpdate("dueDate")}
-                                    onBlur={e => {
+                            <div className="main-header-avatar-pic task-calendar">
+                                <FiCalendar />
+                            </div>
+                            <div className="assignee-details">
+                                <div>
+                                    Due Date
+                                </div>
+                                <form
+                                    onSubmit={e => {
                                         e.preventDefault();
-                                        debugger
                                         updateTaskDueDate({
                                             variables: { id: this.props.task._id, dueDate: this.state.dueDate }
                                         }).then(() => this.setState({ editing: false }));
                                     }}
-                                />
-                                {/* <button type="submit">Update title</button> */}
-                            </form>
+                                >
+                                    <input
+                                        type="date"
+                                        value={this.state.dueDate}
+                                        onChange={this.fieldUpdate("dueDate")}
+                                        onBlur={e => {
+                                            e.preventDefault();
+                                            debugger
+                                            updateTaskDueDate({
+                                                variables: { id: this.props.task._id, dueDate: this.state.dueDate }
+                                            }).then(() => this.setState({ editing: false }));
+                                        }}
+                                    />
+                                    {/* <button type="submit">Update title</button> */}
+                                </form>
+                            </div>
                         </div>
                     )}
                 </Mutation>

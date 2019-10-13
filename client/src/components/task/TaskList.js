@@ -149,7 +149,6 @@ class TaskList extends Component {
 					return (
 						<div>
 							<MainHeader page={user.name} color={user.color} type={"user"} />
-							<div className="scroll-wrapper">
 								<div className="project-show">
 									<div className="project-show-wrapper">
 										<div className="project-show-spreadsheet test-left">
@@ -157,13 +156,14 @@ class TaskList extends Component {
 												{/* {this.addTaskButton()} */}
 												<Link to="/main/task/new" className="add-task-button" >Add Task</Link>
 											</div>
-											{tasks}
+											<div className="project-scroll-wrapper">
+												{tasks}
+											</div>
 										</div>
 										<div className="project-show-task-details" id="task-details">
 											<Task taskId={this.state.openedTask} completed={this.state.taskStatus}/>
 										</div>
 									</div>
-								</div>
 							</div>
 						</div>)
 				}}

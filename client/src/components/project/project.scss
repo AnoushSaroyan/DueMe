@@ -29,7 +29,7 @@
 .project-show-add-task-row{
     display: flex;
     justify-content: space-between;
-    padding: 10px 30px;
+    padding: 10px 38px 10px 30px;
     border-bottom: 1px solid rgb(238, 238, 238);
 }
 
@@ -85,3 +85,31 @@
 //     min-width: calc(100% - 800px);
 //     width: 45%;
 // }
+
+.project-scroll-wrapper{
+    height: calc(100vh - 116px);
+	overflow-y: scroll;
+}
+
+/* width */
+.project-show ::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.project-show ::-webkit-scrollbar-track {
+  background: transparent; 
+  z-index: -1;
+}
+ 
+/* Handle */
+.project-show ::-webkit-scrollbar-thumb {
+  background: transparent; 
+}
+
+/* Handle on hover */
+.project-show:hover ::-webkit-scrollbar-thumb {
+  background: rgb(182, 182, 182); 
+  border-radius: 5px;
+   border: 2px solid rgb(182, 182, 182);  
+}
