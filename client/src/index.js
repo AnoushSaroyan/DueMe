@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
 const httpLink = createHttpLink({
     uri: httpUri,
     headers: {
-        authorization: localStorage.getItem("auth-token")
+        authorization: localStorage.getItem("auth-token") || ""
     }
 });
 
@@ -52,7 +52,7 @@ const wsLink = new WebSocketLink({
         reconnect: true,
         // lazy: true,
         connectionParams: {
-            authorization: localStorage.getItem("auth-token")
+            authorization: localStorage.getItem("auth-token") || ""
         }
     }
 });

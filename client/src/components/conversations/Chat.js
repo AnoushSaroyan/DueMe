@@ -19,7 +19,7 @@ const Chat = (props) => (
             // let chatData = data;
             // let userId = props.match.params.userId
             let chatId = data.fetchOrCreateChatWithUser._id;
-            // get he chat id here
+            // get the chat id here
             let author;
             // debugger
             return (
@@ -36,6 +36,9 @@ const Chat = (props) => (
                                         //     debugger
                                         // }
                                         author = data.fetchOrCreateChatWithUser.users.filter(user => user._id === message.user._id)[0];
+                                        if(!author) {
+                                            debugger
+                                        }
                                         return (
                                             <div key={message._id}>
                                                 <p>{author.name}</p>
