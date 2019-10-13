@@ -19,7 +19,6 @@ const Chat = (props) => (
             // let chatData = data;
             // let userId = props.match.params.userId
             let chatId = data.fetchOrCreateChatWithUser._id;
-            // get the chat id here
             let author;
             // debugger
             return (
