@@ -3,6 +3,8 @@ import { IoIosSearch } from "react-icons/io";
 import './search.scss';
 import { MdPeopleOutline } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icons/fi";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 
 class Search extends Component{
@@ -130,12 +132,44 @@ class Search extends Component{
                 </div>
             )
         }
+
+        let cutProject
+        if (this.state.projects) cutProject = this.state.projects
+            .reverse().slice(-3).reverse()
+            .map(item => <Link to={`/main/project/${item._id}`} key={item._id} className="search-suggestion search-teams-item" ><FiClipboard />{item.name ? item.name : item.title}</Link>)
+        // return cut\
+        let displayProject
+        if (cutProject.length > 0) {
+            displayProject = (
+                <div className="search-teams">
+                    <div className="search-teams-items-header">Projects</div>
+                    {cutProject}
+                </div>
+            )
+        }
+
+        let cutTask
+        if (this.state.tasks) cutTask = this.state.tasks
+            .reverse().slice(-3).reverse()
+            .map(item => <Link to={`/main/project/${item.project._id}`} key={item._id} className="search-suggestion search-teams-item" ><FaRegCheckCircle />{item.title ? item.title : item.description}</Link>)
+        // return cut\
+        let displayTask
+        if (cutTask.length > 0) {
+            displayTask = (
+                <div className="search-teams">
+                    <div className="search-teams-items-header">Tasks</div>
+                    {cutTask}
+                </div>
+            )
+        }
     
 
         return(
             <div>
                 {displayTeam}
                 {displayUser}
+                {displayProject}
+                {displayTask}
                 {/* <div className="search-people">
                     {users}
                 </div>
