@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { MdDone, MdClear } from "react-icons/md";
+import { MdDone, MdClear, MdFormatAlignLeft } from "react-icons/md";
 import './task.scss'
-import { TASK, PROJECT } from '../../graphql/queries';
-import { Query } from "react-apollo";
+import { TASK, PROJECT, USER } from '../../graphql/queries';
+import { Query, Mutation, ApolloConsumer } from "react-apollo";
 import TitleDetail from './TitleDetail';
-import { Mutation } from "react-apollo";
-import { UPDATE_TASK_STATUS } from "../../graphql/mutations";
+import { UPDATE_TASK_STATUS, DELETE_TASK } from "../../graphql/mutations";
 import TaskList from './TaskList';
+import AssigneeDetail from './AssigneeDetail';
+import DueDateDetail from './DueDateDetail'
+import DescriptionDetail from './DescriptionDetail';
 
 class Task extends Component{
     constructor(props){
@@ -17,6 +19,16 @@ class Task extends Component{
         }
     }
 
+    componentDidMount() {
+        const body = document.getElementsByTagName("body")[0];
+        body.addEventListener("click", (event) => {
+            // let screen = document.getElementById("smoke-screen")
+            // if (screen) screen.classList.remove("active")
+            let addDropdown = document.getElementById("task-menu")
+            if (addDropdown) addDropdown.classList.remove("active")
+        })
+    }
+
     componentDidUpdate(prevProps, prevState){
         if (this.state.taskId !== this.props.taskId){
             this.setState({
@@ -24,14 +36,21 @@ class Task extends Component{
                 completed: this.props.completed
             })
         }
+        // debugger
+        if (this.state.completed !== this.props.completed){
+        
+            this.setState({
+                completed: this.props.completed
+            })
+        }
 
-        // if (this.state.completed !== this.props.completed){
-        // 
-        //     this.setState({
-        //         completed: this.props.completed
-        //     })
-        // }
+    }
 
+    toggleDropMenu(button) {
+        return (e) => {
+            let dropDown = document.getElementById(button)
+            if (dropDown) dropDown.classList.add("active")
+        }
     }
 
     handleClose(){
@@ -102,14 +121,55 @@ class Task extends Component{
                                     this.handleCompleteButton(task, updateTaskStatus)
                                 )}
                             </Mutation>
+                            <div className="task-show-right">
+                            <div>
+                                <div className="dots noselect" onClick={this.toggleDropMenu("task-menu")}>
+                                ...
+                                </div>
+                                <div className="profile-menu" id="task-menu">
+                                    <div className="add-menu-items">
+                                            <ApolloConsumer>
+                                                {client => (
+                                                    <Mutation
+                                                        mutation={DELETE_TASK}
+                                                        refetchQueries={() => {
+                                                            return [
+                                                                {
+                                                                    query: PROJECT,
+                                                                    variables: { _id: task.project._id }
+                                                                },
+                                                                {
+                                                                    query: USER,
+                                                                    variables: { _id: localStorage.getItem("currentUserId") }
+                                                                },
+                                                            ]
+                                                        }}
+                                                    >
+                                                        {deleteTask => (
+                                                            <div onClick={() => {deleteTask( { variables: { _id: task._id } } )
+                                                                                this.handleClose()}} className="delete-task-button">Delete Task</div>
+                                                        )}
+                                                    </Mutation>
+                                                )}
+                                            </ApolloConsumer>
+                                    </div>
+                                </div>
+                            </div>
                             <MdClear className="task-show-close-button" onClick={this.handleClose}/>
+                            </div>
                         </div>
                             <div className="task-scroll-wrapper">
 
                                 <div>
                                     <TitleDetail task={task}/>
-
-
+                                    <div className="assignee-data">
+                                        <AssigneeDetail task={task}/>
+                                        <DueDateDetail task={task}/>
+                                    </div>
+                                    <div className="task-show-description">
+                                        <MdFormatAlignLeft/>
+                                        <DescriptionDetail task={task}/>
+                                    </div>
                                 </div>
 
                             </div>

@@ -52,7 +52,7 @@ class TaskRow extends Component{
     handleDate(dueDate){
         let date = new Date(dueDate)
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         let dueDay = days[date.getDay()]
         return <div className="task-row-duedate">
             {dueDay}
@@ -75,7 +75,10 @@ class TaskRow extends Component{
                 id: task._id,
                 completed: !this.state.completed
             }
-        })
+        }).then(() =>
+            this.setState({
+                completed: !this.state.completed
+            }))
 
     }
     

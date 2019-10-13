@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import MainHeader from '../main_header/MainHeader';
-import { useQuery, Query } from "react-apollo";
+import { useQuery, Query, Mutation } from "react-apollo";
 import { USER, PROJECT } from '../../graphql/queries';
 import '../project/project.scss';
 import TaskRow from './TaskRow';
 import { MdPersonOutline, mdAdd } from "react-icons/md";
-import Task from './Task'
+import Task from './Task';
+import { CREATE_TASK } from "../../graphql/mutations";
+import { Link } from 'react-router-dom';
 // import ReactPlayer from 'react-player'
 
 class TaskList extends Component {
@@ -33,7 +35,7 @@ class TaskList extends Component {
 	// }
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevProps.match.params.id !== this.props.match.params.id && !this.props.type) {
+		if (!this.props.type && prevProps.match.params.id !== this.props.match.params.id) {
 			this.setState({
 				userId: this.props.match.params.id
 			})
@@ -64,6 +66,50 @@ class TaskList extends Component {
 		slider.classList.add("task-details-slide")
 	}
 
+	addTaskButton() {
+		return (
+			<Mutation
+				mutation={CREATE_TASK}
+				// if we error out we can set the message here
+				onError={err => this.setState({ message: err.message })}
+				refetchQueries={() => {
+					return [
+						{
+							query: PROJECT,
+							variables: { _id: this.state.projectId }
+						},
+						{
+							query: USER,
+							variables: { _id: localStorage.getItem("currentUserId") }
+						},
+					]
+				}}
+			// we need to make sure we update our cache once a new task is created
+			// update={(cache, data) => {
+			//   this.updateCache(cache, data)}}
+			// when our query is complete we'll display a success message
+			>
+				{(newTask, { data }) => (
+					<div className="add-task-button" onClick={() => this.handleAddTask(newTask)}>Add Task</div>
+				)}
+			</Mutation>
+		)
+	}
+
+	handleAddTask(newTask) {
+		debugger
+		newTask({
+			variables: {
+				title: "new task",
+				description: "",
+				dueDate: "",
+				completed: false,
+				user: this.state.userId,
+				project: "",
+			}
+		});
+	}
+
 	render() {
 		if (!localStorage.getItem("currentUserId")) {
 			return <div></div>
@@ -84,8 +130,15 @@ class TaskList extends Component {
 								project.tasks.forEach(task => {
 									if (task.user._id === user._id )tasks.push(task)})}})}})
 
-
-
+					let foundTask
+					if (this.state.openedTask) {
+						foundTask = tasks.find(task => task._id === this.state.openedTask)
+						if (foundTask && foundTask.completed !== this.state.taskStatus) {
+							this.setState({
+								taskStatus: foundTask.completed
+							})
+						}
+					}
 					// let foundProject = project
 					// const team = teams.find(team => team.projects.find(project => {if(project._id == this.state.projectId){
 					//     foundProject = project
@@ -96,20 +149,21 @@ class TaskList extends Component {
 					return (
 						<div>
 							<MainHeader page={user.name} color={user.color} type={"user"} />
-							<div className="scroll-wrapper">
 								<div className="project-show">
 									<div className="project-show-wrapper">
 										<div className="project-show-spreadsheet test-left">
 											<div className="project-show-add-task-row">
-												<div className="add-task-button">Add Task</div>
+												{/* {this.addTaskButton()} */}
+												<Link to="/main/task/new" className="add-task-button" >Add Task</Link>
 											</div>
-											{tasks}
+											<div className="project-scroll-wrapper">
+												{tasks}
+											</div>
 										</div>
 										<div className="project-show-task-details" id="task-details">
 											<Task taskId={this.state.openedTask} completed={this.state.taskStatus}/>
 										</div>
 									</div>
-								</div>
 							</div>
 						</div>)
 				}}

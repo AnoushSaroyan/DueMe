@@ -64,9 +64,9 @@ class TeamSubMenu extends Component {
         let projectColor = {
             color: color
         }
-    return (
-        <div className="team-submenu-project" key={project._id}><Link to={`/main/project/${project._id}`}><FaSquare style={projectColor}/>{project.name}</Link></div>
-    )
+        return (
+            <div className="team-submenu-project" key={project._id}><Link to={`/main/project/${project._id}`}><FaSquare style={projectColor}/>{project.name}</Link></div>
+        )
     })
         return(
             <div className="team-submenu-projects">

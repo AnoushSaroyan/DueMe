@@ -100,3 +100,137 @@
     border: none;
     box-sizing: content-box;
 }
+
+.task-show-user{
+	display: flex;
+	align-items: center;
+	margin-right: 20px;
+}
+
+.task-show-user .main-header-avatar-pic{
+	height: 30px;
+	width: 30px;
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+}
+
+.assignee-data{
+	padding-bottom: 15px;
+	border-bottom: 1px solid rgb(238, 238, 238);
+	display: flex;
+	margin-bottom: 15px;
+}
+
+.assignee-details{
+	display: flex;
+	flex-direction: column;
+	font-size: 12px;
+}
+
+.assignee-details div:first-child{
+	color: #6f7782;
+}
+
+.assignee-details div:last-child{
+	color:#273240;
+}
+
+.task-calendar{
+	justify-content: center;
+}
+
+.task-calendar svg{
+	color: darkgray;
+	font-size: 16px;
+}	
+
+.task-show-description{
+	display: flex;
+	margin-bottom: 15px;
+    margin-top: 5px;
+}
+
+
+.task-show-description svg{
+	color: darkgray;
+	margin-right: 10px;
+	font-size: 18px;
+	padding-top: 3px;
+}
+
+.task-show-description-details{
+	margin-top: 0;
+	padding: 2px 9px;
+	padding-bottom: 35px;
+	border: 1px solid transparent;
+	width: 100%;
+	min-width: 0;
+	word-wrap: break-word;
+}
+
+.task-show-description-details:hover{
+	border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.task-show-description textarea{
+    background: transparent;
+    border: none;
+	width: 100%;
+	display: flex;
+	min-height: calc(100vh - 300px);
+	font-size: 16px;
+}
+
+.description-edit{
+	padding-bottom: 0;
+}
+
+.task-show-right{
+	display: flex;
+}
+
+.task-show-right > div:first-child{
+    margin-right: 10px;
+    cursor: pointer
+}
+
+.dots{
+	color: darkgray;
+	font-size: 20px;
+	line-height: 12px;
+}
+
+.task-show-right div:first-child:hover{
+	color: black;
+}
+
+.delete-task-button{
+	padding: 0 15px 0 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.delete-task-button:hover{
+	color: #151b26;
+    background: #e8ecee;
+}
+
+select.user-show-assignee-input{
+	background-position:
+		calc(100% - 15px) calc(1em + 1px), 
+		calc(100% - 10px) calc(1em + 1px), 
+		calc(100% - 2.4em) 0.5em;
+	background-size:
+		5px 5px,
+		5px 5px,
+		1px 1.5em;
+	border-radius: 5px;
+	border-color: darkgray;
+}
+
+select.user-show-assignee-input:focus {
+	outline: 0;
+}

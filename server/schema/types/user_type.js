@@ -3,7 +3,8 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLFloat, GraphQLBoolean, GraphQLList } = graphql;
 const User = mongoose.model('user');
 const Team = mongoose.model('team');
-const TeamType = require("./team_type")
+const TeamType = require("./team_type");
+const Project = mongoose.model("project");
 
 const UserType = new GraphQLObjectType({
     name: "UserType",
@@ -20,7 +21,15 @@ const UserType = new GraphQLObjectType({
                     .populate("teams")
                     .then(user => user.teams);
         }},
-        color: { type: GraphQLString }
+        color: { type: GraphQLString },
+        projects: {
+            type: new GraphQLList(require("./project_type")),
+            resolve(parentValue) {
+                return User.findById(parentValue._id)
+                    .populate("projects")
+                    .then(user=> user.projects)
+            }
+        }
     })
 });
 

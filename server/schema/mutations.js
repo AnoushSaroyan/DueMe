@@ -150,9 +150,10 @@ const mutation = new GraphQLObjectType({
                 description: { type: GraphQLString },
                 user: { type: GraphQLID },
                 project: { type: GraphQLID },
-                completed: { type: GraphQLBoolean }
+                completed: { type: GraphQLBoolean },
+                dueDate: { type: GraphQLString },
             },
-            resolve(_, { _id, title, description, user, project, completed }){
+            resolve(_, { _id, title, description, user, project, completed, dueDate }){
                 const updateObj = {};
                 if (_id) updateObj._id = _id;
                 if (title) updateObj.title = title;
@@ -160,7 +161,8 @@ const mutation = new GraphQLObjectType({
                 if (user) updateObj.user = user;
                 if (project) updateObj.project = project;
                 if (completed !== undefined) updateObj.completed = completed;
-
+                if (dueDate) updateObj.dueDate = dueDate;
+                debugger
                 return Task.findOneAndUpdate(
                     {_id: _id},
                     { $set: updateObj },
@@ -311,7 +313,68 @@ const mutation = new GraphQLObjectType({
                     return user
                 })
             }
-        }
+        },
+        addToFavorites: {
+            type: UserType,
+            args: {
+                _id: { type: GraphQLID },
+                projectId: { type: GraphQLID}
+            },
+            resolve(_, { _id, projectId }) {
+                return User.findById(_id).then(user => Project.findById(projectId).then(project => {
+                    user.projects.push(project)
+                    user.save()
+                    return user
+                }))
+            }
+        },
+        removeFromFavorites: {
+            type: UserType,
+            args: {
+                _id: { type: GraphQLID },
+                projectId: { type: GraphQLID }
+            },
+            resolve(_, { _id, projectId }) {
+                return User.findById(_id).then(user => Project.findById(projectId).then(project => {
+                    user.projects.pull(project)
+                    user.save()
+                    return user
+                }))
+            }
+        },
+
+        // fetchOrCreateChatWithUser: {
+        //     type: ChatType,
+        //     args: {
+        //         id: { type: new GraphQLNonNull(GraphQLID) }, // this is the other user's id
+        //     },
+
+        //     async resolve(_, { id }, context) {
+        //         let validUser = await AuthService.verifyUser({ token: context.token });
+        //         let conversations = await Chat.find({});
+
+        //         if (validUser.loggedIn) {
+        //             // let valid_user_id = "5d96d076de8d3d64ecab25a7";
+        //             // let returnValue = conversations.filter(chat => chat.users.includes(args._id) && chat.users.includes(valid_user_id));
+        //             // return returnValue; 
+
+        //             // filter the chat with other user_id and the current user id
+        //             let chaty = conversations.filter(chat => {
+        //                 return chat.users.includes(id) && chat.users.includes(validUser._id)
+        //             });
+        //             let newChaty;
+        //             if (chaty.length !== 0) {
+        //                 return chaty[0];
+        //             } else {
+        //                 newChaty = await new Chat({ users: [valid_user_id, id] }).save();
+        //                 return newChaty;
+        //             }
+        //         } else {
+        //             throw new Error("Sorry, you need to be logged in");
+        //         }
+        //     }
+        // }
+        //}
     }
 });
 

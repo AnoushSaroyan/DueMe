@@ -69,7 +69,7 @@ export const CREATE_PROJECT = gql`
 `;
 
 export const CREATE_TASK = gql`
-  mutation newTask($title: String!, $description: String, $dueDate: String!, $completed: Boolean!, $project: ID!, $user: ID!) {
+  mutation newTask($title: String!, $description: String, $dueDate: String, $completed: Boolean!, $project: ID, $user: ID!) {
     newTask(title:$title, description: $description, dueDate: $dueDate, completed: $completed, project: $project, user: $user) {
       _id
     title
@@ -189,4 +189,60 @@ export const UPDATE_TASK_USER = gql`
       }
     }
 
+`
+
+export const UPDATE_TASK_DESCRIPTION = gql`
+    mutation updateTaskDescription($id: ID, $description: String){
+      updateTask(_id: $id, description: $description){
+        _id
+        description
+        completed
+      }
+    }
+
+`
+
+export const UPDATE_TASK_DUEDATE = gql`
+    mutation updateTaskDueDate($id: ID, $dueDate: String){
+      updateTask(_id: $id, dueDate: $dueDate){
+        _id
+        description
+        completed
+      }
+    }
+`
+
+export const UPDATE_TASK_ASSIGNEE = gql`
+    mutation updateTaskAssignee($id: ID, $user: ID){
+      updateTask(_id: $id, user: $user){
+        _id
+        description
+        completed
+      }
+    }
+
+`
+
+export const DELETE_TASK = gql`
+    mutation deleteTask($_id: ID){
+      deleteTask(_id: $_id){
+        _id
+      }
+    }
+`
+export const ADD_TO_FAVORITES = gql`
+    mutation addToFavorites($_id: ID, $projectId: ID){
+      addToFavorites(_id: $_id, projectId: $projectId){
+        _id
+      }
+    }
+`
+
+
+export const REMOVE_FROM_FAVORITES = gql`
+    mutation removeFromFavorites($_id: ID, $projectId: ID){
+      removeFromFavorites(_id: $_id, projectId: $projectId){
+        _id
+      }
+    }
 `

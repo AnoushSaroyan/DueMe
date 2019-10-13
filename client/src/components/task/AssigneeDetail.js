@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { UPDATE_TASK_USER } from '../../graphql/mutations';
+import { UPDATE_TASK_ASSIGNEE} from '../../graphql/mutations';
 import { Mutation } from "react-apollo";
+import { USER, PROJECT } from '../../graphql/queries';
 import './task.scss';
 
 class AssigneeDetail extends Component{
@@ -8,7 +9,8 @@ class AssigneeDetail extends Component{
         super(props)
         this.state = {
             editing: false,
-            user: this.props.task.user || ""
+            task: this.props.task || "",
+            user: ""
         }
 
         this.handleEdit = this.handleEdit.bind(this);
@@ -22,17 +24,54 @@ class AssigneeDetail extends Component{
     componentDidUpdate(prevProps, prevState) {
         if (this.props.task._id !== prevProps.task._id) {
             this.setState({
-                user: this.props.task.user
+                task: this.props.task
             })
         }
+        // if (prevState.project !== this.state.project) {
+        //     this.setState({
+        //         user: ""
+        //     })
+        // }
     }
 
     fieldUpdate(field) {
         return e => this.setState({ [field]: e.target.value })
     }
 
+
+    constructUserSelection(task, updateTaskAssignee) {
+        let users = []
+        users = task.project.team.users
+        // if (users.length > 0 && users[0] && !this.state.user) this.setState({ user: users[0]._id })
+        let userOptions
+        userOptions = users.map(user => <option key={user._id} value={user._id} selected={task.user._id == user._id}>{user.name}</option>)
+        return (
+            <div className="assignee-details">
+                <div>
+                    Assigned To
+                </div>
+                <select 
+                name="user" 
+                // value={this.state.user} 
+                onChange={this.fieldUpdate("user")} 
+                className="user-show-assignee-input"
+                onBlur={e => {
+                    e.preventDefault();
+
+                    updateTaskAssignee({
+                        variables: { id: this.props.task._id, user: this.state.user }
+                    }).then(() => this.setState({ editing: false }));
+                }}
+                >
+                    {userOptions}
+                </select>
+            </div>
+        )
+    }
+
     render(){
-        const { user } = this.state
+        const { user } = this.props.task
+        const abbreviatedName = user.name.split(" ").map(word => word[0])
         let rightLetters
         if (abbreviatedName.length === 1) {
             rightLetters = abbreviatedName[0]
@@ -48,27 +87,42 @@ class AssigneeDetail extends Component{
 
         if (this.state.editing) {
             return (
-                <Mutation mutation={UPDATE_TASK_USER}>
-                    {(updateTaskUser, data) => (
-                        <div className="task-show-title">
+                <Mutation 
+                mutation={UPDATE_TASK_ASSIGNEE}
+                refetchQueries={() => {
+                    return [
+                        {
+                            query: PROJECT,
+                            variables: { _id: this.state.task.project._id }
+                        },
+                        {
+                            query: USER,
+                            variables: { _id: localStorage.getItem("currentUserId") }
+                        },
+                    ]
+                }}
+                >
+                    {(updateTaskAssignee, data) => (
+                        <div className="task-show-user">
                             <form
                                 onSubmit={e => {
                                     e.preventDefault();
-                                    updateTaskUser({
-                                        variables: { id: this.props.task._id, title: this.state.title }
+                                    updateTaskAssignee({
+                                        variables: { id: this.props.task._id, user: this.state.user }
                                     }).then(() => this.setState({ editing: false }));
                                 }}
                             >
-                                <input
-                                    value={this.state.title}
-                                    onChange={this.fieldUpdate("title")}
+                                {this.constructUserSelection(this.props.task, updateTaskAssignee)}
+                                {/* <input
+                                    value={this.state.user}
+                                    onChange={this.fieldUpdate("user")}
                                     onBlur={e => {
                                         e.preventDefault();
-                                        updateTaskUser({
-                                            variables: { id: this.props.task._id, title: this.state.title }
+                                        updateTaskAssignee({
+                                            variables: { id: this.props.task._id, user: this.state.title }
                                         }).then(() => this.setState({ editing: false }));
                                     }}
-                                />
+                                /> */}
                                 {/* <button type="submit">Update title</button> */}
                             </form>
                         </div>
@@ -80,6 +134,14 @@ class AssigneeDetail extends Component{
                 <div onClick={this.handleEdit} className="task-show-user">
                     <div className="main-header-avatar-pic" style={profileColor} >
                         {rightLetters}
+                    </div>
+                    <div className="assignee-details">
+                        <div>
+                            Assigned To
+                        </div>
+                        <div>
+                            {user.name}
+                        </div>
                     </div>
                 </div>
             );
