@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { Query } from 'react-apollo';
-import { USER, FETCH_TASKS } from '../../graphql/queries';
+import { USER, FETCH_TASKS, PROJECT } from '../../graphql/queries';
 import MainHeader from '../main_header/MainHeader';
+import Task from '../task/Task';
+import TaskRow from '../task/TaskRow';
 import Tiles from './Tiles';
 import './home.scss';
 import './tiles.scss';
@@ -19,10 +21,53 @@ class Home extends Component {
         projects: true,
       }
       this.handleCollapse = this.handleCollapse.bind(this)
+      this.handleSlide = this.handleSlide.bind(this)
     }
 
-    handleTasks(){
+    handleSlide(e) {
+      const slider = document.getElementById("task-details")
+      let bool = e.currentTarget.getAttribute("value")
+      if (bool === "true") {
+        bool = true
+      } else {
+        bool = false
+      }
+      this.setState({
+        openedTask: e.currentTarget.id,
+        taskStatus: bool
+      })
+      slider.classList.add("task-details-slide")
+    }
+
+    handleTasks(projects, user){
       if (this.state.tasks) {
+
+            let taskDivs = []
+            let userTasks = []
+            taskDivs = projects.map(project => project.tasks).flat();
+        userTasks = taskDivs.map(task => <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}><TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} /></div>)
+            debugger
+            // return (
+            //   <div>
+            //     <MainHeader page={project.name} color={project.color} type={"project"} projectId={this.state.projectId} />
+            //     <div className="project-show">
+            //       <div className="project-show-wrapper">
+            //         <div className="project-show-spreadsheet">
+            //           <div className="project-show-add-task-row">
+            //             {this.addTaskButton()}
+
+                        
+            //           </div>
+            //           <div className="project-scroll-wrapper">
+            //             {taskDivs}
+            //           </div>
+            //         </div>
+            //         <div className="project-show-task-details" id="task-details">
+            //           <Task taskId={this.state.openedTask} completed={this.state.taskStatus} />
+            //         </div>
+            //       </div>
+            //     </div>
+            //   </div>)
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
@@ -31,11 +76,11 @@ class Home extends Component {
               <MdExpandMore />
             </div>
             <div className="section-tiles">
-              <h2>tasks go here</h2>
+              {userTasks}
             </div>
           </div>
         )
-      } else {
+      }else {
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
@@ -49,13 +94,6 @@ class Home extends Component {
     }
 
     handleProjects(projects){
-      let projectArr = [];
-      projects.forEach(prjArr => {
-        prjArr.forEach(prj => {
-          projectArr.push(prj)
-        })
-      })
-
       if (this.state.projects) {
         return (
           <div className="home-section">
@@ -65,7 +103,7 @@ class Home extends Component {
               <MdExpandMore />
             </div>
             <div className="section-tiles">
-              { projectArr.map(project => <Tiles project={project} key={project._id}/>)}
+              { projects.map(project => <Tiles project={project} key={project._id}/>)}
               <Link to="/main/project/new">
                 <div className="tile-top">
                   <div className="tile-inner-new" >
@@ -105,17 +143,16 @@ class Home extends Component {
       return (
       <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
         {({ data }) => {
-          debugger
+
           if (data) {
             const { user } = data
-            const projects = user.teams.map(team => team.projects)
-          
+            const projects = user.teams.map(team => team.projects).flat()
             return<div>
                 <MainHeader page={"Home"}/>
                 <div className="scroll-wrapper">
                     <div className="home-page">
                         <div className="home-inner">
-                          {this.handleTasks()}
+                          {this.handleTasks(projects, user)}
                           {this.handleProjects(projects)}
                         </div>
                     </div>
