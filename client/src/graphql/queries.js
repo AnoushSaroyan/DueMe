@@ -18,6 +18,9 @@ export const FETCH_USERS = gql`
       _id
       name
       email
+      teams{
+        _id
+      }
     }
   }`;
 
@@ -49,6 +52,7 @@ export const USER = gql`
           _id
           name
           color
+          email
         }
         projects{
           _id

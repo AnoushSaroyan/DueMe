@@ -272,3 +272,26 @@ a.main-header-avatar-pic {
 .star-filled{
     color: #fcbd01;
 }
+
+.project-dropdown-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.project-dropdown-button{
+    color: darkgray;
+    font-size: 25px;
+}
+
+.project-dropdown-button:hover{
+    color: black;
+}
+
+.project-menu{
+    right: 1205px;
+}
+
+.team-menu{
+    right: 1391px;
+}

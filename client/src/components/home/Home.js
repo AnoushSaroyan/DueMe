@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { USER, FETCH_TASKS, PROJECT } from '../../graphql/queries';
 import MainHeader from '../main_header/MainHeader';
-import Task from '../task/Task';
+import TaskModal from '../task/TaskModal';
 import TaskRow from '../task/TaskRow';
 import Tiles from './Tiles';
 import './home.scss';
@@ -20,6 +20,8 @@ class Home extends Component {
         currentUser: props.currentUser,
         tasks: true,
         projects: true,
+        openedTask: "",
+        taskStatus: ""
       }
       this.handleCollapse = this.handleCollapse.bind(this)
       this.handleSlide = this.handleSlide.bind(this)
@@ -37,7 +39,11 @@ class Home extends Component {
         openedTask: e.currentTarget.id,
         taskStatus: bool
       })
-      slider.classList.add("task-details-slide")
+      // slider.classList.add("task-details-slide")
+      // let modal = document.getElementById("task-modal")
+      // if (modal) modal.classList.add("active")
+      const playlistForm = document.getElementById("task-popup");
+      playlistForm.classList.add("active");
     }
 
     handleTasks(projects, user){
@@ -49,13 +55,23 @@ class Home extends Component {
             let filteredTasks = taskDivs.filter(task => task.user._id === user._id)
             userTasks = filteredTasks.map(task => {
               return (
-              <div>
-                <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}>
+              <div key={task._id}>
+                <div onClick={this.handleSlide} id={task._id} value={task.completed}>
                   <TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} />
                 </div>
               </div>
               )
             })
+
+            let foundTask
+            if (this.state.openedTask) {
+              foundTask = filteredTasks.find(task => task._id === this.state.openedTask)
+              if (foundTask && foundTask.completed !== this.state.taskStatus) {
+                this.setState({
+                  taskStatus: foundTask.completed
+                })
+              }
+            }
         return (
           <div className="home-section">
             <div className="home-section-header noselect" onClick={this.handleCollapse("tasks")}>
@@ -92,14 +108,14 @@ class Home extends Component {
             </div>
             <div className="section-tiles">
               { projects.map(project => <Tiles project={project} key={project._id}/>)}
-              <Link to="/main/project/new">
                 <div className="tile-top">
-                  <div className="tile-inner-new" >
-                    <GoPlus /> 
-                  </div>
-                  <h2>New Project</h2>
+                  <Link to="/main/project/new">
+                    <div className="tile-inner-new" >
+                      <GoPlus /> 
+                    </div>
+                    <h2>New Project</h2>
+                  </Link>
                 </div>
-              </Link>
             </div>
           </div>
         )
@@ -137,6 +153,11 @@ class Home extends Component {
             const projects = user.teams.map(team => team.projects).flat()
             return<div>
                 <MainHeader page={"Home"}/>
+              <div className="dialog color-dialog" id="task-popup">
+                <div className="project-show-task-details task-details-slide task-details-modal">
+                    <TaskModal taskId={this.state.openedTask} completed={this.state.taskStatus} />
+                  </div>
+                </div>
                 <div className="scroll-wrapper">
                     <div className="home-page">
                         <div className="home-inner">

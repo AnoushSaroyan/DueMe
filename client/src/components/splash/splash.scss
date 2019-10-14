@@ -83,7 +83,7 @@
     justify-content: center;
     position: relative;
     width: 100%;
-    margin-bottom: 90px;
+    margin-bottom: -50px;
 }
 
 
@@ -108,4 +108,34 @@
     position: relative;
     z-index: 1;
     width: 300px;
+}
+
+.features-wrapper{
+    display: flex;
+    background: linear-gradient(180deg,#edf1f2 0,#f6f8f9);
+    padding-bottom: 160px;
+    padding-top: 160px;
+    justify-content: center;
+}
+
+.splash-clickable-features{
+    display: flex;
+    width: 60%;
+}
+
+.feature h2{
+    font-size: 1.375rem;
+    line-height: 1.636;
+    margin-bottom: 16px;
+}
+
+.feature p{
+    font-size: 17px;
+    color: #646f79;
+    line-height: 2.25;
+}
+
+.feature {
+    padding-left: 26px;
+    padding-right: 26px;
 }

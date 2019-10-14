@@ -49,7 +49,7 @@ class TeamSubMenu extends Component {
             <div>
                 <div className="team-submenu-people">
                     <div className="team-submenu-circles">{three}</div>
-                    <div className="submenu-invite-people">Invite People</div>
+                    <Link to={`/main/team/update/${team._id}`} className="submenu-invite-people">Invite People</Link>
                 </div>
             </div>
         )
@@ -79,7 +79,7 @@ class TeamSubMenu extends Component {
         if (this.state.open) {
             return (
                 <div className="team-submenu">
-                    <div className="team-submenu-title noselect"><TiArrowSortedDown onClick={this.handleCollapse("open")}/><Link className="submenu-team-name">{team.name}</Link></div>
+                    <div className="team-submenu-title noselect"><TiArrowSortedDown onClick={this.handleCollapse("open")}/><Link to={`/main/team/${team._id}`}className="submenu-team-name">{team.name}</Link></div>
                     {this.renderTeamMembers(team)}
                     {this.renderProjects(team)}
                 </div>

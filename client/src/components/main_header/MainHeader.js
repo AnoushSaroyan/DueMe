@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { MdMenu } from "react-icons/md";
 import { Query, Mutation, ApolloConsumer } from 'react-apollo';
-import { USER } from '../../graphql/queries';
-import { MdAdd, MdStarBorder, MdStar } from "react-icons/md";
+import { USER, PROJECT } from '../../graphql/queries';
+import { MdAdd, MdStarBorder, MdStar, MdKeyboardArrowDown } from "react-icons/md";
 import "./main-header.scss";
 import { FiClipboard, FiCheckCircle, FiMessageCircle, FiUsers } from "react-icons/fi";
-import { LOGOUT_USER, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES } from "../../graphql/mutations";
+import { LOGOUT_USER, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, DELETE_PROJECT, DELETE_TEAM } from "../../graphql/mutations";
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FiFileText } from "react-icons/fi";
-import CreateProjectPopup from '../forms/CreateProjectPopup'
 import Search from '../search/search'
 
 
@@ -20,7 +19,8 @@ class MainHeader extends Component {
             page: this.props.page,
             projectColor: this.props.color,
             type: this.props.type,
-            projectId: this.props.projectId
+            projectId: this.props.projectId,
+            teamId: this.props.teamId
         }
     }
 
@@ -33,6 +33,10 @@ class MainHeader extends Component {
             if (addDropdown) addDropdown.classList.remove("active")
             let accountDropdown = document.getElementById("profile-menu")
             if (accountDropdown) accountDropdown.classList.remove("active")
+            let projectDropdown = document.getElementById("project-menu")
+            if (projectDropdown) projectDropdown.classList.remove("active")
+            let teamDropdown = document.getElementById("team-menu")
+            if (teamDropdown) teamDropdown.classList.remove("active")
         })
         if (this.props.type === "project") {
             this.addBorderBottom()
@@ -45,7 +49,8 @@ class MainHeader extends Component {
                 page: this.props.page,
                 projectColor: this.props.color,
                 type: this.props.type,
-                projectId: this.props.projectId
+                projectId: this.props.projectId,
+                teamId: this.props.teamId
             })
         }
 
@@ -128,8 +133,83 @@ class MainHeader extends Component {
             let projectColor = {
                 backgroundColor: color
             } 
-            return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div><h1>{this.state.page}</h1>{this.handleFavorite(user)}</div>
+            return <div className="page-title"><div className="page-title-color-box" style={projectColor}><FiFileText className="page-title-inside" /></div>
+            <h1>{this.state.page}</h1>
+            {this.handleFavorite(user)}
+            <div className="project-dropdown-wrapper">
+                <MdKeyboardArrowDown className="project-dropdown-button" onClick={this.toggleDropMenu("project-menu")}/>
+            </div>
+            <div className="profile-menu project-menu" id="project-menu">
+                    <div className="add-menu-items">
+                        <ApolloConsumer>
+                            {client => (
+                                <Mutation
+                                    mutation={DELETE_PROJECT}
+                                    refetchQueries={() => {
+                                        return [
+                                            {
+                                                query: USER,
+                                                variables: { _id: localStorage.getItem("currentUserId") }
+                                            },
+                                        ]
+                                    }}
+                                    onCompleted={data => {
+                                        this.props.history.push(`/main/home`);
+                                    }}
+                                >
+                                    {deleteProject => (
+                                        <div onClick={() => {
+                                            deleteProject({ variables: { _id: this.state.projectId } })
+                                        }} className="delete-task-button">Delete Project</div>
+                                    )}
+                                </Mutation>
+                            )}
+                        </ApolloConsumer>
+                    </div>
+            </div>
+            </div>
         }
+
+        if (this.state.type === "team"){
+            return(
+            <div className="page-title">
+                <h1>{this.state.page}</h1>
+                    <div className="project-dropdown-wrapper">
+                        <MdKeyboardArrowDown className="project-dropdown-button" onClick={this.toggleDropMenu("team-menu")} />
+                    </div>
+                    <div className="profile-menu team-menu" id="team-menu">
+                        <div className="add-menu-items">
+                            <ApolloConsumer>
+                                {client => (
+                                    <Mutation
+                                        mutation={DELETE_TEAM}
+                                        refetchQueries={() => {
+                                            return [
+                                                {
+                                                    query: USER,
+                                                    variables: { _id: localStorage.getItem("currentUserId") }
+                                                },
+                                            ]
+                                        }}
+                                        onCompleted={data => {
+                                            this.props.history.push(`/main/home`);
+                                        }}
+                                    >
+                                        {deleteTeam => (
+                                            <div onClick={() => {
+                                                deleteTeam({ variables: { _id: this.state.teamId } })
+                                            }} className="delete-task-button">Delete Team</div>
+                                        )}
+                                    </Mutation>
+                                )}
+                            </ApolloConsumer>
+                        </div>
+                    </div>
+            </div>
+            )
+        }
+
+
         if (this.state.type === "user") {
             let color
             this.state.projectColor ? color = this.state.projectColor : color = "#e362e3"

@@ -1,0 +1,40 @@
+.team-page{
+  display: flex;
+  justify-content: center;
+}
+
+.team-inner{
+  display: flex;
+  justify-content: center;
+  width: 90%;
+}
+
+.team-section{
+  width: 50%;
+  margin: 20px;
+}
+
+.team-members{
+  margin: 10px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+
+.team-members h2{
+  margin-left: 10px;
+  
+}
+
+.team-members-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team-members-delete{
+  color: red;
+  cursor: pointer;
+}
