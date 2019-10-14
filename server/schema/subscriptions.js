@@ -13,10 +13,6 @@ const User = mongoose.model("user");
 const Chat = mongoose.model("chat");
 
 
-// const graphQLISO = require("graphql-iso-date")
-// const { GraphQLDate } = graphQLISO;
-
-
 // Publish-Subscribe system, also known as pubsub in short, 
 // is a type of database system that serves a group of subscribers interested in various events with notifications as the events occur.
 const pubsub = require("./pubsub");
@@ -56,7 +52,10 @@ const subscription = new GraphQLObjectType({
                 return data.messageDeleted;
             },
             // subscribe: () => withFilter(() => pubsub.asyncIterator(["MESSAGE_DELETED"])),
-            
+            subscribe: withFilter(
+                () => pubsub.asyncIterator(["MESSAGE_DELETED"]),
+                () => { return true; }
+            )
         }
     })
 });

@@ -162,7 +162,6 @@ const mutation = new GraphQLObjectType({
                 if (project) updateObj.project = project;
                 if (completed !== undefined) updateObj.completed = completed;
                 if (dueDate) updateObj.dueDate = dueDate;
-                debugger
                 return Task.findOneAndUpdate(
                     {_id: _id},
                     { $set: updateObj },
@@ -264,40 +263,42 @@ const mutation = new GraphQLObjectType({
             }
         },
         deleteMessage: {
-            type: MessageType,
+            type: ChatType,
             args: {
-                id: { type: GraphQLID },
+                messageId: { type: GraphQLID },
+                currentUserId: { type: GraphQLID },
+                chat: { type: GraphQLID },
             },
-            async resolve(_, { id }, context) {
+            async resolve(_, { messageId, currentUserId, chat }, context) {
                 // let validUser = await AuthService.verifyUser({ token: context.token });
                 // check if the user is loggedin
-                const token = context.token;
-                const decoded = await jwt.verify(token, secretOrkey);
-                const valid_user_id = decoded.id;
-                const loggedIn = await User.findById(valid_user_id);
+                // const token = context.token;
+                // const decoded = await jwt.verify(token, secretOrkey);
+                // const valid_user_id = decoded.id;
+                // const loggedIn = await User.findById(valid_user_id);
 
-                let message = await Message.findById(id);
+                let message = await Message.findById(messageId);
 
-                if (loggedIn) {
+                // if (loggedIn) {
                     // check if the message auther is the current user id 
-                    if (message.user !== valid_user_id) {
+                    if (message.user._id !== currentUserId) {
                         let chaty = await Chat.findById(chat);
                         // check if the chat contains the message then delete it from chat.messages
-                        if (chaty.messages.includes(message)) {
-                            chaty.messages.splice(message.indexOf(message), 1);
+                        if (chaty.messages.includes(messageId)) {
+                            chaty.messages.splice(chaty.messages.indexOf(messageId), 1);
 
-                            await channel.save();
+                            await chaty.save();
                             await message.remove();
                             // publish to the pubsub system so that the new data will get send to the chat that is subscribed to the messageDelete subscription
-                            await pubsub.publish("MESSAGE_DELETED", { messageDeleted: message, chat: chaty });
-                            return message;
+                            await pubsub.publish("MESSAGE_DELETED", { messageDeleted: chaty });
+                            return chaty;
                         }
                     } else {
                         throw new Error("Sorry, you can't delete other users' messages");
                     }
-                } else {
-                    throw new Error("Sorry, you need to be logged in to delete a message");
-                }
+                // } else {
+                //     throw new Error("Sorry, you need to be logged in to delete a message");
+                // }
             }
         },
         changeUserColor: {
@@ -374,7 +375,7 @@ const mutation = new GraphQLObjectType({
         //         }
         //     }
         // }
-        //}
+        // }
     }
 });
 

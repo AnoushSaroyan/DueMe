@@ -79,7 +79,6 @@ class DueDateDetail extends Component{
                                         onChange={this.fieldUpdate("dueDate")}
                                         onBlur={e => {
                                             e.preventDefault();
-                                            debugger
                                             updateTaskDueDate({
                                                 variables: { id: this.props.task._id, dueDate: this.state.dueDate }
                                             }).then(() => this.setState({ editing: false }));

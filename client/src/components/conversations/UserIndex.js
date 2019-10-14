@@ -31,18 +31,14 @@ class UserIndex extends React.Component {
     }
 
     handleClick(e, user) {
-        debugger
         // e.preventDefault();
         return (
             <Query query={FETCH_USERS_CHAT} variables={{ id: user._id }}>
                 {({ loading, error, data }) => {
                     if (loading) return <p>Loading...</p>
-                    debugger
                     if (error) return `Error! ${error.message}`
 
-                    debugger
                     if (data.usersChat === []) {
-                        debugger
                         return (
                             <Mutation
                                 mutation={CREATE_CHAT}
@@ -62,7 +58,6 @@ class UserIndex extends React.Component {
                             </Mutation>
                         );
                     } else {
-                        debugger
                         let chatyId = data.usersChat[0]._id;
                         return (
                             <div className="chat-user-item">
@@ -99,7 +94,7 @@ class UserIndex extends React.Component {
                             {allUsers.map(user => {
 
                                 // return <h4 onClick={(e) => this.handleClick(e, user)}>{user.name}</h4>
-                                return <Link to={`/main/chat/${user._id}`}>{user.name}</Link>
+                                return <Link to={`/main/chat/${user._id}`} key={user._id}>{user.name}</Link>
                             })}
                             </div>
                             )

@@ -79,34 +79,48 @@ export const CREATE_TASK = gql`
   }
 `;
 export const NEW_MESSAGE = gql`
-    mutation NewMessage($user: ID!, $content: String!, $chat: ID!) {
-      newMessage(user: $user, content: $content, chat: $chat) {
+  mutation NewMessage($user: ID!, $content: String!, $chat: ID!) {
+    newMessage(user: $user, content: $content, chat: $chat) {
+      _id
+      users {
         _id
-        users {
+        email
+        name
+      }
+      messages {
+        date
+        chat
+        content
+        user {
           _id
-          email
           name
         }
-        messages {
-          date
-          chat
-          content
-          user {
-            _id
-            name
-          }
+      }
+    }
+  }
+`;
+
+export const DELETE_MESSAGE = gql`
+  mutation DeleteMessage($messageId: ID!, $currentUserId: ID!, $chat: ID!) {
+    deleteMessage(messageId: $messageId, currentUserId: $currentUserId, chat: $chat) {
+      _id
+      users {
+        _id
+        email
+        name
+      }
+      messages {
+        date
+        chat
+        content
+        user {
+          _id
+          name
         }
       }
     }
-  `;
-
-export const DELETE_MESSAGE = gql`
-    mutation DeleteMessage($id: ID!) {
-      deleteMessage(id: $id) {
-        _id
-      }
-    }
-  `;
+  }
+`;
 
 export const CREATE_CHAT = gql`
     mutation CreateChat($id: ID!) {
