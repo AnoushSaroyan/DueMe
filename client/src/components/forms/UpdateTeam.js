@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Mutation } from "react-apollo";
+import { Mutation, useQuery } from "react-apollo";
 import MainHeader from "../main_header/MainHeader";
 import "./create-team.scss";
 
-import { CREATE_TEAM } from "../../graphql/mutations";
+import { CREATE_TEAM, ADD_USER_TO_TEAM } from "../../graphql/mutations";
 import { FETCH_USERS, FIND_USER_BY_EMAIL, USER } from "../../graphql/queries";
 
 
-class CreateTeam extends Component {
+class UpdateTeam extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             name: "",
-            projects: [],
-            users: []
+            projects: "",
+            user: ""
         };
     }
 
@@ -33,28 +33,49 @@ class CreateTeam extends Component {
 
     //   if (users) {
     //     let teamArray = users;
-    //     let newTeam = data.newTeam;
+    //     let addUserToTeam = data.addUserToTeam;
     //     cache.writeQuery({
     //       query: FETCH_USERS,
-    //       data: { users: teamArray.concat(newTeam) }
+    //       data: { users: teamArray.concat(addUserToTeam) }
     //     });
     //   }
     // }
 
-    handleSubmit(e, newTeam) {
+    handleSubmit(e, addUserToTeam) {
         e.preventDefault();
-        newTeam({
+        debugger
+        addUserToTeam({
             variables: {
-                name: this.state.name,
-                users: this.state.users.split(', ')
+                _id: this.props.match.params.id,
+                userId: this.state.user
             }
         });
+    }
+
+    constructUserSelection() {
+        const { loading, error, data } = useQuery(FETCH_USERS)
+        if (loading) return null;
+        if (error) return <option>{`Error! ${error}`}</option>;
+        const { users } = data
+
+        if (users.length > 0 && users[0] && !this.state.user) this.setState({ user: users[0]._id })
+
+        let userOptions
+        userOptions = users.map(user => <option key={user._id} value={user._id}>{user.name}</option>)
+        return (
+            <div className="create-project-team create-task">
+                <h3>Member</h3>
+                <select name="user" value={this.state.user} onChange={this.update("user")} className="form-input team">
+                    {userOptions}
+                </select>
+            </div>
+        )
     }
 
     render() {
         return (
             <Mutation
-                mutation={CREATE_TEAM}
+                mutation={ADD_USER_TO_TEAM}
                 // if we error out we can set the message here
                 onError={err => this.setState({ message: err.message })}
                 // we need to make sure we update our cache once our new team is created
@@ -71,36 +92,19 @@ class CreateTeam extends Component {
                 }
                 // when our query is complete we'll display a success message
                 onCompleted={data => {
-                    const { name } = data.newTeam;
-                    this.setState({
-                        message: `New team ${name} created successfully!`
-                    });
-                    this.props.history.push('/');
+                    this.props.history.push(`/main/team/${data.addUserToTeam._id}`);
                 }}
             >
-                {(newTeam, { data }) => (
+                {(addUserToTeam, { data }) => (
                     <div>
-                        <MainHeader page={"New Team"} />
+                        <MainHeader page={"Add Member"} />
                         <div className="form-top">
-                            <h1>Create New Team</h1>
-                            <form onSubmit={e => this.handleSubmit(e, newTeam)} className="form-inner">
-                                <h3>Team Name</h3>
-                                <input
-                                    onChange={this.update("name")}
-                                    value={this.state.name}
-                                    placeholder='For example: "Design" or "Development"'
-                                    className="form-input"
-                                />
-                                <h3>Members</h3>
-                                <input
-                                    onChange={this.update("users")}
-                                    value={this.state.users}
-                                    placeholder="name@email.com, name2@email2.com, ..."
-                                    className="form-input"
-                                />
+                            <h1>Update Team</h1>
+                            <form onSubmit={e => this.handleSubmit(e, addUserToTeam)} className="form-inner">
+                                {this.constructUserSelection()}
                                 <div className="form-buttons">
                                     <button type="cancel"><Link to="/home">Cancel</Link></button>
-                                    <button type="submit">Create Team</button>
+                                    <button type="submit">Add Member</button>
                                 </div>
                             </form>
                             <p className="success-message">{this.state.message}</p>
@@ -112,4 +116,4 @@ class CreateTeam extends Component {
     }
 }
 
-export default withRouter(CreateTeam);
+export default withRouter(UpdateTeam);

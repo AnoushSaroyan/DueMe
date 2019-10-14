@@ -160,7 +160,7 @@ class MainHeader extends Component {
                                     {deleteProject => (
                                         <div onClick={() => {
                                             deleteProject({ variables: { _id: this.state.projectId } })
-                                        }} className="delete-task-button">Delete Task</div>
+                                        }} className="delete-task-button">Delete Project</div>
                                     )}
                                 </Mutation>
                             )}

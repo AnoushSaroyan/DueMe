@@ -55,8 +55,8 @@ class Home extends Component {
             let filteredTasks = taskDivs.filter(task => task.user._id === user._id)
             userTasks = filteredTasks.map(task => {
               return (
-              <div>
-                <div key={task._id} onClick={this.handleSlide} id={task._id} value={task.completed}>
+              <div key={task._id}>
+                <div onClick={this.handleSlide} id={task._id} value={task.completed}>
                   <TaskRow task={task} type={"user"} projectId={task.project._id} userId={user._id} />
                 </div>
               </div>

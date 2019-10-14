@@ -19,9 +19,21 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  text-decoration: none;
 }
 
 .team-members h2{
   margin-left: 10px;
   
+}
+
+.team-members-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team-members-delete{
+  color: red;
+  cursor: pointer;
 }

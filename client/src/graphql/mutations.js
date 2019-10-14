@@ -263,3 +263,19 @@ export const REMOVE_FROM_FAVORITES = gql`
       }
     }
 `
+
+export const ADD_USER_TO_TEAM = gql`
+    mutation addUserToTeam($_id: ID, $userId: ID){
+      addUserToTeam(_id: $_id, userId: $userId){
+        _id
+      }
+    }
+`
+
+export const REMOVE_USER_FROM_TEAM = gql`
+    mutation removeUserFromTeam($_id: ID, $userId: ID){
+      removeUserFromTeam(_id: $_id, userId: $userId){
+        _id
+      }
+    }
+`

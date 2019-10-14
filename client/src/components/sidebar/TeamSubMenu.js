@@ -49,7 +49,7 @@ class TeamSubMenu extends Component {
             <div>
                 <div className="team-submenu-people">
                     <div className="team-submenu-circles">{three}</div>
-                    <div className="submenu-invite-people">Invite People</div>
+                    <Link to={`/main/team/update/${team._id}`} className="submenu-invite-people">Invite People</Link>
                 </div>
             </div>
         )

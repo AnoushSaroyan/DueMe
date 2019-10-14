@@ -376,6 +376,7 @@ const mutation = new GraphQLObjectType({
             resolve(_, { _id, userId }) {
                 return(
                     Team.findById(_id).then(team => User.findById(userId).then(user => {
+                        debugger
                         user.teams.push(team)
                         team.users.push(user)
                         user.save()

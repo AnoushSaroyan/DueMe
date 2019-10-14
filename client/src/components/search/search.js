@@ -201,7 +201,7 @@ class Search extends Component{
             return (
             <div>
                 <div className="main-header-search-bar">
-                    <input className="header-search-input" value={this.state.search} onClick={this.handleEdit}></input>
+                    <input className="header-search-input" value={this.state.search} onClick={this.handleEdit} onChange={()=>{}}></input>
                     <IoIosSearch />
                 </div>
                 <div className="search-suggestions search-suggestions-minimized" id="search-suggestions">

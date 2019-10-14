@@ -148,7 +148,7 @@ div.task-mark-complete:hover{
 	justify-content: center;
 }
 
-.task-calendar svg{
+.task-calendar > svg{
 	color: darkgray;
 	font-size: 16px;
 }	
@@ -250,7 +250,11 @@ div.task-details-modal{
 	border-radius: 4px;
 }
 
-.task-details-modal h2{
+.task-details-modal > h2{
+	color: black;
+}
+
+.task-details-modal .task-show-title h2{
 	color: black;
 }
 
@@ -269,6 +273,8 @@ div.task-details-modal{
 
 .task-details-modal .dialog-right svg{
 	margin: 0;
+	    font-size: 25px;
+	color: #afafaf;
 }
 
 .task-details-modal .dots{
