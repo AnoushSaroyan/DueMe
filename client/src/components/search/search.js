@@ -86,7 +86,7 @@ class Search extends Component{
         let cutTeam
         if (this.state.teams) cutTeam = this.state.teams
             .reverse().slice(-3).reverse()
-            .map(item => <Link key={item._id} className="search-suggestion search-teams-item" ><MdPeopleOutline/>{item.name ? item.name : item.title}</Link>)
+            .map(item => <Link to={`/main/team/${item._id}`} key={item._id} className="search-suggestion search-teams-item" ><MdPeopleOutline/>{item.name ? item.name : item.title}</Link>)
         // return cut\
         let displayTeam
         if (cutTeam.length > 0) {
