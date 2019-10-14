@@ -230,6 +230,23 @@ export const DELETE_TASK = gql`
       }
     }
 `
+
+export const DELETE_PROJECT = gql`
+    mutation deleteProject($_id: ID){
+        deleteProject(_id: $_id){
+          _id
+        }
+    }
+`
+
+export const DELETE_TEAM = gql`
+    mutation deleteTeam($_id: ID){
+      deleteTeam(_id: $_id){
+        _id
+      }
+    }
+`
+
 export const ADD_TO_FAVORITES = gql`
     mutation addToFavorites($_id: ID, $projectId: ID){
       addToFavorites(_id: $_id, projectId: $projectId){
@@ -242,6 +259,22 @@ export const ADD_TO_FAVORITES = gql`
 export const REMOVE_FROM_FAVORITES = gql`
     mutation removeFromFavorites($_id: ID, $projectId: ID){
       removeFromFavorites(_id: $_id, projectId: $projectId){
+        _id
+      }
+    }
+`
+
+export const ADD_USER_TO_TEAM = gql`
+    mutation addUserToTeam($_id: ID, $userId: ID){
+      addUserToTeam(_id: $_id, userId: $userId){
+        _id
+      }
+    }
+`
+
+export const REMOVE_USER_FROM_TEAM = gql`
+    mutation removeUserFromTeam($_id: ID, $userId: ID){
+      removeUserFromTeam(_id: $_id, userId: $userId){
         _id
       }
     }

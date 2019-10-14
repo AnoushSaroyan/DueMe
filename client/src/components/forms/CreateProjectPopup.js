@@ -76,6 +76,8 @@ class CreateProjectPopup extends Component {
             )
         }
 
+        
+
 
         return (
             <div className="dialog" id="project-popup">

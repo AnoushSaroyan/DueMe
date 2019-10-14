@@ -14,7 +14,15 @@
     cursor: pointer;
 }
 
-.project-show-spreadsheet > div:nth-child(2) .task-row-wrapper{
+// .project-show-spreadsheet > div:nth-child(2) .task-row-wrapper{
+//     border-top: none;
+// }
+
+.project-scroll-wrapper > div:nth-child(1) .task-row-wrapper{
+    border-top: none;
+}
+
+.section-tiles-tasks > div:nth-child(1) .task-row-wrapper{
     border-top: none;
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Query } from 'react-apollo';
-import { USER } from '../../graphql/queries';
+import { Query, Mutation } from 'react-apollo';
+import { USER, FETCH_USERS } from '../../graphql/queries';
 import MainHeader from '../main_header/MainHeader';
 import Tiles from '../home/Tiles';
 // import './home.scss';
@@ -10,6 +10,7 @@ import '../project/project.scss'
 import './team.scss'
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import { GoTriangleRight, GoTriangleDown, GoPlus } from "react-icons/go";
+import { REMOVE_USER_FROM_TEAM } from "../../graphql/mutations";
 
 
 class Team extends Component {
@@ -21,6 +22,17 @@ class Team extends Component {
       projects: true,
     }
     this.handleCollapse = this.handleCollapse.bind(this)
+  }
+
+  renderRemove(user, removeUserFromTeam, team){
+    if (user._id !== localStorage.getItem("currentUserId")) {
+      return    <div className="team-members-delete" onClick={() => {
+      removeUserFromTeam({ variables: { _id: team._id, userId: user._id } })
+    }}>
+      remove
+    </div>
+    }
+    return <div></div>
   }
 
   handleMembers(team) {
@@ -41,11 +53,31 @@ class Team extends Component {
             backgroundColor: color
           }
           return (
-            <div className="team-members">
-              <Link to={`/main/user/${user._id}`} className="main-header-avatar-pic" style={profileColor} key={user._id}>
-                {rightLetters}
+            <div className="team-members-wrapper">
+              <Link to={`/main/user/${user._id}`} className="team-members">
+                <div className="main-header-avatar-pic" style={profileColor} key={user._id}>
+                  {rightLetters}
+                </div>
+                <h2>{user.name}</h2>
               </Link>
-              <h2>{user.name}</h2>
+              <Mutation
+                mutation={REMOVE_USER_FROM_TEAM}
+                refetchQueries={() => {
+                  return [
+                    {
+                      query: USER,
+                      variables: { _id: localStorage.getItem("currentUserId") }
+                    },
+                    {
+                      query: FETCH_USERS
+                    }
+                  ]
+                }}
+              >
+                {removeUserFromTeam => (
+                  this.renderRemove(user, removeUserFromTeam, team)
+                )}
+              </Mutation>
             </div>
           )
         })
@@ -131,7 +163,7 @@ class Team extends Component {
             let filteredTeam = user.teams.filter(team => team._id === this.props.match.params.id);
             const projects = filteredTeam[0].projects.flat()
             return <div>
-              <MainHeader page={"Team"} />
+              <MainHeader page={filteredTeam[0].name} teamId={filteredTeam[0]._id} type={"team"}/>
               <div className="scroll-wrapper">
                 <div className="team-page">
                   <div className="team-inner">

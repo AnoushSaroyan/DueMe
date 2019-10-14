@@ -97,7 +97,6 @@ class TaskList extends Component {
 	}
 
 	handleAddTask(newTask) {
-		debugger
 		newTask({
 			variables: {
 				title: "new task",

@@ -5,6 +5,7 @@ import TaskList from '../task/TaskList';
 import Sidebar from '../sidebar/Sidebar';
 import "./main_page.scss";
 import CreateTeam from '../forms/CreateTeam';
+import UpdateTeam from '../forms/UpdateTeam';
 import Team from '../team/Team';
 import CreateProject from '../forms/CreateProject';
 import CreateTask from '../task/CreateTask';
@@ -23,6 +24,7 @@ class MainPage extends Component {
                     <Switch>
                         <Route exact path="/main/home" component={Home} />
                         <Route exact path="/main/task" component={() => <TaskList type={"own"} />} />
+                        <Route exact path="/main/team/update/:id" component={UpdateTeam} />
                         <Route exact path="/main/team/new" component={CreateTeam} />
                         <Route exact path="/main/team/:id" component={Team} />
                         <Route exact path="/main/task/new" component={CreateTask} />
