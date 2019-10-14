@@ -239,6 +239,14 @@ export const DELETE_PROJECT = gql`
     }
 `
 
+export const DELETE_TEAM = gql`
+    mutation deleteTeam($_id: ID){
+      deleteTeam(_id: $_id){
+        _id
+      }
+    }
+`
+
 export const ADD_TO_FAVORITES = gql`
     mutation addToFavorites($_id: ID, $projectId: ID){
       addToFavorites(_id: $_id, projectId: $projectId){

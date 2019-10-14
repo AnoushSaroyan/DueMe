@@ -23,6 +23,7 @@ class MainPage extends Component {
                     <Switch>
                         <Route exact path="/main/home" component={Home} />
                         <Route exact path="/main/task" component={() => <TaskList type={"own"} />} />
+                        
                         <Route exact path="/main/team/new" component={CreateTeam} />
                         <Route exact path="/main/team/:id" component={Team} />
                         <Route exact path="/main/task/new" component={CreateTask} />

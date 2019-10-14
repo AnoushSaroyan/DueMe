@@ -131,7 +131,7 @@ class Team extends Component {
             let filteredTeam = user.teams.filter(team => team._id === this.props.match.params.id);
             const projects = filteredTeam[0].projects.flat()
             return <div>
-              <MainHeader page={"Team"} />
+              <MainHeader page={filteredTeam[0].name} teamId={filteredTeam[0]._id} type={"team"}/>
               <div className="scroll-wrapper">
                 <div className="team-page">
                   <div className="team-inner">
