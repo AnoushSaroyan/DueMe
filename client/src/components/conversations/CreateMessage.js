@@ -13,6 +13,7 @@ class CreateMessage extends React.Component {
 
         this.state = { content: "" };
         this.addEmoji = this.addEmoji.bind(this);
+        this.handleEmojiClick = this.handleEmojiClick.bind(this);
     }
 
     update(field) {
@@ -74,6 +75,10 @@ class CreateMessage extends React.Component {
         })
     }
 
+    handleEmojiClick() {
+        document.getElementById("emoji-picker").classList.add('show')
+    }
+
     render() {
         return (
             <Query query={CURRENT_USER} >
@@ -87,15 +92,19 @@ class CreateMessage extends React.Component {
                             >
          
                             {(newMessage, { data }) => (
-                                <div>
+                                <div className="message-create-div">
                                     <form onSubmit={e => this.handleSubmit(e, newMessage, currentUserId)}>
                                         <input
                                             onChange={this.update("content")}
                                             value={this.state.content}
                                             placeholder="Send a message"
+                                            className="message-create-input"
                                         />
                                     </form>
-                                    <Picker onSelect={this.addEmoji} style={{ position: 'absolute', bottom: '20px', right: '20px' }}/>
+                                    <div id="emoji-picker" className="emoji-picker-div"> 
+                                        <Picker onSelect={this.addEmoji} />
+                                    </div>
+                                    <button onClick={this.handleEmojiClick}>Emoji</button>                                  
                                 </div>
                             )
                             }

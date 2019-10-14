@@ -240,6 +240,7 @@ export const FETCH_OR_CREATE_CHAT_WITH_USER = gql`
         email
       }
       messages {
+        _id
         user {
           _id
           name

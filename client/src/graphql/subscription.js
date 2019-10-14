@@ -19,6 +19,7 @@ subscription onMessageSent {
           name
         }
         messages {
+          _id
           date
           chat
           content
@@ -34,14 +35,30 @@ subscription onMessageSent {
 export const DELETED_MESSAGE_SUBSCRIPTION = gql`
 subscription onMessageDeleted {
       messageDeleted {
+        # _id
+        # user {
+        #   _id
+        #   name
+        # }
+        # content
+        # date
+        # chat
         _id
-        user {
+        users {
           _id
+          email
           name
         }
-        content
-        date
-        chat
+        messages {
+          _id
+          date
+          chat
+          content
+          user {
+            _id
+            name
+          }
+        }
       }
     }
 `;
