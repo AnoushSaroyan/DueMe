@@ -24,6 +24,17 @@ class Team extends Component {
     this.handleCollapse = this.handleCollapse.bind(this)
   }
 
+  renderRemove(user, removeUserFromTeam, team){
+    if (user._id !== localStorage.getItem("currentUserId")) {
+      return    <div className="team-members-delete" onClick={() => {
+      removeUserFromTeam({ variables: { _id: team._id, userId: user._id } })
+    }}>
+      remove
+    </div>
+    }
+    return <div></div>
+  }
+
   handleMembers(team) {
     if (this.state.members) {
         let members
@@ -64,11 +75,7 @@ class Team extends Component {
                 }}
               >
                 {removeUserFromTeam => (
-              <div className="team-members-delete" onClick={()=>{
-                removeUserFromTeam({ variables: {_id: team._id, userId: user._id} })
-              }}>
-                remove
-              </div>
+                  this.renderRemove(user, removeUserFromTeam, team)
                 )}
               </Mutation>
             </div>
