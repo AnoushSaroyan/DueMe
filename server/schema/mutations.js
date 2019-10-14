@@ -92,7 +92,7 @@ const mutation = new GraphQLObjectType({
                 _id: { type: GraphQLID }
             },
             resolve(_, { _id }) {
-                Team.findById(_id).then(team =>{
+                return Team.findById(_id).then(team =>{
                     team.projects.forEach(project => {
                         Project.findById(_id).then(project => {
                             project.tasks.forEach(Task => {
@@ -367,6 +367,42 @@ const mutation = new GraphQLObjectType({
                 }))
             }
         },
+        addUserToTeam: {
+            type: TeamType,
+            args: {
+                _id: { type: GraphQLID },
+                userId: { type: GraphQLID }
+            },
+            resolve(_, { _id, userId }) {
+                return(
+                    Team.findById(_id).then(team => User.findById(userId).then(user => {
+                        user.teams.push(team)
+                        team.users.push(user)
+                        user.save()
+                        team.save()
+                        return team
+                    }))
+                )
+            }
+        },
+        removeUserFromTeam: {
+            type: TeamType,
+            args: {
+                _id: { type: GraphQLID },
+                userId: { type: GraphQLID }
+            },
+            resolve(_, { _id, userId }) {
+                return (
+                    Team.findById(_id).then(team => User.findById(userId).then(user => {
+                        user.teams.pull(team)
+                        team.users.pull(user)
+                        user.save()
+                        team.save()
+                        return team
+                    }))
+                )
+            }
+        }
 
         // fetchOrCreateChatWithUser: {
         //     type: ChatType,
