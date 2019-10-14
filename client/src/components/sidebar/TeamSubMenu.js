@@ -79,7 +79,7 @@ class TeamSubMenu extends Component {
         if (this.state.open) {
             return (
                 <div className="team-submenu">
-                    <div className="team-submenu-title noselect"><TiArrowSortedDown onClick={this.handleCollapse("open")}/><Link className="submenu-team-name">{team.name}</Link></div>
+                    <div className="team-submenu-title noselect"><TiArrowSortedDown onClick={this.handleCollapse("open")}/><Link to={`/main/team/${team._id}`}className="submenu-team-name">{team.name}</Link></div>
                     {this.renderTeamMembers(team)}
                     {this.renderProjects(team)}
                 </div>

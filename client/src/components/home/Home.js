@@ -92,14 +92,14 @@ class Home extends Component {
             </div>
             <div className="section-tiles">
               { projects.map(project => <Tiles project={project} key={project._id}/>)}
-              <Link to="/main/project/new">
                 <div className="tile-top">
-                  <div className="tile-inner-new" >
-                    <GoPlus /> 
-                  </div>
-                  <h2>New Project</h2>
+                  <Link to="/main/project/new">
+                    <div className="tile-inner-new" >
+                      <GoPlus /> 
+                    </div>
+                    <h2>New Project</h2>
+                  </Link>
                 </div>
-              </Link>
             </div>
           </div>
         )
