@@ -18,6 +18,9 @@ export const FETCH_USERS = gql`
       _id
       name
       email
+      teams{
+        _id
+      }
     }
   }`;
 

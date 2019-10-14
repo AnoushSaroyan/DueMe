@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Query, Mutation } from 'react-apollo';
-import { USER } from '../../graphql/queries';
+import { USER, FETCH_USERS } from '../../graphql/queries';
 import MainHeader from '../main_header/MainHeader';
 import Tiles from '../home/Tiles';
 // import './home.scss';
@@ -57,6 +57,9 @@ class Team extends Component {
                       query: USER,
                       variables: { _id: localStorage.getItem("currentUserId") }
                     },
+                    {
+                      query: FETCH_USERS
+                    }
                   ]
                 }}
               >

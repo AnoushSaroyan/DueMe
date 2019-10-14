@@ -75,7 +75,7 @@ class CreateTeam extends Component {
           this.setState({
             message: `New team ${name} created successfully!`
           });
-          this.props.history.push(`/main/team/${data.newTeam._id}`);
+          this.props.history.push(`/main/`);
         }}
       >
         {(newTeam, { data }) => (

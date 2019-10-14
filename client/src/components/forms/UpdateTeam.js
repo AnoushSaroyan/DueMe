@@ -57,11 +57,21 @@ class UpdateTeam extends Component {
         if (loading) return null;
         if (error) return <option>{`Error! ${error}`}</option>;
         const { users } = data
+        let filtered = users.filter(user => {
+            if (!user.teams.some( team => {
+                if (team._id == this.props.match.params.id){
+                    return team
+                }
+            })) {
+                return user
+            }
 
-        if (users.length > 0 && users[0] && !this.state.user) this.setState({ user: users[0]._id })
+        })
+
+        if (filtered.length > 0 && filtered[0] && !this.state.user) this.setState({ user: filtered[0]._id })
 
         let userOptions
-        userOptions = users.map(user => <option key={user._id} value={user._id}>{user.name}</option>)
+        userOptions = filtered.map(user => <option key={user._id} value={user._id}>{user.name}</option>)
         return (
             <div className="create-project-team create-task">
                 <h3>Member</h3>
@@ -86,13 +96,16 @@ class UpdateTeam extends Component {
                         {
                             query: USER,
                             variables: { _id: localStorage.getItem("currentUserId") }
+                        },
+                        {
+                            query: FETCH_USERS
                         }
                     ]
                 }
                 }
                 // when our query is complete we'll display a success message
                 onCompleted={data => {
-                    this.props.history.push(`/main/team/${data.addUserToTeam._id}`);
+                    this.props.history.push(`/main/`);
                 }}
             >
                 {(addUserToTeam, { data }) => (
