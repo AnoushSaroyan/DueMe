@@ -9,7 +9,6 @@ import { LOGOUT_USER, ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, DELETE_PROJECT } 
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FiFileText } from "react-icons/fi";
-import CreateProjectPopup from '../forms/CreateProjectPopup'
 import Search from '../search/search'
 
 
