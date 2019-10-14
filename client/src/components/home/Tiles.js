@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import { DiGitMerge  } from "react-icons/di";
 import { GoBug, GoRocket, GoFileCode, GoChecklist } from "react-icons/go";
 import './tiles.scss'
@@ -23,13 +24,14 @@ class Tiles extends Component{
     if(!this.props.project){
       return <div></div>
     }
-  
     return (
       <div className="tile-top">
-        <div className="tile-inner" style={{backgroundColor: this.props.project.color}}>
-          {this.insertImage(this.props.project.name)}
-        </div>
-        <h2>{this.props.project.name}</h2>
+        <Link to={`/main/project/${this.props.project._id}`}>
+          <div className="tile-inner" style={{backgroundColor: this.props.project.color}}>
+            {this.insertImage(this.props.project.name)}
+          </div>
+          <h2>{this.props.project.name}</h2>
+        </Link>
       </div>
     )
   }

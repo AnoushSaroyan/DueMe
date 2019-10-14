@@ -1,4 +1,4 @@
-.tile-top{
+.tile-top a{
   height: 215px;
   width: 150px;
   padding-top: 15px;
@@ -10,11 +10,15 @@
   border-radius: 20px;
 }
 
-.tile-top:first-child{
+// .tile-top a{
+//   justify-content: center;
+// }
+
+.tile-top a:first-child{
   margin-left: 0px;
 }
 
-.tile-top:hover{
+.tile-top a:hover{
   background-color: rgba(237, 237, 237, 0.75);
   cursor: pointer;
   margin-top: 0px;
