@@ -86,6 +86,31 @@ const mutation = new GraphQLObjectType({
                 )
             }
         },
+        deleteTeam: {
+            type: TeamType,
+            args: {
+                _id: { type: GraphQLID }
+            },
+            resolve(_, { _id }) {
+                Team.findById(_id).then(team =>{
+                    team.projects.forEach(project => {
+                        Project.findById(_id).then(project => {
+                            project.tasks.forEach(Task => {
+                                Task.remove({ _id: Task})
+                            })
+                        })
+                        Project.remove({ _id: project})
+                    })
+                    team.users.forEach(user => User.findById(user).then(
+                        user => {
+                            user.teams.pull(team)
+                            user.save()
+                        }
+                    ))
+                    return Team.remove({ _id: _id})
+                })
+            }
+        },
         deleteProject: {
             type: ProjectType,
             args: {
@@ -96,7 +121,8 @@ const mutation = new GraphQLObjectType({
                     project.tasks.forEach(task => {
                         Task.remove({ _id: task})})
                     return project
-
+                        // This does not delete the task that are associated with the project
+                        // Dunno why it isn't working and no time.
                 }).then(project => Team.findById(project.team).then(team => {
                     team.projects.pull(project)
                     team.save()

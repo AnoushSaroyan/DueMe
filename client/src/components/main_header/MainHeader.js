@@ -34,7 +34,7 @@ class MainHeader extends Component {
             let accountDropdown = document.getElementById("profile-menu")
             if (accountDropdown) accountDropdown.classList.remove("active")
             let projectDropdown = document.getElementById("project-menu")
-            if (accountDropdown) projectDropdown.classList.remove("active")
+            if (projectDropdown) projectDropdown.classList.remove("active")
         })
         if (this.props.type === "project") {
             this.addBorderBottom()
