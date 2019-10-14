@@ -239,6 +239,7 @@ export const FETCH_OR_CREATE_CHAT_WITH_USER = gql`
         _id 
         name
         email
+        color
       }
       messages {
         _id

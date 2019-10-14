@@ -76,7 +76,13 @@ class CreateMessage extends React.Component {
     }
 
     handleEmojiClick() {
-        document.getElementById("emoji-picker").classList.add('show')
+        let button 
+        button = document.getElementById("emoji-picker")
+        if (Array.from(button.classList).includes("show")) {
+            button.classList.remove("show")
+        } else {
+            button.classList.add('show')
+        }
     }
 
     render() {
@@ -93,6 +99,7 @@ class CreateMessage extends React.Component {
          
                             {(newMessage, { data }) => (
                                 <div className="message-create-div">
+                                    <span className="emoji-button" onClick={this.handleEmojiClick}>Emoji</span>                                  
                                     <form onSubmit={e => this.handleSubmit(e, newMessage, currentUserId)}>
                                         <input
                                             onChange={this.update("content")}
@@ -104,7 +111,6 @@ class CreateMessage extends React.Component {
                                     <div id="emoji-picker" className="emoji-picker-div"> 
                                         <Picker onSelect={this.addEmoji} />
                                     </div>
-                                    <button onClick={this.handleEmojiClick}>Emoji</button>                                  
                                 </div>
                             )
                             }

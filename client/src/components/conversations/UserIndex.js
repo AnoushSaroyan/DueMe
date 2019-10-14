@@ -91,6 +91,7 @@ class UserIndex extends React.Component {
 
                             return(
                                 <div className="userIndex">
+                                    <h2>Chat</h2>
                             {allUsers.map(user => {
 
                                 // return <h4 onClick={(e) => this.handleClick(e, user)}>{user.name}</h4>

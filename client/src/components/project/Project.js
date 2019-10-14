@@ -93,6 +93,15 @@ class Project extends Component {
         });
     }
 
+    renderLoading() {
+        return (
+            <div className="la-ball-clip-rotate-multiple la-dark la-3x main-page-load">
+                <div></div>
+                <div></div>
+            </div>
+        )
+    }
+
     render(){
         if (!localStorage.getItem("currentUserId")) {
             return <div></div>
@@ -101,7 +110,7 @@ class Project extends Component {
         return(
             <Query query={PROJECT} variables={{ _id: this.state.projectId }}>
                 {({ loading, error, data }) => {  
-                    if (loading) return null;
+                    if (loading) return this.renderLoading()
                     if (error) return <option>{`Error! ${error}`}</option>;
                     const { project } = data
                     // const teams = user.teams

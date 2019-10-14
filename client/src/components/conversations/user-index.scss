@@ -1,4 +1,27 @@
 .userIndex{
     display: flex;
     flex-direction: column;
+    padding: 10px 0;
+}
+
+.userIndex a {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 10px 0 15px;
+}
+
+.userIndex a:hover{
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+
+.userIndex h2 {
+    font-size: 13px;
+    color: #6f7782;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 18px;
 }

@@ -9,10 +9,23 @@ import MainHeader from '../main_header/MainHeader'
 // import { FETCH_OR_CREATE_CHAT_WITH_USER } from "../../graphql/mutations";
 
 
-const Chat = (props) => (
-    <Query query={FETCH_OR_CREATE_CHAT_WITH_USER} variables={{ id1: localStorage.getItem("currentUserId"), id2: props.match.params.userId }}>
+class Chat extends React.Component  {
+
+
+    renderLoading() {
+        return (
+            <div className="la-ball-clip-rotate-multiple la-dark la-3x main-page-load">
+                <div></div>
+                <div></div>
+            </div>
+        )
+    }
+    
+    render(){
+        return(
+    <Query query={FETCH_OR_CREATE_CHAT_WITH_USER} variables={{ id1: localStorage.getItem("currentUserId"), id2: this.props.match.params.userId }}>
         {({ loading, error, data }) => {
-            if (loading) return <p>Loading...</p>
+            if (loading) return this.renderLoading()
             if (error) return `Error! ${error.message}`
             // debugger
             // if (loading) return <p>Loading...</p>
@@ -90,10 +103,10 @@ const Chat = (props) => (
 
                                         })}
                                         {/* </ul> */}
-                                        <CreateMessage chat={chatId} />
                                         </div>
                                     </div>
                                     </div>
+                                        <CreateMessage chat={chatId} />
                                 </div>
                             )}}
                         </Subscription>
@@ -103,6 +116,7 @@ const Chat = (props) => (
             )
         }}
     </Query>
-);
+        )}
+};
 
 export default Chat;
