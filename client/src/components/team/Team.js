@@ -53,7 +53,7 @@ class Team extends Component {
             backgroundColor: color
           }
           return (
-            <div className="team-members-wrapper">
+            <div key={user._id} className="team-members-wrapper">
               <Link to={`/main/user/${user._id}`} className="team-members">
                 <div className="main-header-avatar-pic" style={profileColor} key={user._id}>
                   {rightLetters}

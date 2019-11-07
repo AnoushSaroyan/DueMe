@@ -263,7 +263,10 @@ class MainHeader extends Component {
 
 
         return(
-        <Query query={USER} variables={{ _id: localStorage.getItem("currentUserId") }}>
+        <Query 
+        query={USER} 
+        variables={{ _id: localStorage.getItem("currentUserId") }}
+        >
                 {({ loading, error, data }) => {   
                     if (loading) return this.renderEmptyHeader();
                     if (error) return <option>{`Error! ${error}`}</option>;

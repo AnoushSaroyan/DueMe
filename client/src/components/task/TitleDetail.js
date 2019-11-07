@@ -57,7 +57,6 @@ class TitleDetail extends Component{
                                         }).then(() => this.setState({ editing: false }));
                                     }}
                                 />
-                                {/* <button type="submit">Update title</button> */}
                             </form>
                         </div>
                     )}

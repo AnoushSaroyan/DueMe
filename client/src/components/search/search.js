@@ -31,7 +31,7 @@ class Search extends Component{
         const body = document.getElementsByTagName("body")[0];
         body.addEventListener("click", (event) => {
             suggestionDiv.classList.remove("active")
-            this.closeEdit()
+            if (this.state.editing) this.closeEdit()
         })
     }
     

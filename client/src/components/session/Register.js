@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./session.scss";
 import { Mutation } from "react-apollo";
-import { REGISTER_USER } from "../../graphql/mutations";
+import { REGISTER_USER, LOGIN_USER } from "../../graphql/mutations";
 import { USER } from "../../graphql/queries";
 import { Link } from 'react-router-dom';
 
@@ -25,6 +25,23 @@ class Register extends Component {
     updateCache(client, { data }) {
         client.writeData({
             data: { isLoggedIn: data.register.loggedIn, currentUserId: data.register._id }
+        });
+    }
+
+    loginUpdateCache(cache, { data }) {
+        console.log(data);
+        cache.writeData({
+            data: { isLoggedIn: data.login.loggedIn, currentUserId: data.login._id }
+        })
+    }
+
+    handleDemo = (e, login) => {
+        e.preventDefault();
+        login({
+            variables: {
+                email: "demo@user.com",
+                password: "password"
+            }
         });
     }
 
@@ -93,6 +110,21 @@ class Register extends Component {
                                   className="form-input"
                               />
                               <div className="form-buttons">
+                                    <Mutation
+                                    mutation={LOGIN_USER}
+                                    onCompleted={data => {
+                                        const { token } = data.login;
+                                        localStorage.setItem("auth-token", token);
+                                        localStorage.setItem("currentUserId", data.login._id)
+                                        this.props.history.push("/");
+                                    }}
+                                    onError={error => this.setState({ errorMsg: error.message.split(":")[1] })}
+                                    update={(cache, data) => this.loginUpdateCache(cache, data)}
+                                    >
+                                        {(login, { data }) => (
+                                             <button type="demo" onClick={e => this.handleDemo(e, login)}>Demo</button>
+                                        )}
+                                    </Mutation>
                                 <button type="submit">Sign Up</button>
                               </div>
                             </div>
