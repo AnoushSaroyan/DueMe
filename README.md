@@ -104,3 +104,64 @@ Thanks to Apollo/GraphQL's malleable queries and onBlur events, editing can be d
 ```
 
 The displayed text is updated locally in the component AND a query is sent to have it changed in the database. This saves having to make an unnecessary refetch query. 
+
+### Real-time Chat
+![edit](client/public/videos/chat.gif)
+
+Utilized GraphQL subscriptions to achieve real-time chat functionality. It uses asyncIterator for mapping a subscription to a pubsub channel ( to an event or to many events)
+
+
+```javascript
+const subscription = new GraphQLObjectType({
+    name: "Subscription",
+    fields: () => ({
+        messageSent: {
+            type: ChatType,
+            resolve: data => {
+                return data.messageSent;
+            },  
+            subscribe: withFilter(
+                () => pubsub.asyncIterator(["MESSAGE_SENT"]),
+                () => { return true; } 
+            )
+        },
+        messageDeleted: {
+            type: ChatType,
+            resolve: data => {
+                return data.messageDeleted;
+            },
+            subscribe: withFilter(
+                () => pubsub.asyncIterator(["MESSAGE_DELETED"]),
+                () => { return true; }
+            )
+        }
+    })
+});
+
+```
+
+GraphQL Mutation to add a new message to the chat: creates the message and publishes the MESSAGE_SENT event to the chat so the subscribers will get the updated data.
+
+
+```javascript
+newMessage: {
+    type: ChatType,
+    args: {
+        content: { type: GraphQLString },
+        user: { type: GraphQLID },
+        chat: { type: GraphQLID }
+    },
+    async resolve(_, { content, user, chat }, context) {
+        let message = new Message({ content, user, chat });
+        await message.save();
+        let chaty = await Chat.findById(chat);
+        if (!chaty.messages.includes(message)) {
+            chaty.messages.push(message);
+        }
+        await chaty.save();
+        await pubsub.publish("MESSAGE_SENT", { messageSent: chaty });
+        return chaty;
+        }
+},
+
+```
