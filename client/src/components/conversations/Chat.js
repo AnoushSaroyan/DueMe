@@ -46,7 +46,7 @@ class Chat extends React.Component  {
                             {(args) => {
                             return (
                                 <div>
-                                    <MainHeader />
+                                    <MainHeader page={"Chat"}/>
                                     <div  className="chat-show">
                                     <div className="chat-show-wrapper">
                                         <div className="chat-show-main">
