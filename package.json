@@ -42,6 +42,6 @@
     "react-big-calendar": "^0.22.1",
     "react-scripts": "^3.2.0",
     "subscriptions-transport-ws": "^0.9.16",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   }
 }
